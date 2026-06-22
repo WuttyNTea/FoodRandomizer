@@ -1,0 +1,690 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Kanit', sans-serif;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    text-align: center;
+    background-color: #FFFDE7;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23FFF44F;stop-opacity:1" /><stop offset="100%" style="stop-color:%23E6A800;stop-opacity:1" /></linearGradient></defs><path d="M 0 0 V 80 C 15 90 35 90 50 80 C 65 70 85 70 100 80 V 0 Z" fill="url(%23g)" /></svg>');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    margin-bottom: 30px;
+}
+
+button {
+    background-color: #FFF44F;
+    color: #333333;
+    border: 2px solid #E6A800;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: inherit;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #FFC107;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+button:disabled {
+    background-color: #e0e0e0;
+    border-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.result-card {
+    margin-top: 30px;
+    background-color: #FAFAFA;
+    border: 2px dashed #FFC107;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    display: none;
+}
+
+.food-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333333;
+    margin: 15px 0;
+}
+
+.animating {
+    animation: pop 0.3s ease-in-out alternate infinite;
+    color: #E6A800;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+.hidden {
+    display: none;
+}
+
+.calories {
+    font-size: 1.5rem;
+    color: #E6A800;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.nutrition-grid {
+    display: flex;
+    justify-content: space-around;
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.nut-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.nut-label {
+    font-size: 0.9rem;
+    color: #888888;
+}
+
+.nut-value {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333333;
+}
+
+/* ตกแต่งรูปภาพอาหาร */
+.food-image {
+    width: 100%;
+    height: 200px; /* กำหนดความสูงรูปภาพ */
+    object-fit: cover; /* ตัดรูปไม่ให้เบี้ยว */
+    border-radius: 15px; /* มุมโค้งมน */
+    margin-bottom: 10px;
+    border: 3px solid #FFF44F; /* กรอบสีเหลืองมะนาว */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+/* บังคับซ่อนให้เนียนขึ้น */
+.hidden {
+    display: none !important;
+}
+
+/* === ตกแต่งส่วนค้นหาและหมวดหมู่ === */
+.search-section {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.divider {
+    border: none;
+    border-top: 2px dashed #E6A800;
+    margin-bottom: 20px;
+}
+
+.search-title {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-family: inherit;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #E6A800;
+    box-shadow: 0 0 10px rgba(230, 168, 0, 0.2);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    background-color: #FFF;
+    border: 2px solid #ddd;
+    color: #555;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 50px;
+    box-shadow: none;
+}
+
+.filter-btn:hover {
+    background-color: #FFFDE7;
+    border-color: #FFC107;
+    transform: none;
+}
+
+/* ปุ่มที่ถูกเลือก */
+.filter-btn.active {
+    background-color: #FFC107;
+    color: #333;
+    border-color: #E6A800;
+}
+
+/* กริดแสดงผลลัพธ์ */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* ปรับแต่ง Scrollbar */
+.menu-grid::-webkit-scrollbar { width: 8px; }
+.menu-grid::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.menu-grid::-webkit-scrollbar-thumb { background: #FFC107; border-radius: 10px; }
+
+.menu-card {
+    background: #FFF;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    border-color: #FFC107;
+}
+
+.menu-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.menu-card h4 {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.menu-card p {
+    margin: 0;
+    color: #E6A800;
+    font-weight: bold;
+}
+
+/* === ตกแต่ง Modal วิธีทำอาหาร === */
+.modal {
+    display: none; /* ซ่อนไว้เป็นค่าเริ่มต้น */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #FAFAFA;
+    border: 3px solid #FFF44F;
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    text-align: left;
+}
+
+/* ปรับแต่ง Scrollbar ใน Modal */
+.modal-content::-webkit-scrollbar { width: 8px; }
+.modal-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.modal-content::-webkit-scrollbar-thumb { background: #E6A800; border-radius: 10px; }
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #888;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover { color: #E6A800; }
+
+#modalFoodName {
+    color: #E6A800;
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+#modalFoodImage {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.recipe-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.recipe-section {
+    background: #FFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.recipe-section h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px dashed #FFF44F;
+    padding-bottom: 10px;
+}
+
+.recipe-section ul, .recipe-section ol {
+    padding-left: 20px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.small-btn {
+    background-color: #FFFDE7;
+    border: 1px solid #E6A800;
+    color: #E6A800;
+    padding: 5px 15px;
+    border-radius: 50px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.small-btn:hover {
+    background-color: #E6A800;
+    color: #FFF;
+}
+
+/* === ตกแต่งส่วนโต้ตอบ (ถูกใจ, แชร์, คอมเมนต์) === */
+.interaction-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.interaction-btn {
+    background-color: #FFF;
+    border: 2px solid #E6A800;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.interaction-btn:hover { background-color: #FFFDE7; }
+.interaction-btn.liked { background-color: #FFC107; border-color: #E6A800; color: #333; }
+
+.comment-section {
+    background: #FFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 25px;
+    border-top: 2px dashed #eee;
+}
+
+.comment-section h3 { margin-top: 0; color: #333; }
+
+.comment-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-input-area input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.comment-input-area input:focus { outline: none; border-color: #E6A800; }
+
+.comment-input-area button {
+    background: #FFF44F;
+    border: 1px solid #E6A800;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.comment-input-area button:hover { background: #FFC107; }
+
+#commentList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#commentList li {
+    background: #FAFAFA;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid #FFC107;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #E6A800;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 0.85rem;
+}
+
+/* === ตกแต่งส่วน Trending และปุ่ม Favorite === */
+.trending-title {
+    color: #E6A800;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.trending-card {
+    background: linear-gradient(135deg, #FFFDE7 0%, #FFF 100%);
+    border: 2px solid #FFF44F;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(230, 168, 0, 0.1);
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.trending-card img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.trending-info h4 { margin: 0 0 5px 0; font-size: 1rem; color: #333; }
+.trending-info p { margin: 0; font-size: 0.85rem; color: #666; }
+
+.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #FFC107;
+    color: #333;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-bottom-left-radius: 10px;
+}
+
+.filter-btn.favorite-btn.active {
+    background-color: #E6A800;
+    color: white;
+    border-color: #A67900;
+}
+
+/* === ตกแต่งปุ่ม "ดูวิธีทำเมนูนี้" ในการ์ดสุ่ม === */
+.btn-view-recipe {
+    margin-top: 25px; /* ผลักปุ่มลงมาให้ห่างจากตารางโภชนาการ 25 พิกเซล */
+    width: 100%;
+    justify-content: center;
+    background-color: #FFFDE7;
+    padding: 15px; /* เพิ่มความอวบให้ปุ่มดูน่ากด */
+    border-radius: 15px; /* ปรับความโค้งให้รับกับตารางด้านบนพอดี */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.btn-view-recipe:hover {
+    background-color: #FFC107;
+    border-color: #E6A800;
+}
+
+/* === ตกแต่งปุ่ม 3 ขีด และ Sidebar Menu === */
+.menu-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 35px;
+    color: #E6A800; /* สีเหลืองไข่แดงให้เข้ากับธีม */
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.2s;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.menu-toggle:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none; /* ซ่อนไว้จนกว่าจะกดเมนู */
+    backdrop-filter: blur(2px);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px; /* ซ่อนหลบไว้ทางซ้ายนอกจอ */
+    width: 280px;
+    height: 100%;
+    background-color: #FFFFFF;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* คลาสที่จะดึงเมนูออกมาแสดง */
+.sidebar.open { left: 0; }
+
+.sidebar-header {
+    background-color: #FFC107;
+    padding: 25px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333;
+    border-bottom: 3px solid #E6A800;
+}
+
+.sidebar-header h3 { margin: 0; font-size: 1.3rem; }
+
+.close-sidebar {
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s;
+}
+
+.close-sidebar:hover { color: #FFF; }
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #555;
+    transition: background 0.2s;
+    font-weight: 600;
+}
+
+.sidebar-menu li:hover {
+    background-color: #FFFDE7;
+    color: #E6A800;
+}
+
+/* === ตกแต่งรูปภาพโปรไฟล์ === */
+.sidebar-header-user {
+    display: flex;
+    align-items: center;
+}
+
+#sidebarProfilePic {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #FFF;
+    margin-right: 15px;
+    background-color: #FFF;
+}
+
+.profile-pic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#previewProfilePic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #FFC107;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: #FAFAFA;
+}
+
+/* === ตกแต่งป้ายเตือนแพ้อาหาร === */
+.allergy-warning {
+    background-color: #ffebee; /* พื้นหลังสีแดงอ่อน */
+    color: #c62828; /* ตัวหนังสือสีแดงเข้ม */
+    border: 2px solid #ef5350;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: pulseRed 1.5s infinite; /* ทำให้กระพริบเตะตา */
+}
+
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 83, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0); }
+}
+
+/* ปรับปรุงให้ป้ายเตือนซ่อนตัวได้โดยไม่โดน .hidden ขัดขวาง */
+.allergy-warning {
+    display: flex; /* ให้แสดงผลปกติ */
+}
+
+.allergy-warning.hidden {
+    display: none !important; /* ให้ซ่อนเมื่อมีคลาส .hidden เท่านั้น */
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ 🍋🍳</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #FFFDE7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background-color: #FFFFFF;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(230, 168, 0, 0.2);
+            width: 100%;
+            max-width: 400px; /* ขยายความกว้างการ์ดขึ้นนิดหน่อยเพื่อรองรับข้อมูลที่มากขึ้น */
+            text-align: center;
+            border: 2px solid #FFF44F;
+        }
+
+        h2 {
+            color: #E6A800;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #E6A800;
+            box-shadow: 0 0 5px rgba(230, 168, 0, 0.3);
+        }
+
+        button {
+            width: 100%;
+            background-color: #FFF44F;
+            color: #333;
+            border: 2px solid #E6A800;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #FFC107;
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #loadingMsg {
+            display: none;
+            color: #888;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>ลงทะเบียน / เข้าสู่ระบบ 🍳</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">ชื่อผู้ใช้งาน (Username)</label>
+                <input type="text" id="username" name="username" required placeholder="ใส่ชื่อของคุณ">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">รหัสผ่าน (Password)</label>
+                <input type="password" id="password" name="password" required placeholder="ใส่รหัสผ่าน">
+            </div>
+
+            <div class="input-group">
+                <label for="gmail">อีเมล (Gmail)</label>
+                <input type="email" id="gmail" name="gmail" required placeholder="example@gmail.com">
+            </div>
+
+            <div class="input-group">
+                <label for="allergies">อาหารที่แพ้ / ไม่ทาน (ถ้ามี)</label>
+                <input type="text" id="allergies" name="allergies" placeholder="เช่น กุ้ง, ถั่วลิสง, ไม่กินเผ็ด">
+            </div>
+
+            <button type="submit">ไปหน้าสุ่มอาหาร!</button>
+            <p id="loadingMsg">กำลังบันทึกข้อมูลและเข้าสู่ระบบ... ⏳</p>
+        </form>
+    </div>
+
+    <script>
+        // === นำ URL ที่ก็อปปี้มาจาก Google Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ===
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxG88mZ_NbPpDQzF3npXLuiF2o1Rz_jbTQteMKyNdHOB_p7wMi8Wc9hZqY30B1A_z3A/exec'; 
+        // =======================================================================
+
+        const form = document.getElementById('loginForm');
+        const loadingMsg = document.getElementById('loadingMsg');
+        const submitBtn = form.querySelector('button');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+
+            loadingMsg.style.display = 'block';
+            submitBtn.disabled = true;
+
+            // ตัวแปร FormData จะดึงข้อมูล input ทั้งหมดที่มีแอตทริบิวต์ name ส่งไปอัตโนมัติ
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: new FormData(form),
+                mode: 'no-cors' 
+            })
+            .then(response => {
+                const usernameInput = document.getElementById('username').value;
+                localStorage.setItem('currentUser', usernameInput);
+
+                const allergiesInput = document.getElementById('allergies').value;
+                localStorage.setItem('userAllergies', allergiesInput);
+                
+                window.location.href = 'main.html';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("เกิดข้อผิดพลาดในการเชื่อมต่อ");
+                loadingMsg.style.display = 'none';
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>

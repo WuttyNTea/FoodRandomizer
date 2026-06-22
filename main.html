@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วันนี้กินอะไรดี? 🍋🍳</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="menu-toggle" onclick="openSidebar()">☰</div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+    <div id="mySidebar" class="sidebar">
+        <!-- อัปเดตส่วนหัวให้มีรูปโปรไฟล์ -->
+        <div class="sidebar-header">
+            <div class="sidebar-header-user">
+                <img id="sidebarProfilePic" src="" alt="Profile">
+                <h3 id="sidebarUsername">ผู้ใช้งาน</h3>
+            </div>
+            <span class="close-sidebar" onclick="closeSidebar()">&times;</span>
+        </div>
+        <ul class="sidebar-menu">
+            <!-- อัปเดตปุ่มแก้ไขโปรไฟล์ให้เรียกฟังก์ชันแทนการแจ้งเตือน -->
+            <li onclick="openProfile()">👤 แก้ไขโปรไฟล์ตัวเอง</li>
+            <li onclick="alert('กำลังพัฒนาฟีเจอร์แชท 💬')">💬 ข้อความไว้คุยกับเพื่อน</li>
+            <li onclick="switchAccount()">🔄 สลับบัญชี</li>
+            <li onclick="logout()">🚪 ออกจากระบบ</li>
+        </ul>
+    </div>
+
+    <!-- === ส่วนที่เพิ่มใหม่: หน้าต่างแก้ไขโปรไฟล์ (Modal) === -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <span class="close-btn" onclick="closeProfile()">&times;</span>
+            <h2 style="color: #E6A800; margin-top: 0;">👤 แก้ไขโปรไฟล์</h2>
+            
+            <!-- ส่วนเลือกรูปภาพ -->
+            <div class="profile-pic-container">
+                <img id="previewProfilePic" src="" alt="รูปโปรไฟล์">
+                <label for="uploadPic" class="small-btn" style="display: inline-block; cursor: pointer; margin-top: 15px;">
+                    📷 เปลี่ยนรูปโปรไฟล์
+                </label>
+                <!-- ช่อง input แบบ file ที่ถูกซ่อนไว้ (ใช้ Label กดแทน) -->
+                <input type="file" id="uploadPic" accept="image/*" style="display: none;" onchange="previewImage(event)">
+            </div>
+
+            <!-- ส่วนชื่อผู้ใช้ (แก้ไขไม่ได้) -->
+            <div style="text-align: left; margin-top: 20px;">
+                <label style="font-weight: bold; color: #555; font-size: 0.9rem;">ชื่อผู้ใช้ (Username - แก้ไขไม่ได้)</label>
+                <input type="text" id="profileUsername" readonly style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; background-color: #f5f5f5; color: #888; box-sizing: border-box; font-family: inherit; margin-top: 5px;">
+            </div>
+
+            <!-- ส่วนชื่อที่แสดง (แก้ไขได้) -->
+            <div style="text-align: left; margin-top: 15px;">
+                <label style="font-weight: bold; color: #555; font-size: 0.9rem;">ชื่อที่แสดง (Display Name)</label>
+                <input type="text" id="profileDisplayName" placeholder="ตั้งชื่อเล่นเท่ๆ ของคุณ" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; margin-top: 5px;">
+            </div>
+
+            <div style="text-align: left; margin-top: 15px;">
+                <label style="font-weight: bold; color: #555; font-size: 0.9rem;">อาหารที่แพ้ / ไม่ทาน (Allergies)</label>
+                <input type="text" id="profileAllergies" placeholder="เช่น กุ้ง, ถั่ว, ไม่กินเผ็ด" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; margin-top: 5px;">
+            </div>
+
+            <button class="interaction-btn" onclick="saveProfile()" style="width: 100%; justify-content: center; margin-top: 25px; background-color: #FFF44F;">
+                💾 บันทึกข้อมูล
+            </button>
+        </div>
+    </div>
+    <!-- =================================================== -->
+
+    <h1>🍋 วันนี้กินอะไรดี? 🍳</h1>
+    <p class="subtitle">สุ่มเมนูอร่อย พร้อมบอกแคลอรี่และโภชนาการ</p>
+
+    <button id="randomBtn" onclick="startRandomize()">สุ่มเมนูเลย!</button>
+
+    <div class="result-card" id="resultCard">
+        
+        <img id="foodImage" class="food-image hidden" src="" alt="ภาพอาหาร">
+
+        <div id="allergyWarning" class="allergy-warning hidden"></div>
+
+        <h2 class="food-name" id="foodName">รอสุ่มเมนู...</h2>
+        
+        <div id="nutritionContent" class="hidden">
+            <div class="calories">🔥 <span id="foodCalories">0</span> kcal</div>
+            
+            <div class="nutrition-grid">
+                <div class="nut-item">
+                    <span class="nut-label">โปรตีน</span>
+                    <span class="nut-value" id="foodProtein">0g</span>
+                </div>
+                <div class="nut-item">
+                    <span class="nut-label">คาร์บ</span>
+                    <span class="nut-value" id="foodCarbs">0g</span>
+                </div>
+                <div class="nut-item">
+                    <span class="nut-label">ไขมัน</span>
+                    <span class="nut-value" id="foodFat">0g</span>
+                </div>
+            </div> 
+            <button id="viewRandomRecipeBtn" class="interaction-btn btn-view-recipe">
+                📖 ดูวิธีทำเมนูนี้!
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="search-section">
+
+        <h3 class="trending-title">🔥 เมนู Trending ประจำสัปดาห์</h3>
+        <div class="trending-grid" id="trendingGrid">
+            <!-- เมนูยอดนิยม 3 อันดับแรกจะแสดงที่นี่ -->
+        </div>
+
+        <hr class="divider">
+        <h3 class="search-title">🔍 ค้นหาเมนูอาหารตามใจชอบ</h3>
+        
+        <input type="text" id="searchInput" placeholder="พิมพ์ชื่อเมนูที่อยากทาน เช่น กะเพรา, ยำ, เส้น..." onkeyup="searchFood()">
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCategory('ทั้งหมด', this)">เมนูทั้งหมด</button>
+            <button class="filter-btn" onclick="filterCategory('อาหารจานข้าว', this)">🍚 อาหารจานข้าว</button>
+            <button class="filter-btn" onclick="filterCategory('อาหารเส้น', this)">🍜 อาหารเส้น</button>
+            <button class="filter-btn" onclick="filterCategory('อาหารจีน', this)">🥟 อาหารจีน</button>
+            <button class="filter-btn" onclick="filterCategory('ของทานเล่น', this)">🍟 ของทานเล่น</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            </div>
+    </div>
+
+    <!-- === หน้าต่างป๊อปอัป (Modal) อัปเดตใหม่ เพิ่มส่วนโต้ตอบ === -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeRecipe()">&times;</span>
+            <h2 id="modalFoodName">ชื่ออาหาร</h2>
+            <img id="modalFoodImage" src="" alt="ภาพอาหาร">
+
+            <div id="modalAllergyWarning" class="allergy-warning"></div>
+            
+            <!-- ส่วนโต้ตอบ: ถูกใจ & แชร์ -->
+            <div class="interaction-bar">
+                <button id="likeBtn" class="interaction-btn" onclick="toggleLike()">
+                    <span id="likeIcon">🤍</span> ถูกใจ <span id="likeCount"></span>
+                </button>
+                <button class="interaction-btn" onclick="shareFood()">
+                    🔗 แชร์เมนูนี้
+                </button>
+            </div>
+            
+            <div class="recipe-container">
+                <div class="recipe-section">
+                    <h3>🛒 วัตถุดิบ</h3>
+                    <ul id="modalIngredients"></ul>
+                </div>
+                
+                <div class="recipe-section">
+                    <h3>🍳 วิธีทำ</h3>
+                    <ol id="modalInstructions"></ol>
+                </div>
+            </div>
+
+            <!-- ส่วนคอมเมนต์ -->
+            <div class="comment-section">
+                <h3>💬 ความคิดเห็น</h3>
+                <div class="comment-input-area">
+                    <input type="text" id="commentInput" placeholder="พิมพ์ความคิดเห็นของคุณที่นี่...">
+                    <button onclick="addComment()">ส่ง</button>
+                </div>
+                <ul id="commentList">
+                    <!-- คอมเมนต์จะถูกเพิ่มมาตรงนี้ -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
