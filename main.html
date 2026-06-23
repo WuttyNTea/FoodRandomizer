@@ -22,6 +22,7 @@
         </div>
         <ul class="sidebar-menu">
             <!-- อัปเดตปุ่มแก้ไขโปรไฟล์ให้เรียกฟังก์ชันแทนการแจ้งเตือน -->
+            <li onclick="openLikedFoods()">❤️ เมนูที่ถูกใจ</li>
             <li onclick="openProfile()">👤 แก้ไขโปรไฟล์ตัวเอง</li>
             <li onclick="alert('กำลังพัฒนาฟีเจอร์แชท 💬')">💬 ข้อความไว้คุยกับเพื่อน</li>
             <li onclick="switchAccount()">🔄 สลับบัญชี</li>
@@ -175,6 +176,16 @@
             </div>
         </div>
     </div>
+
+    <div id="likedFoodsModal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-btn" onclick="closeLikedFoods()">&times;</span>
+            <h2 style="color: #E6A800; text-align: center;">❤️ คลังเมนูโปรดของคุณ</h2>
+            
+            <div id="likedFoodsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                </div>
+        </div>
+    </div>ห
 
     <script src="script.js"></script>
 </body>

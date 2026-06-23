@@ -25,7 +25,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(230, 168, 0, 0.2);
             width: 100%;
-            max-width: 400px; /* ขยายความกว้างการ์ดขึ้นนิดหน่อยเพื่อรองรับข้อมูลที่มากขึ้น */
+            max-width: 400px;
             text-align: center;
             border: 2px solid #FFF44F;
         }
@@ -97,6 +97,15 @@
             margin-top: 15px;
             font-size: 0.9rem;
         }
+
+        /* เพิ่ม CSS สำหรับข้อความเตือนรหัสผิด */
+        #errorMessage {
+            display: none;
+            color: red;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -125,38 +134,69 @@
             </div>
 
             <button type="submit">ไปหน้าสุ่มอาหาร!</button>
+            <p id="errorMessage">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง ❌</p>
             <p id="loadingMsg">กำลังบันทึกข้อมูลและเข้าสู่ระบบ... ⏳</p>
+            <div style="margin-top: 15px;">
+                <a href="#" onclick="forgotPassword()" style="color: #E6A800; font-size: 0.9rem; text-decoration: underline; font-weight: 600;">ลืมรหัสผ่านใช่ไหม?</a>
+            </div>
         </form>
     </div>
 
     <script>
-        // === นำ URL ที่ก็อปปี้มาจาก Google Apps Script มาวางในเครื่องหมายคำพูดด้านล่างนี้ ===
+        // URL ไปยัง Google Apps Script ของคุณ
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxG88mZ_NbPpDQzF3npXLuiF2o1Rz_jbTQteMKyNdHOB_p7wMi8Wc9hZqY30B1A_z3A/exec'; 
-        // =======================================================================
 
         const form = document.getElementById('loginForm');
         const loadingMsg = document.getElementById('loadingMsg');
+        const errorMsg = document.getElementById('errorMessage');
         const submitBtn = form.querySelector('button');
 
         form.addEventListener('submit', e => {
             e.preventDefault(); 
+            errorMsg.style.display = 'none'; // ซ่อนข้อความสีแดงไว้ก่อนเสมอ
 
+            const emailInput = document.getElementById('gmail').value;
+            const passwordInput = document.getElementById('password').value;
+            const usernameInput = document.getElementById('username').value;
+            const allergiesInput = document.getElementById('allergies').value;
+
+            // === 1. ระบบตรวจเช็ครหัสผ่าน ===
+            let usersDatabase = JSON.parse(localStorage.getItem('usersDatabase')) || {};
+
+            if (usersDatabase[emailInput]) {
+                // ถ้ามีอีเมลนี้อยู่แล้ว ให้เช็ครหัสผ่าน
+                if (usersDatabase[emailInput].password !== passwordInput) {
+                    errorMsg.style.display = 'block'; // โชว์ข้อความรหัสผิด
+                    return; // เบรกการทำงานตรงนี้ ไม่ส่งข้อมูลไป Google Sheets
+                }
+            } else {
+                // ถ้าเป็นผู้ใช้ใหม่ ให้บันทึกลงฐานข้อมูลจำลอง
+                usersDatabase[emailInput] = {
+                    password: passwordInput,
+                    username: usernameInput,
+                    allergies: allergiesInput
+                };
+                localStorage.setItem('usersDatabase', JSON.stringify(usersDatabase));
+            }
+
+            // === 2. ผ่านการเช็ครหัสผ่าน ให้ส่งข้อมูลไป Google Sheets ===
             loadingMsg.style.display = 'block';
             submitBtn.disabled = true;
 
-            // ตัวแปร FormData จะดึงข้อมูล input ทั้งหมดที่มีแอตทริบิวต์ name ส่งไปอัตโนมัติ
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: new FormData(form),
                 mode: 'no-cors' 
             })
             .then(response => {
-                const usernameInput = document.getElementById('username').value;
+                // บันทึกสถานะผู้ใช้งานเข้าเครื่อง
                 localStorage.setItem('currentUser', usernameInput);
-
-                const allergiesInput = document.getElementById('allergies').value;
-                localStorage.setItem('userAllergies', allergiesInput);
                 
+                // ดึงข้อมูลอาหารที่แพ้มาใช้งาน (ถ้าล็อกอินเก่าให้ใช้ของเก่า ถ้าใหม่ใช้ของใหม่)
+                const currentAllergy = allergiesInput || usersDatabase[emailInput].allergies || '';
+                localStorage.setItem('userAllergies', currentAllergy);
+                
+                // เปลี่ยนไปหน้า main.html
                 window.location.href = 'main.html';
             })
             .catch(error => {
@@ -166,6 +206,25 @@
                 submitBtn.disabled = false;
             });
         });
+
+        // ฟังก์ชันลืมรหัสผ่าน (ฉบับฐานข้อมูลจำลอง)
+        function forgotPassword() {
+            // เด้งหน้าต่างเล็กๆ ขึ้นมาถามอีเมล
+            const emailToCheck = prompt("กรุณากรอกอีเมลที่ใช้สมัคร เพื่อกู้คืนรหัสผ่าน 🕵️‍♂️:");
+            
+            if (emailToCheck) {
+                // ดึงฐานข้อมูลจำลองมาค้นหา
+                let usersDatabase = JSON.parse(localStorage.getItem('usersDatabase')) || {};
+                
+                if (usersDatabase[emailToCheck]) {
+                    // ถ้าเจออีเมล ให้แอบบอกรหัสผ่าน
+                    alert(`รหัสผ่านของคุณคือ: ${usersDatabase[emailToCheck].password} 🤫 (รู้แล้วเหยียบไว้เลยนะ!)`);
+                } else {
+                    // ถ้าไม่เจอ
+                    alert("ไม่พบอีเมลนี้ในระบบครับ ลองนึกดูดีๆ อีกทีน้า 🧐");
+                }
+            }
+        }
     </script>
 </body>
 </html>

@@ -1,159 +1,1528 @@
 //รอเพิ่มภาพกับ Instructionการทำ
 const foodMenu = [
-    // === 5 เมนูแรก (ตัวอย่างข้อมูลจริง) ===
-    { name: "ข้าวกะเพราหมูสับไข่ดาว", image: "https://images.unsplash.com/photo-1626804475297-4160cb2af811?w=500&q=80", calories: 620, protein: "28g", carbs: "55g", fat: "32g", ingredients: ["หมูสับ 150g", "ใบกะเพรา", "พริกและกระเทียม", "ไข่ไก่ 1 ฟอง", "เครื่องปรุงรส (น้ำปลา, ซอสหอยนางรม, น้ำตาล)"], instructions: ["โขลกพริกและกระเทียมให้พอหยาบ", "ตั้งกระทะใส่น้ำมัน ผัดพริกกระเทียมให้หอม", "ใส่หมูสับลงไปผัดจนสุก", "ปรุงรสตามชอบ ใส่ใบกะเพราแล้วปิดไฟ", "ทอดไข่ดาว โปะลงบนข้าวสวยร้อนๆ"] },
-    { name: "ข้าวผัดหมู", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 500, protein: "20g", carbs: "60g", fat: "20g", ingredients: ["ข้าวสวยแช่เย็น 1 ถ้วย", "เนื้อหมูหั่นชิ้น", "ไข่ไก่ 1 ฟอง", "กระเทียมสับ", "ต้นหอมซอย"], instructions: ["ตั้งกระทะเจียวกระเทียมให้หอม", "ใส่เนื้อหมูลงไปผัดจนสุก ตามด้วยไข่ไก่", "ยีไข่ให้สุก แล้วใส่ข้าวสวยลงไปผัดให้เข้ากัน", "ปรุงรสด้วยซีอิ๊วขาว ซอสปรุงรส และน้ำตาลเล็กน้อย", "โรยต้นหอมซอย ผัดให้เข้ากันพร้อมเสิร์ฟ"] },
-    { name: "ข้าวมันไก่ต้ม", image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=500&q=80", calories: 560, protein: "25g", carbs: "65g", fat: "22g", ingredients: ["เนื้อไก่ 1 ชิ้นใหญ่", "ข้าวสาร", "กระเทียม, ขิงแว่น, รากผักชี", "น้ำจิ้มเต้าเจี้ยว", "แตงกวา"], instructions: ["ต้มเนื้อไก่กับรากผักชีและกระเทียมจนสุก หั่นเป็นชิ้น", "นำน้ำซุปไก่ที่ได้ไปหุงข้าวพร้อมกับขิงแว่นและกระเทียม", "เมื่อข้าวสุก ตักใส่จาน โปะด้วยไก่ต้ม", "เสิร์ฟพร้อมน้ำจิ้มเต้าเจี้ยว แตงกวา และน้ำซุปร้อนๆ"] },
-    { name: "ข้าวมันไก่ทอด", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=500&q=80", calories: 660, protein: "22g", carbs: "65g", fat: "35g", ingredients: ["สะโพกไก่ไม่มีกระดูก", "แป้งทอดกรอบ", "ข้าวมัน (หุงเตรียมไว้)", "น้ำจิ้มไก่หวาน", "แตงกวา"], instructions: ["นำเนื้อไก่ไปคลุกแป้งทอดกรอบให้ทั่ว", "ตั้งน้ำมันให้ร้อน ทอดไก่จนเหลืองกรอบ", "นำไก่มาหั่นเป็นชิ้นพอดีคำ วางบนข้าวมัน", "เสิร์ฟพร้อมน้ำจิ้มไก่และแตงกวา"] },
-    { name: "ข้าวหมูแดง", image: "https://images.unsplash.com/photo-1548943487-a2e4f43b4850?w=500&q=80", calories: 550, protein: "26g", carbs: "70g", fat: "18g", ingredients: ["เนื้อหมูแดงหั่นสไลด์", "กุนเชียงทอด", "ไข่ต้มครึ่งฟอง", "ข้าวสวย", "น้ำราดหมูแดงและซีอิ๊วดำ"], instructions: ["ตักข้าวสวยใส่จาน", "จัดเรียงหมูแดง กุนเชียง และไข่ต้มลงบนข้าว", "ราดน้ำหมูแดงให้ชุ่มฉ่ำ", "เสิร์ฟพร้อมต้นหอมและซีอิ๊วดำพริกสด"] },
-
-    // === เมนูที่เหลือ (ข้อความคร่าวๆ รอการแก้ไข) ===
-    { name: "ข้าวหมูกรอบ", image: "https://images.unsplash.com/photo-1606495390974-9faea0b57e79?w=500&q=80", calories: 700, protein: "20g", carbs: "65g", fat: "40g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวขาหมู (เนื้อล้วน)", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 620, protein: "28g", carbs: "60g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวไข่เจียวหมูสับ", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 600, protein: "20g", carbs: "50g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหมูทอดกระเทียม", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 545, protein: "25g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าเป็ดย่าง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 540, protein: "26g", carbs: "60g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดกุ้ง", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 450, protein: "18g", carbs: "60g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดปู", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 465, protein: "16g", carbs: "60g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดต้มยำกุ้ง", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 500, protein: "18g", carbs: "62g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดแหนม", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 590, protein: "20g", carbs: "60g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดแกงเขียวหวาน", image: "https://images.unsplash.com/photo-1606495390974-9faea0b57e79?w=500&q=80", calories: 600, protein: "22g", carbs: "65g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวคลุกกะปิ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 550, protein: "25g", carbs: "68g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวพะแนงหมู", image: "https://images.unsplash.com/photo-1548943487-a2e4f43b4850?w=500&q=80", calories: 585, protein: "24g", carbs: "55g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวแกงกะหรี่ไก่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 545, protein: "22g", carbs: "58g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดพริกแกงหมู", image: "https://images.unsplash.com/photo-1626804475297-4160cb2af811?w=500&q=80", calories: 540, protein: "24g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวกะเพราไก่", image: "https://images.unsplash.com/photo-1626804475297-4160cb2af811?w=500&q=80", calories: 480, protein: "25g", carbs: "55g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวไก่กระเทียมพริกไทย", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 470, protein: "28g", carbs: "55g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวคะน้าหมูกรอบ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 650, protein: "18g", carbs: "60g", fat: "38g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดผักบุ้งไฟแดง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 405, protein: "8g", carbs: "60g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวไข่ข้นกุ้ง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 515, protein: "22g", carbs: "50g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าไก่ย่างจิ้มแจ่ว", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 500, protein: "35g", carbs: "55g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหมูยอทอด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 545, protein: "15g", carbs: "58g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดกุนเชียง", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 560, protein: "18g", carbs: "65g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวฉู่ฉี่ปลาทู", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 550, protein: "24g", carbs: "55g", fat: "26g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวปลากะพงผัดฉ่า", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 505, protein: "26g", carbs: "55g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดสับปะรด", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 520, protein: "15g", carbs: "70g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหมกไก่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 600, protein: "28g", carbs: "65g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวยำปักษ์ใต้ (ไข่ต้ม)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 390, protein: "15g", carbs: "60g", fat: "10g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ผัดไทยกุ้งสด", image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=500&q=80", calories: 570, protein: "18g", carbs: "68g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยเตี๋ยวเรือหมูน้ำตก", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 400, protein: "22g", carbs: "45g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยเตี๋ยวต้มยำหมู", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 440, protein: "20g", carbs: "50g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "เย็นตาโฟเส้นใหญ่", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 380, protein: "18g", carbs: "55g", fat: "10g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "บะหมี่เกี๊ยวหมูแดง", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 475, protein: "25g", carbs: "60g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ราดหน้าหมูหมัก", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 520, protein: "24g", carbs: "65g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ผัดซีอิ๊วหมู", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 580, protein: "22g", carbs: "60g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยเตี๋ยวคั่วไก่", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 525, protein: "25g", carbs: "50g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สุกี้น้ำทะเล", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 290, protein: "20g", carbs: "35g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สุกี้แห้งหมู", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 430, protein: "22g", carbs: "40g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มาม่าผัดขี้เมาหมู", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 515, protein: "18g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ขนมจีนน้ำยาปลา", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 465, protein: "18g", carbs: "58g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ขนมจีนแกงเขียวหวาน", image: "https://images.unsplash.com/photo-1606495390974-9faea0b57e79?w=500&q=80", calories: 580, protein: "22g", carbs: "60g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยจั๊บน้ำข้น", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 460, protein: "20g", carbs: "50g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยจั๊บญวน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 400, protein: "18g", carbs: "55g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ผัดหมี่โคราช", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 545, protein: "15g", carbs: "65g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มักกะโรนีผัดซอสมะเขือเทศ", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 490, protein: "22g", carbs: "60g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สปาเก็ตตี้คาโบนาร่า", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 615, protein: "20g", carbs: "55g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สปาเก็ตตี้ซอสเนื้อ", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 520, protein: "25g", carbs: "60g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สปาเก็ตตี้ผัดขี้เมาทะเล", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 470, protein: "22g", carbs: "55g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สปาเก็ตตี้เบคอนพริกแห้ง", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 560, protein: "18g", carbs: "55g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "พาสต้าเพสโต้ไก่", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 590, protein: "26g", carbs: "50g", fat: "32g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มักกะโรนีอบชีส", image: "https://images.unsplash.com/photo-1555126634-ae327a41eb93?w=500&q=80", calories: 650, protein: "22g", carbs: "55g", fat: "38g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "พิซซ่าฮาวายเอี้ยน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 535, protein: "24g", carbs: "60g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "พิซซ่าเปปเปอโรนี", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 590, protein: "26g", carbs: "58g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "เบอร์เกอร์เนื้อ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 615, protein: "30g", carbs: "45g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "เบอร์เกอร์ไก่ทอด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 595, protein: "22g", carbs: "55g", fat: "32g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "เบอร์เกอร์หมู", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 550, protein: "25g", carbs: "45g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "แซนด์วิชแฮมชีส", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 390, protein: "18g", carbs: "35g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "แซนด์วิชทูน่ามายองเนส", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 420, protein: "20g", carbs: "35g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "คลับแซนด์วิช", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 505, protein: "25g", carbs: "45g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ฮอทดอก (Hotdog)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 330, protein: "12g", carbs: "30g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ฟิชแอนด์ชิปส์", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 640, protein: "22g", carbs: "60g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สเต็กหมูพริกไทยดำ", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 510, protein: "35g", carbs: "30g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สเต็กไก่สไปซี่", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 375, protein: "40g", carbs: "20g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สเต็กเนื้อริบอาย", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 555, protein: "45g", carbs: "15g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สเต็กปลาแซลมอน", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 425, protein: "35g", carbs: "15g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สลัดอกไก่ย่างน้ำใส", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 250, protein: "30g", carbs: "15g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สลัดทูน่า", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 255, protein: "22g", carbs: "15g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซีซาร์สลัดไก่", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 410, protein: "28g", carbs: "18g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สเต็กปลาดอลลี่", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 315, protein: "25g", carbs: "20g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มันฝรั่งอบชีสเบคอน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 485, protein: "15g", carbs: "50g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "พอร์คชอป", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 520, protein: "38g", carbs: "25g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าเนื้อ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 560, protein: "25g", carbs: "70g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าหมูทอด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 680, protein: "28g", carbs: "75g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าไก่และไข่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 540, protein: "30g", carbs: "65g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวแกงกะหรี่หมูทอด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 760, protein: "26g", carbs: "85g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าปลาไหล", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 530, protein: "22g", carbs: "70g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าแซลมอนเทอริยากิ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 560, protein: "30g", carbs: "65g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซูชิเซ็ตรวม (10 คำ)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 490, protein: "25g", carbs: "75g", fat: "10g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ทงคตสึราเมน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 685, protein: "28g", carbs: "65g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "โชยุราเมน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 515, protein: "25g", carbs: "70g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มิโซะราเมน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 545, protein: "26g", carbs: "70g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ยากิโซบะหมู", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 555, protein: "22g", carbs: "60g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "อุด้งน้ำซุปกุ้งเทมปุระ", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 505, protein: "18g", carbs: "75g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซารุโซบะ (หมี่เย็น)", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 345, protein: "15g", carbs: "60g", fat: "5g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ทาโกะยากิ (6 ลูก)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 345, protein: "12g", carbs: "40g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "โอโคโนมิยากิ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 505, protein: "20g", carbs: "50g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวยำเกาหลี", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 505, protein: "22g", carbs: "70g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "จาจังมยอน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 600, protein: "20g", carbs: "85g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซุปกิมจิเต้าหู้อ่อน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 480, protein: "24g", carbs: "55g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "หมูผัดโคชูจัง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 570, protein: "28g", carbs: "65g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ต๊อกบกกี", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 440, protein: "12g", carbs: "75g", fat: "10g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ไก่ทอดเกาหลี", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 625, protein: "30g", carbs: "70g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "คิมบับ (1 โรล)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 390, protein: "15g", carbs: "55g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "แนงมยอน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 425, protein: "18g", carbs: "70g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซุปไก่ตุ๋นโสม", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 480, protein: "55g", carbs: "25g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "บุลโกกิเนื้อ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 530, protein: "32g", carbs: "60g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดหยางโจว", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 530, protein: "22g", carbs: "65g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหมูแดงฮ่องกง", image: "https://images.unsplash.com/photo-1548943487-a2e4f43b4850?w=500&q=80", calories: 540, protein: "26g", carbs: "68g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าเป็ดย่างฮ่องกง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 595, protein: "28g", carbs: "65g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "บะหมี่ผัดสไตล์จีน", image: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&q=80", calories: 530, protein: "18g", carbs: "65g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ติ่มซำเซ็ตรวม", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 380, protein: "20g", carbs: "35g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "กระเพาะปลาน้ำแดง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 230, protein: "15g", carbs: "25g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "โจ๊กหมูใส่ไข่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 360, protein: "18g", carbs: "45g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวต้มปลา", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 320, protein: "22g", carbs: "40g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวต้มหมูสับ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 360, protein: "18g", carbs: "45g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "มาโปโทฟู", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 560, protein: "24g", carbs: "60g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวกะเพราเนื้อสับ", image: "https://images.unsplash.com/photo-1626804475297-4160cb2af811?w=500&q=80", calories: 610, protein: "30g", carbs: "55g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหมูกระเทียมพริกไทย", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 520, protein: "26g", carbs: "55g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวไก่ผัดเม็ดมะม่วง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 605, protein: "28g", carbs: "60g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวปลาหมึกผัดไข่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 555, protein: "25g", carbs: "55g", fat: "26g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดน้ำพริกลงเรือ", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 520, protein: "20g", carbs: "65g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวผัดปลาสลิด", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=80", calories: 525, protein: "22g", carbs: "60g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวเนื้อทอดกระเทียม", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=80", calories: 575, protein: "32g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวหน้าเนื้อตุ๋น", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 560, protein: "30g", carbs: "60g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวตับผัดกระเทียม", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 495, protein: "28g", carbs: "55g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวไข่เจียวกุ้งสับ", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 575, protein: "22g", carbs: "50g", fat: "32g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ยำวุ้นเส้นทะเล", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80", calories: 305, protein: "20g", carbs: "45g", fat: "5g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ยำมาม่าหมูสับ", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80", calories: 425, protein: "18g", carbs: "55g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ส้มตำไทยไข่เค็ม", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=500&q=80", calories: 430, protein: "15g", carbs: "65g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "น้ำตกหมู", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=500&q=80", calories: 490, protein: "28g", carbs: "50g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ลาบหมู", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=500&q=80", calories: 465, protein: "26g", carbs: "50g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ไก่ย่างครึ่งตัว", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 585, protein: "45g", carbs: "45g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "คอหมูย่าง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 595, protein: "25g", carbs: "45g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ซุปหน่อไม้", image: "https://images.unsplash.com/photo-1564834724105-918b73d1b9e0?w=500&q=80", calories: 295, protein: "8g", carbs: "55g", fat: "5g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ต้มแซ่บกระดูกอ่อน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 480, protein: "25g", carbs: "50g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "แกงอ่อมหมู", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 440, protein: "24g", carbs: "45g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดผัดมะเขือยาว", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 490, protein: "18g", carbs: "55g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดผัดดอกกุยช่าย", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 440, protein: "26g", carbs: "50g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดผัดวุ้นเส้น", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 480, protein: "15g", carbs: "65g", fat: "18g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดไก่ผัดขิง", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 435, protein: "25g", carbs: "50g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดปลาดุกผัดเผ็ด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 535, protein: "22g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดแกงส้มชะอม", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 495, protein: "24g", carbs: "55g", fat: "20g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดต้มข่าไก่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 540, protein: "22g", carbs: "50g", fat: "28g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวราดมัสมั่นไก่", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 610, protein: "25g", carbs: "60g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "พายเนื้อ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 540, protein: "22g", carbs: "45g", fat: "30g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "คีชโลเรน (Quiche)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 505, protein: "18g", carbs: "30g", fat: "35g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "เครปคาว (แฮมชีส)", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 445, protein: "22g", carbs: "40g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "แพนเค้กไข่ดาวเบคอน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 515, protein: "18g", carbs: "55g", fat: "25g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ข้าวโอ๊ตต้มหมูสับ", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 360, protein: "18g", carbs: "45g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "โจ๊กข้าวโอ๊ตไก่ฉีก", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 320, protein: "22g", carbs: "40g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "อะโวคาโดโทสต์", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 400, protein: "15g", carbs: "35g", fat: "22g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สมูทตี้โบลว์", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 475, protein: "20g", carbs: "65g", fat: "15g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "กราโนล่าโยเกิร์ต", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 390, protein: "15g", carbs: "55g", fat: "12g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "สลัดเต้าหู้เย็น", image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80", calories: 240, protein: "18g", carbs: "20g", fat: "10g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ปอเปี๊ยะสด", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 275, protein: "12g", carbs: "45g", fat: "5g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] },
-    { name: "ก๋วยเตี๋ยวลุยสวน", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80", calories: 330, protein: "15g", carbs: "50g", fat: "8g", ingredients: ["วัตถุดิบ 1...", "วัตถุดิบ 2..."], instructions: ["ขั้นตอนที่ 1...", "ขั้นตอนที่ 2..."] }
+    {
+    name: "ข้าวกะเพราหมูสับไข่ดาว",
+    image: "",
+    calories: 620,
+    protein: "28g",
+    carbs: "55g",
+    fat: "32g",
+    ingredients: ["เนื้อหมูสับ 150g", "ใบกะเพรา 1 ถ้วย", "พริกและกระเทียม", "ไข่ไก่ 1 ฟอง", "เครื่องปรุงรส (น้ำปลา, ซอสหอยนางรม, ซีอิ๊วดำ, น้ำตาล)"],
+    instructions: ["โขลกพริกขี้หนูและกระเทียมให้พอหยาบ", "ตั้งกระทะใส่น้ำมัน รอจนน้ำมันร้อนจัด ทอดไข่ดาวให้กรอบแล้วตักขึ้นพักไว้", "เทน้ำมันออกให้เหลือเล็กน้อย ผัดพริกกระเทียมให้หอม", "ใส่หมูสับลงไปผัด ยีให้ไม่เป็นก้อน ผัดจนสุก", "ปรุงรสด้วยเครื่องปรุงรส เร่งไฟแรง ใส่ใบกะเพราแล้วปิดไฟ", "ตักราดบนข้าวสวยร้อนๆ และวางไข่ดาวโปะด้านบน"]
+  },
+  {
+    name: "ข้าวผัดหมู",
+    image: "",
+    calories: 500,
+    protein: "20g",
+    carbs: "60g",
+    fat: "20g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 ถ้วย", "เนื้อหมูหั่นชิ้น 100g", "ไข่ไก่ 1 ฟอง", "กระเทียมสับ", "หอมใหญ่และมะเขือเทศ", "ต้นหอมซอย", "เครื่องปรุง (ซีอิ๊วขาว, ซอสปรุงรส, น้ำตาล, พริกไทย)"],
+    instructions: ["ตั้งกระทะเจียวกระเทียมให้หอม ใส่หมูลงไปผัดจนสุก", "ตอกไข่ใส่กระทะ ยีไข่ให้แตกพอสุก", "ใส่ข้าวสวย หอมใหญ่ มะเขือเทศ ลงไปผัดคลุกเคล้า", "ปรุงรสตามชอบ ใช้ไฟแรงผัดให้ข้าวร่วน", "โรยต้นหอมซอย ผัดเร็วๆ ปิดไฟ ตักเสิร์ฟคู่กับพริกน้ำปลา"]
+  },
+  {
+    name: "ข้าวมันไก่ต้ม",
+    image: "",
+    calories: 560,
+    protein: "25g",
+    carbs: "65g",
+    fat: "22g",
+    ingredients: ["ข้าวหอมมะลิ 1 ถ้วย", "สะโพกไก่หรืออกไก่ 200g", "น้ำซุปไก่", "มันไก่เจียว 1 ช้อนโต๊ะ", "กระเทียม ขิง และรากผักชี", "น้ำจิ้ม (เต้าเจี้ยว, ซีอิ๊วหวาน, ขิงสับ, พริกสับ)"],
+    instructions: ["ต้มไก่กับน้ำซุป รากผักชี กระเทียม ขิง จนไก่สุกนุ่ม ตักขึ้นพักไว้", "เจียวมันไก่ ผัดกับกระเทียมและขิง จากนั้นนำข้าวสารลงไปผัด", "นำข้าวที่ผัดไปหุงด้วยน้ำซุปไก่ที่ต้มไว้จนสุก", "สับไก่เป็นชิ้น วางบนข้าวมัน", "เสิร์ฟพร้อมน้ำจิ้มเต้าเจี้ยว แตงกวา และน้ำซุปร้อนๆ"]
+  },
+  {
+    name: "ข้าวมันไก่ทอด",
+    image: "",
+    calories: 660,
+    protein: "22g",
+    carbs: "65g",
+    fat: "35g",
+    ingredients: ["ข้าวมันหุงสุก 1 ถ้วย", "เนื้อไก่ส่วนสะโพก 150g", "แป้งทอดกรอบ", "ไข่ไก่ 1 ฟอง", "เกล็ดขนมปัง", "น้ำจิ้มไก่หวาน"],
+    instructions: ["หมักไก่ด้วยเกลือและพริกไทยเล็กน้อย", "นำไก่ชุบแป้งทอดกรอบ ชุบไข่ และคลุกเกล็ดขนมปังให้ทั่ว", "ทอดในน้ำมันท่วมไฟกลางจนเหลืองกรอบ", "ตักขึ้นสะเด็ดน้ำมัน หั่นเป็นชิ้นพอดีคำ", "วางบนข้าวมัน เสิร์ฟคู่กับน้ำจิ้มไก่และแตงกวา"]
+  },
+  {
+    name: "ข้าวหมูแดง",
+    image: "",
+    calories: 550,
+    protein: "26g",
+    carbs: "70g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูแดงย่างหั่นชิ้น 100g", "กุนเชียงทอดหั่นแว่น", "ไข่ต้มยางมะตูม 1/2 ฟอง", "น้ำราดหมูแดง", "แตงกวา"],
+    instructions: ["เตรียมหมูแดงและกุนเชียงทอดหั่นเป็นชิ้น", "ตั้งไฟทำน้ำราดโดยใช้น้ำซุปปรุงรสและแป้งมันละลายน้ำให้ข้น", "ตักข้าวสวยร้อนๆ วางหมูแดง กุนเชียง และไข่ต้มลงไป", "ราดด้วยน้ำราดหมูแดงให้ชุ่มฉ่ำ", "เสิร์ฟคู่กับซีอิ๊วดำพริกสดและแตงกวา"]
+  },
+  {
+    name: "ข้าวหมูกรอบ",
+    image: "",
+    calories: 700,
+    protein: "20g",
+    carbs: "65g",
+    fat: "40g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูกรอบหั่นชิ้น 100g", "ไข่ต้ม 1/2 ฟอง", "น้ำราดหมูกรอบ", "แตงกวา และซีอิ๊วดำพริกสด"],
+    instructions: ["หั่นหมูกรอบเป็นชิ้นหนาเพื่อให้หนังคงความกรอบ", "เตรียมน้ำราดสูตรน้ำซุปเคี่ยวแป้งมัน", "ตักข้าวสวยร้อนๆ ใส่จาน วางหมูกรอบและไข่ต้มด้านข้าง", "ราดน้ำข้นลงไป แต่อย่าให้ท่วมหนังเพื่อรักษาความกรอบ", "เสิร์ฟคู่กับแตงกวาและซีอิ๊วดำพริกชี้ฟ้า"]
+  },
+  {
+    name: "ข้าวขาหมู (เนื้อล้วน)",
+    image: "",
+    calories: 620,
+    protein: "28g",
+    carbs: "60g",
+    fat: "30g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อขาหมูตุ๋น 150g", "ไข่เป็ดต้มพะโล้ 1 ฟอง", "ผักกาดดองและคะน้าลวก", "น้ำพะโล้ขาหมู", "น้ำส้มพริกตำ"],
+    instructions: ["ตุ๋นขาหมูในน้ำพะโล้ เครื่องเทศ และซีอิ๊วด้วยไฟอ่อนจนเนื้อเปื่อยยุ่ย", "ต้มไข่ในน้ำพะโล้และลวกผักกาดดอง คะน้าเตรียมไว้", "ตักข้าวสวยร้อนๆ สับเนื้อขาหมูวางลงบนข้าว", "ราดน้ำพะโล้ให้ชุ่ม เคียงด้วยไข่ต้มและผัก", "เสิร์ฟพร้อมน้ำส้มพริกตำเปรี้ยวเผ็ด"]
+  },
+  {
+    name: "ข้าวไข่เจียวหมูสับ",
+    image: "",
+    calories: 600,
+    protein: "20g",
+    carbs: "50g",
+    fat: "35g",
+    ingredients: ["ข้าวสวย 1 จาน", "ไข่ไก่ 2 ฟอง", "หมูสับ 50g", "เครื่องปรุง (น้ำปลา, ซอสปรุงรส, พริกไทยป่น)", "น้ำมันพืชสำหรับทอด"],
+    instructions: ["ตอกไข่ใส่ชาม ตีให้เข้ากันจนฟู", "ใส่หมูสับและเครื่องปรุงรส ตีให้ส่วนผสมทั้งหมดเข้ากัน", "ตั้งกระทะใส่น้ำมัน รอจนน้ำมันร้อนจัด (มีควันขึ้นเล็กน้อย)", "เทไข่ลงไปตรงกลางกระทะ ทอดจนฟูและสุกเหลืองกรอบทั้งสองด้าน", "ตักขึ้นสะเด็ดน้ำมัน โปะลงบนข้าวสวย เสิร์ฟพร้อมซอสพริก"]
+  },
+  {
+    name: "ข้าวหมูทอดกระเทียม",
+    image: "",
+    calories: 545,
+    protein: "25g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อหมู 150g", "กระเทียมไทยสับหยาบ 3 ช้อนโต๊ะ", "รากผักชีและพริกไทยป่น", "เครื่องปรุง (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาลทราย)"],
+    instructions: ["หมักหมูกับรากผักชี พริกไทย ซอสหอยนางรม และซีอิ๊วขาว ทิ้งไว้ 15 นาที", "เจียวกระเทียมสับในน้ำมันจนเหลืองกรอบ ตักพักไว้", "นำหมูที่หมักไว้ลงไปรวนในกระทะน้ำมันเจียวกระเทียม", "ผัดจนหมูสุกและซอสงวดเกาะติดเนื้อหมู", "ตักราดข้าวสวย โรยด้วยกระเทียมเจียวกรอบๆ ด้านบน"]
+  },
+  {
+    name: "ข้าวหน้าเป็ดย่าง",
+    image: "",
+    calories: 540,
+    protein: "26g",
+    carbs: "60g",
+    fat: "22g",
+    ingredients: ["ข้าวสวย 1 จาน", "เป็ดย่างหั่นชิ้นพร้อมหนัง 120g", "ผักกวางตุ้งลวก", "ขิงดอง 1 ช้อนโต๊ะ", "น้ำราดเป็ดย่าง", "ซีอิ๊วดำพริกสด"],
+    instructions: ["หั่นเป็ดย่างเป็นชิ้นพอดีคำ วางพักไว้", "ลวกผักกวางตุ้งในน้ำเดือด ตักขึ้นน็อกน้ำเย็น", "อุ่นน้ำราดเป็ดให้ร้อนและมีความข้นพอดี", "ตักข้าวสวยร้อนๆ วางเป็ดย่างและผักกวางตุ้ง เคียงด้วยขิงดอง", "ราดน้ำเป็ดให้ฉ่ำๆ ทั่วเนื้อเป็ด เสิร์ฟพร้อมพริกซีอิ๊ว"]
+  },
+  {
+    name: "ข้าวผัดกุ้ง",
+    image: "",
+    calories: 450,
+    protein: "18g",
+    carbs: "60g",
+    fat: "15g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "กุ้งสดแกะเปลือก 5-6 ตัว", "ไข่ไก่ 1 ฟอง", "กระเทียมและหอมใหญ่", "ต้นหอมซอย", "เครื่องปรุง (ซีอิ๊วขาว, ซอสปรุงรส, น้ำตาล)"],
+    instructions: ["ผัดกระเทียมให้หอม นำกุ้งลงผัดให้สุก 70% ตักกุ้งขึ้นพักไว้", "ตอกไข่ลงในกระทะ ยีให้แตกพอสุก", "ใส่ข้าวสวยและหอมใหญ่ ปรุงรส ผัดด้วยไฟแรงให้ข้าวร่วน", "นำกุ้งที่พักไว้กลับลงไป ผัดคลุกเคล้า", "ใส่ต้นหอม ผัดเร็วๆ ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวผัดปู",
+    image: "",
+    calories: 465,
+    protein: "16g",
+    carbs: "60g",
+    fat: "18g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "เนื้อปูก้อน 50g", "ไข่ไก่ 1 ฟอง", "กระเทียมสับและต้นหอมซอย", "เนยจืด 1 ช้อนชา", "เครื่องปรุง (เกลือป่น, พริกไทย, ซีอิ๊วขาว)"],
+    instructions: ["ตั้งกระทะใส่เนยและน้ำมัน เจียวกระเทียมให้หอม", "ตอกไข่ ยีให้สุกเป็นลิ่ม", "ใส่ข้าวสวย ปรุงรสด้วยเกลือและพริกไทย ผัดไฟแรงให้ร่วน", "ใส่เนื้อปูลงไป ค่อยๆ ตลบข้าวเบาๆ ไม่ให้ปูเละ", "โรยต้นหอม ผัดเบาๆ ปิดไฟ เสิร์ฟพร้อมมะนาวฝาน"]
+  },
+  {
+    name: "ข้าวผัดต้มยำกุ้ง",
+    image: "",
+    calories: 500,
+    protein: "18g",
+    carbs: "62g",
+    fat: "20g",
+    ingredients: ["ข้าวสวย 1 จาน", "กุ้งสด 5 ตัว", "เครื่องต้มยำ (ข่า, ตะไคร้, ใบมะกรูดฉีก)", "น้ำพริกเผา 1.5 ช้อนโต๊ะ", "น้ำปลาและน้ำมะนาว", "พริกขี้หนูซอย"],
+    instructions: ["ผัดเครื่องต้มยำในกระทะให้ส่งกลิ่นหอม", "ใส่น้ำพริกเผาและกุ้ง ผัดจนกุ้งเริ่มสุก", "ใส่ข้าวสวยลงไปคลุกเคล้าให้เข้ากับเครื่องและน้ำพริกเผา", "ปรุงรสด้วยน้ำปลาและพริกขี้หนู ผัดให้เข้ากันและปิดไฟ", "บีบน้ำมะนาวลงไปคลุกเคล้าหลังปิดไฟเพื่อไม่ให้ขม ตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวผัดแหนม",
+    image: "",
+    calories: 590,
+    protein: "20g",
+    carbs: "60g",
+    fat: "30g",
+    ingredients: ["ข้าวสวย 1 จาน", "แหนมหั่นชิ้น 80g", "ไข่ไก่ 1 ฟอง", "กระเทียม หอมใหญ่ และมะเขือเทศ", "พริกขี้หนูซอย", "ซอสปรุงรสและน้ำตาลทราย"],
+    instructions: ["ผัดกระเทียมและพริกให้หอม", "ใส่แหนมลงไปผัดจนสุกและหอมกลิ่นเปรี้ยว", "ตอกไข่ ยีให้แตกและรอจนสุก", "ใส่ข้าวสวย หอมใหญ่ มะเขือเทศ และปรุงรส", "เร่งไฟแรง ผัดให้ข้าวร่วนเข้ากัน ตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวผัดแกงเขียวหวาน",
+    image: "",
+    calories: 600,
+    protein: "22g",
+    carbs: "65g",
+    fat: "28g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่ 100g", "พริกแกงเขียวหวาน 1.5 ช้อนโต๊ะ", "กะทิ 2 ช้อนโต๊ะ", "มะเขือพวง และใบมะกรูด", "ใบโหระพา", "น้ำปลาและน้ำตาลปี๊บ"],
+    instructions: ["ผัดพริกแกงเขียวหวานกับกะทิด้วยไฟอ่อนจนหอมแตกมัน", "ใส่เนื้อไก่ มะเขือพวง และใบมะกรูด ผัดจนเนื้อสุก", "ปรุงรสด้วยน้ำปลาและน้ำตาลปี๊บ", "ใส่ข้าวสวยลงไปคลุกเคล้าให้พริกแกงเคลือบเม็ดข้าว", "ใส่ใบโหระพา ผัดเร็วๆ ให้สลด ปิดไฟ ตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวคลุกกะปิ",
+    image: "",
+    calories: 550,
+    protein: "25g",
+    carbs: "68g",
+    fat: "20g",
+    ingredients: ["ข้าวสวย 1 จาน", "กะปิย่างไฟ 1 ช้อนโต๊ะ", "กระเทียมสับ", "หมูหวาน 50g", "ไข่เจียวหั่นฝอย", "เครื่องเคียง (มะม่วงเปรี้ยว, หอมแดง, พริกขี้หนู, กุ้งแห้ง, ถั่วฝักยาว)"],
+    instructions: ["เตรียมทำหมูหวานเคี่ยวจนเปื่อยและน้ำงวด", "เจียวกระเทียม นำกะปิลงไปผัดให้หอมฟุ้ง", "นำข้าวสวยลงไปผัดคลุกเคล้ากับกะปิจนสีกระจายตัวสม่ำเสมอ ตักใส่จาน", "ทอดไข่เจียวบางๆ แล้วหั่นเป็นเส้นฝอย", "จัดข้าวคลุกกะปิไว้ตรงกลาง ล้อมด้วยเครื่องเคียงทั้งหมดให้สวยงาม"]
+  },
+  {
+    name: "ข้าวพะแนงหมู",
+    image: "",
+    calories: 585,
+    protein: "24g",
+    carbs: "55g",
+    fat: "30g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อหมูสันคอ 150g", "พริกแกงพะแนง 2 ช้อนโต๊ะ", "หัวกะทิและหางกะทิ", "น้ำปลาและน้ำตาลปี๊บ", "ใบมะกรูดซอยและพริกชี้ฟ้าแดง"],
+    instructions: ["เคี่ยวหัวกะทิให้แตกมัน ใส่พริกแกงพะแนงลงไปผัดให้หอม", "ใส่เนื้อหมูลงไปผัดให้เข้ากับเครื่องแกง เติมหางกะทิ", "ปรุงรสด้วยน้ำปลาและน้ำตาลปี๊บ เคี่ยวไฟอ่อนจนข้น", "โรยใบมะกรูดซอยและพริกชี้ฟ้าแดง คนให้เข้ากัน ปิดไฟ", "ตักราดบนข้าวสวยร้อนๆ"]
+  },
+  {
+    name: "ข้าวแกงกะหรี่ไก่",
+    image: "",
+    calories: 545,
+    protein: "22g",
+    carbs: "58g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "สะโพกไก่ 150g", "มันฝรั่งและหอมใหญ่หั่นชิ้น", "พริกแกงกะหรี่ 1.5 ช้อนโต๊ะ", "กะทิ 1 ถ้วย", "น้ำปลาและน้ำตาลทราย"],
+    instructions: ["เคี่ยวกะทิเล็กน้อย ผัดกับพริกแกงกะหรี่จนหอมแตกมัน", "ใส่เนื้อไก่ลงไปผัดจนผิวสุก เติมกะทิที่เหลือแล้วต้มให้เดือด", "ใส่มันฝรั่ง หอมใหญ่ และปรุงรส", "เคี่ยวไฟอ่อน 15-20 นาทีจนมันฝรั่งนุ่มและน้ำข้น", "ตักราดข้าวสวย เสิร์ฟพร้อมอาจาด"]
+  },
+  {
+    name: "ข้าวผัดพริกแกงหมู",
+    image: "",
+    calories: 540,
+    protein: "24g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูชิ้น 100g", "พริกแกงเผ็ด 1.5 ช้อนโต๊ะ", "ถั่วฝักยาวหั่นท่อน", "ใบมะกรูดฉีก", "น้ำปลาและน้ำตาลทราย"],
+    instructions: ["ผัดพริกแกงเผ็ดกับน้ำมันด้วยไฟกลางจนหอม", "ใส่เนื้อหมูลงไปคลุกเคล้าจนสุก", "ใส่ถั่วฝักยาว ใบมะกรูด และปรุงรสด้วยน้ำปลากับน้ำตาล", "นำข้าวสวยลงไปผัดให้พริกแกงเคลือบเม็ดข้าวทั่วถึง", "ผัดจนข้าวแห้ง ปิดไฟ ตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวกะเพราไก่",
+    image: "",
+    calories: 480,
+    protein: "25g",
+    carbs: "55g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่สับ 150g", "ใบกะเพรา 1 ถ้วย", "พริกและกระเทียมโขลก", "เครื่องปรุง (ซอสหอยนางรม, น้ำปลา, น้ำตาลทราย)"],
+    instructions: ["ตั้งกระทะผัดพริกกระเทียมในน้ำมันจนเหลืองหอม", "ใส่เนื้อไก่ลงไปผัดยีให้สุกทั่วถึง", "ปรุงรสด้วยซอสหอยนางรม น้ำปลา และน้ำตาล", "เร่งไฟแรง ใส่ใบกะเพราลงผัด 2-3 ครั้งให้สลด", "ตักราดบนข้าวสวย ทานคู่กับไข่ดาว"]
+  },
+  {
+    name: "ข้าวไก่กระเทียมพริกไทย",
+    image: "",
+    calories: 470,
+    protein: "28g",
+    carbs: "55g",
+    fat: "15g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่หั่นชิ้น 150g", "กระเทียมไทยสับ", "พริกไทยขาวป่น", "เครื่องปรุง (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาลทราย)"],
+    instructions: ["หมักไก่กับเครื่องปรุงรสและพริกไทย ทิ้งไว้ 15 นาที", "ตั้งกระทะเจียวกระเทียมจนเหลืองกรอบ ตักขึ้นพักไว้", "นำไก่ที่หมักลงผัดในน้ำมันกระเทียมเจียว", "ผัดจนไก่สุกและน้ำซอสงวดเกาะเนื้อไก่", "ตักราดบนข้าวสวย โรยด้วยกระเทียมเจียวด้านบน"]
+  },
+  {
+    name: "ข้าวคะน้าหมูกรอบ",
+    image: "",
+    calories: 650,
+    protein: "18g",
+    carbs: "60g",
+    fat: "38g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูกรอบหั่นชิ้น 100g", "ยอดคะน้าหั่นแฉลบ", "พริกทุบและกระเทียมบุบ", "เต้าเจี้ยว", "เครื่องปรุง (ซอสหอยนางรม, น้ำตาลทราย, น้ำเปล่า)"],
+    instructions: ["นำคะน้า พริก กระเทียม เต้าเจี้ยว เครื่องปรุง ใส่รวมกันในจานเดียว", "ตั้งกระทะใส่น้ำมันจนร้อนจัดมีควัน", "เทผักและเครื่องปรุงลงกระทะ ผัดฉ่าเร็วๆ ให้คะน้าสีสวย", "ใส่หมูกรอบลงคลุกเคล้า 1-2 ครั้ง ปิดไฟทันที", "ตักราดข้าวสวยร้อนๆ พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวผัดผักบุ้งไฟแดง",
+    image: "",
+    calories: 405,
+    protein: "8g",
+    carbs: "60g",
+    fat: "15g",
+    ingredients: ["ข้าวสวย 1 จาน", "ผักบุ้งจีนเด็ดท่อน", "พริกขี้หนูแดงและกระเทียม", "เต้าเจี้ยว", "เครื่องปรุง (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาลทราย)"],
+    instructions: ["จัดผักบุ้ง พริก กระเทียม เครื่องปรุง ใส่รวมในจานเดียว", "ตั้งกระทะใส่น้ำมัน เร่งไฟแรงสุดรอจนกระทะร้อนจัด", "เทส่วนผสมลงกระทะ ผัดอย่างรวดเร็ว (ไฟลุก) 10-15 วินาที", "ตักผักบุ้งไฟแดงพร้อมน้ำขลุกขลิกราดข้าวสวยทันที"]
+  },
+  {
+    name: "ข้าวไข่ข้นกุ้ง",
+    image: "",
+    calories: 515,
+    protein: "22g",
+    carbs: "50g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "ไข่ไก่ 2 ฟอง", "กุ้งสด 5 ตัว", "นมข้นจืด 2 ช้อนโต๊ะ", "ซีอิ๊วขาวและพริกไทยป่น", "เนยจืดหรือน้ำมันพืช"],
+    instructions: ["ตอกไข่เติมนมข้นจืด ซีอิ๊วขาว พริกไทย ตีเบาๆ", "ตั้งกระทะแบนใส่เนย นำกุ้งลงดาดให้สุก 70%", "เทส่วนผสมไข่ลงไป ใช้ตะหลิวคนจากขอบเข้าตรงกลาง", "พอไข่เริ่มเซ็ตตัวเยิ้มๆ ปิดไฟทันที", "ค่อยๆ สไลด์ไข่ข้นกุ้งราดลงบนข้าวสวย"]
+  },
+  {
+    name: "ข้าวหน้าไก่ย่างจิ้มแจ่ว",
+    image: "",
+    calories: 500,
+    protein: "35g",
+    carbs: "55g",
+    fat: "15g",
+    ingredients: ["ข้าวสวย 1 จาน", "สะโพกไก่ 150g", "สามเกลอ (รากผักชี กระเทียม พริกไทย)", "เครื่องปรุง (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาลปี๊บ)", "น้ำจิ้มแจ่ว"],
+    instructions: ["หมักไก่ด้วยสามเกลอและเครื่องปรุงรส นวดและพักไว้ 30 นาที", "นำไก่ไปย่างหรือจี่ในกระทะจนหนังเกรียมและเนื้อสุก", "ผสมน้ำจิ้มแจ่วด้วยน้ำปลา มะนาว น้ำตาลปี๊บ ข้าวคั่ว พริกป่น", "หั่นไก่ย่างเป็นชิ้น วางบนข้าวสวย", "เสิร์ฟพร้อมน้ำจิ้มแจ่ว"]
+  },
+  {
+    name: "ข้าวหมูยอทอด",
+    image: "",
+    calories: 545,
+    protein: "15g",
+    carbs: "58g",
+    fat: "28g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูยอหั่นแว่น 100g", "น้ำมันพืชสำหรับทอด", "ซอสพริกหรือน้ำจิ้มไก่"],
+    instructions: ["หั่นหมูยอเป็นชิ้น บั้งขอบเล็กน้อยเพื่อให้กรอบฟู", "ตั้งกระทะน้ำมันไฟกลาง รอจนน้ำมันร้อน", "นำหมูยอลงทอด หมั่นกลับด้านจนเหลืองทองและขอบกรอบ", "ตักขึ้นซับน้ำมัน จัดวางบนข้าวสวย", "เสิร์ฟคู่กับซอสพริก"]
+  },
+  {
+    name: "ข้าวผัดกุนเชียง",
+    image: "",
+    calories: 560,
+    protein: "18g",
+    carbs: "65g",
+    fat: "25g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "กุนเชียงหั่นแว่น 1 เส้น", "ไข่ไก่ 1 ฟอง", "กระเทียมสับและหอมใหญ่", "ต้นหอมซอย", "ซีอิ๊วขาวและพริกไทยป่น"],
+    instructions: ["ทอดกุนเชียงด้วยไฟอ่อนจนสุกและคายน้ำมัน ตักพักไว้", "ใช้น้ำมันกุนเชียงเจียวกระเทียม ตอกไข่ลงยีให้สุก", "ใส่ข้าวสวย หอมใหญ่ ปรุงรสด้วยซีอิ๊วขาวและพริกไทย", "ใส่กุนเชียงที่ทอดไว้กลับลงไป ผัดด้วยไฟแรง", "โรยต้นหอม ผัดเข้ากัน ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวฉู่ฉี่ปลาทู",
+    image: "",
+    calories: 550,
+    protein: "24g",
+    carbs: "55g",
+    fat: "26g",
+    ingredients: ["ข้าวสวย 1 จาน", "ปลาทูนึ่ง 1 ตัว", "พริกแกงเผ็ด 1 ช้อนโต๊ะ", "กะทิ 1/2 ถ้วย", "น้ำปลาและน้ำตาลปี๊บ", "ใบมะกรูดหั่นฝอยและพริกชี้ฟ้าแดง"],
+    instructions: ["ทอดปลาทูในน้ำมันร้อนจนเหลืองกรอบ ตักพักไว้", "เคี่ยวกะทิครึ่งหนึ่งให้แตกมัน นำพริกแกงลงผัดจนหอม", "เติมกะทิที่เหลือ ปรุงรส เคี่ยวจนน้ำแกงข้นกลมกล่อม", "นำปลาทูทอดวางบนจานข้าว", "ตักน้ำแกงฉู่ฉี่ราดลงบนตัวปลาทู โรยใบมะกรูดและพริกชี้ฟ้า"]
+  },
+  {
+    name: "ข้าวปลากะพงผัดฉ่า",
+    image: "",
+    calories: 505,
+    protein: "26g",
+    carbs: "55g",
+    fat: "20g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อปลากะพงแล่ 150g", "เครื่องโขลก (พริก กระเทียม พริกไทยดำ)", "กระชายซอยและพริกไทยอ่อน", "ใบกะเพรา", "เครื่องปรุง (ซอสหอยนางรม, น้ำปลา, น้ำตาลทราย)"],
+    instructions: ["คลุกปลาด้วยแป้งบางๆ ทอดให้ผิวนอกเหลืองตึง ตักพักไว้", "ผัดเครื่องโขลกในกระทะให้หอมฉุน", "ใส่กระชาย พริกไทยอ่อน ปรุงรสและเติมน้ำเปล่าเล็กน้อย", "ใส่เนื้อปลาทอดคลุกเคล้ากับซอสเบาๆ", "ใส่ใบกะเพรา ผัดเร็วๆ ปิดไฟตักราดข้าวสวย"]
+  },
+  {
+    name: "ข้าวผัดสับปะรด",
+    image: "",
+    calories: 520,
+    protein: "15g",
+    carbs: "70g",
+    fat: "20g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "สับปะรดหั่นเต๋า 1/2 ถ้วย", "กุ้งสดหรือเนื้อไก่ 100g", "ไข่ไก่ 1 ฟอง", "ผงกะหรี่ 1 ช้อนชา", "เม็ดมะม่วงหิมพานต์ ลูกเกด", "เครื่องปรุง (ซีอิ๊วขาว, น้ำตาลทราย)", "กระเทียมสับ"],
+    instructions: ["ผัดกระเทียมให้หอม ใส่เนื้อสัตว์ลงผัดจนสุก", "ตอกไข่ยีให้สุก ใส่ผงกะหรี่คั่วให้หอม", "ใส่ข้าวสวย ปรุงรส ผัดให้ข้าวสีสวยสม่ำเสมอ", "ใส่สับปะรด ลูกเกด เม็ดมะม่วงหิมพานต์ ผัดไฟแรง", "ปิดไฟ ตักเสิร์ฟในจานหรือในลูกสับปะรด"]
+  },
+  {
+    name: "ข้าวหมกไก่",
+    image: "",
+    calories: 600,
+    protein: "28g",
+    carbs: "65g",
+    fat: "25g",
+    ingredients: ["ข้าวสารหอมมะลิ 1 ถ้วย", "สะโพกไก่หรือน่องไก่ 200g", "ผงข้าวหมกไก่ 2 ช้อนโต๊ะ", "นมข้นจืด 1/4 ถ้วย", "หอมแดงเจียว", "น้ำจิ้ม (ใบสะระแหน่, พริกเขียว, น้ำส้มสายชู, น้ำตาล, เกลือ)"],
+    instructions: ["หมักไก่ด้วยผงข้าวหมกไก่ นมข้นจืด และเกลือ ทิ้งไว้ 30 นาที", "นำไก่ไปทอดหรือจี่ในกระทะให้หนังตึงและสุกประมาณ 50%", "นำข้าวสารลงไปผัดกับน้ำมันที่เหลือจากการทอดไก่ให้หอม", "นำข้าวและไก่ไปหุงในหม้อหุงข้าว เติมน้ำซุปตามสัดส่วนหุงข้าวปกติ", "ปั่นส่วนผสมน้ำจิ้มให้ละเอียด", "เมื่อข้าวสุก ตักเสิร์ฟพร้อมโรยหอมแดงเจียวและแตงกวา"]
+  },
+  {
+    name: "ข้าวยำปักษ์ใต้ไข่ต้ม",
+    image: "",
+    calories: 390,
+    protein: "15g",
+    carbs: "60g",
+    fat: "10g",
+    ingredients: ["ข้าวสวยหุงด้วยน้ำดอกอัญชัน 1 จาน", "น้ำบูดูสายบุรี 3 ช้อนโต๊ะ", "ปลาป่น 2 ช้อนโต๊ะ", "มะพร้าวคั่ว 2 ช้อนโต๊ะ", "ไข่ต้ม 1 ฟอง", "ผักซอย (ใบมะกรูด, ตะไคร้, ถั่วฝักยาว, ถั่วงอก, มะม่วงเปรี้ยว, ส้มโอ)"],
+    instructions: ["เคี่ยวน้ำบูดูกับน้ำตาลโตนด หอมแดง และตะไคร้ จนข้นและมีรสหวานนำเค็ม", "คั่วมะพร้าวขูดให้เหลืองหอม และเตรียมปลาป่น", "ซอยผักเคียงทั้งหมดให้เป็นเส้นเล็กๆ", "ตักข้าวสวยใส่จาน จัดเรียงผักซอย ปลาป่น มะพร้าวคั่ว ไว้รอบๆ ข้าว", "วางไข่ต้มผ่าครึ่ง ราดด้วยน้ำบูดูที่เคี่ยวไว้ คลุกเคล้าให้เข้ากันก่อนทาน"]
+  },
+  {
+    name: "ผัดไทยกุ้งสด",
+    image: "",
+    calories: 570,
+    protein: "18g",
+    carbs: "68g",
+    fat: "25g",
+    ingredients: ["เส้นจันท์ 1 ถ้วย", "กุ้งสด 5 ตัว", "ไข่ไก่ 1 ฟอง", "เต้าหู้เหลืองหั่นเต๋า 2 ช้อนโต๊ะ", "ไชโป๊หวานสับ 1 ช้อนโต๊ะ", "กุ้งแห้ง 1 ช้อนโต๊ะ", "ถั่วงอกและใบกุยช่าย", "น้ำซอสผัดไทย (น้ำมะขามเปียก, น้ำตาลมะพร้าว, น้ำปลา)"],
+    instructions: ["ตั้งกระทะใส่น้ำมัน นำกุ้งสดลงไปจี่ให้สุก 70% ตักขึ้นพักไว้", "ผัดเต้าหู้ ไชโป๊ และกุ้งแห้งให้หอม ตอกไข่ลงไปยีให้สุก", "ใส่เส้นจันท์และน้ำเปล่าเล็กน้อย ผัดจนเส้นนุ่ม", "ใส่น้ำซอสผัดไทยลงไปคลุกเคล้าให้เส้นดูดซอสและสีสวย", "ใส่ถั่วงอก ใบกุยช่าย และกุ้งที่พักไว้ ผัดเร็วๆ ปิดไฟ เสิร์ฟพร้อมถั่วลิสงคั่วบดและมะนาว"]
+  },
+  {
+    name: "ก๋วยเตี๋ยวเรือหมูน้ำตก",
+    image: "",
+    calories: 400,
+    protein: "22g",
+    carbs: "45g",
+    fat: "15g",
+    ingredients: ["เส้นก๋วยเตี๋ยว (ตามชอบ) 1 ถ้วย", "เนื้อหมูสดหั่นชิ้นและตับหมู 100g", "ลูกชิ้นหมู 3-4 ลูก", "เลือดหมูสดผสมน้ำกะทิ 2 ช้อนโต๊ะ", "น้ำซุปก๋วยเตี๋ยวเรือ (เครื่องเทศตุ๋น)", "ผักบุ้งและถั่วงอกลวก", "กระเทียมเจียวและกากหมู"],
+    instructions: ["ลวกเส้น ผักบุ้ง และถั่วงอก ใส่ชามเตรียมไว้", "ลวกเนื้อหมู ตับ และลูกชิ้นในน้ำซุปเดือดๆ ตักใส่ชาม", "ตักเลือดสดผสมน้ำกะทิใส่กระบวย นำไปแกว่งในน้ำซุปที่เดือดพล่านให้เลือดสุกข้น", "ตักน้ำซุปน้ำตกลงในชามก๋วยเตี๋ยว", "โรยหน้าด้วยกระเทียมเจียว กากหมู และผักชีฝรั่งซอย"]
+  },
+  {
+    name: "ก๋วยเตี๋ยวต้มยำหมู",
+    image: "",
+    calories: 440,
+    protein: "20g",
+    carbs: "50g",
+    fat: "18g",
+    ingredients: ["เส้นก๋วยเตี๋ยว 1 ถ้วย", "หมูสับรวนสุก 50g", "หมูชิ้นและลูกชิ้น 50g", "ถั่วงอกลวก", "ถั่วลิสงคั่วบด 1 ช้อนโต๊ะ", "น้ำตาลทราย น้ำปลา น้ำมะนาว พริกป่น", "น้ำซุปกระดูกหมู"],
+    instructions: ["ปรุงรสต้มยำในชาม: ใส่น้ำตาล น้ำปลา พริกป่น น้ำมะนาว ถั่วลิสง และหมูสับ", "ตักน้ำซุปเดือดๆ ใส่ชาม คนให้เครื่องปรุงต้มยำละลายเข้ากัน", "ลวกเส้นและถั่วงอก ตักใส่ชามต้มยำ", "ลวกหมูชิ้นและลูกชิ้นใส่ตามลงไป", "โรยต้นหอม ผักชี และแผ่นเกี๊ยวทอดกรอบ"]
+  },
+  {
+    name: "เย็นตาโฟเส้นใหญ่",
+    image: "",
+    calories: 380,
+    protein: "18g",
+    carbs: "55g",
+    fat: "10g",
+    ingredients: ["เส้นใหญ่ 1 ถ้วย", "ซอสเย็นตาโฟ 2 ช้อนโต๊ะ", "ลูกชิ้นปลา ฮื่อก้วย เลือดหมู ปลาหมึกกรอบ", "เต้าหู้พวงทอด 2-3 ชิ้น", "ผักบุ้งไทยลวก 1/2 ถ้วย", "น้ำซุปกระดูกหมู"],
+    instructions: ["ลวกผักบุ้งและเส้นใหญ่ ใส่ชามรอไว้", "ลวกลูกชิ้นปลา ฮื่อก้วย ปลาหมึกกรอบ และเลือดหมู จัดเรียงในชาม", "ใส่ซอสเย็นตาโฟลงไปในชามประมาณ 2 ช้อนโต๊ะ", "ตักน้ำซุปกระดูกหมูเดือดๆ ราดลงไป คนให้ซอสละลาย", "โรยหน้าด้วยกระเทียมเจียวและเกี๊ยวทอดกรอบ"]
+  },
+  {
+    name: "บะหมี่เกี๊ยวหมูแดง",
+    image: "",
+    calories: 475,
+    protein: "25g",
+    carbs: "60g",
+    fat: "15g",
+    ingredients: ["บะหมี่ไข่ 1-2 ก้อน", "แผ่นเกี๊ยวห่อหมูสับปรุงรส 4-5 ตัว", "หมูแดงหั่นบาง 50g", "ผักกวางตุ้งลวก 1 ต้น", "น้ำซุปใส", "กระเทียมเจียว", "ต้นหอมซอย"],
+    instructions: ["คลี่ก้อนบะหมี่เพื่อล้างแป้ง นำไปลวกในน้ำเดือดจนสุกใส น็อกน้ำเย็นแล้วคลุกน้ำมันกระเทียมเจียว", "ลวกเกี๊ยวหมูสับจนลอยขึ้นมา สุกตักพักไว้", "จัดเส้นบะหมี่ ผักกวางตุ้ง เกี๊ยว และหมูแดงใส่ชาม", "ราดน้ำซุปใสร้อนๆ (หรือเสิร์ฟแบบแห้งพร้อมซุปแยก)", "โรยต้นหอม กระเทียมเจียว และพริกไทยป่น"]
+  },
+  {
+    name: "ราดหน้าหมูหมัก",
+    image: "",
+    calories: 520,
+    protein: "24g",
+    carbs: "65g",
+    fat: "18g",
+    ingredients: ["เส้นใหญ่หรือเส้นหมี่ 1 ถ้วย", "เนื้อหมูหมักนุ่ม 100g", "ยอดคะน้าหั่นแฉลบ", "กระเทียมสับ 1 ช้อนโต๊ะ", "เต้าเจี้ยว 1 ช้อนโต๊ะ", "น้ำซุปและแป้งมันละลายน้ำ", "ซีอิ๊วดำและเครื่องปรุงรส"],
+    instructions: ["คลุกเส้นกับซีอิ๊วดำ นำไปคั่วในกระทะด้วยไฟแรงให้หอมกลิ่นกระทะ ตักพักไว้", "ตั้งกระทะเจียวกระเทียมและเต้าเจี้ยวให้หอม ใส่หมูหมักลงผัดพอสุก", "เติมน้ำซุปลงไป ปรุงรสด้วยซอสหอยนางรม ซีอิ๊วขาว น้ำตาล", "พอน้ำเดือด ใส่ผักคะน้าลงไป", "ค่อยๆ เทแป้งมันละลายน้ำ คนตลอดเวลาจนน้ำราดหน้าเหนียวข้น ตักราดบนเส้นที่เตรียมไว้"]
+  },
+  {
+    name: "ผัดซีอิ๊วหมู",
+    image: "",
+    calories: 580,
+    protein: "22g",
+    carbs: "60g",
+    fat: "28g",
+    ingredients: ["เส้นใหญ่ 1 ถ้วย", "เนื้อหมูหมัก 100g", "ไข่ไก่ 1 ฟอง", "ยอดคะน้าหั่นแฉลบ", "กระเทียมสับ 1 ช้อนโต๊ะ", "ซีอิ๊วดำหวาน", "เครื่องปรุง (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาลทราย)"],
+    instructions: ["คลุกเส้นใหญ่กับซีอิ๊วดำหวานเตรียมไว้", "ตั้งกระทะน้ำมัน เจียวกระเทียมให้หอม ใส่หมูลงผัดจนสุก", "ใส่ไข่ไก่ลงไป ยีให้แตกและรอจนไข่เริ่มสุก", "ใส่เส้นใหญ่และผักคะน้าลงไปผัด ปรุงรสตามชอบ", "เร่งไฟแรง ผัดคั่วให้เส้นมีกลิ่นหอมไหม้กระทะเล็กน้อย ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "ก๋วยเตี๋ยวคั่วไก่",
+    image: "",
+    calories: 525,
+    protein: "25g",
+    carbs: "50g",
+    fat: "25g",
+    ingredients: ["เส้นใหญ่ 1 ถ้วย", "เนื้อไก่หมักชิ้นพอดีคำ 100g", "ไข่ไก่ 1-2 ฟอง", "ปลาหมึกกรอบ 3-4 ชิ้น", "ตั้งฉ่าย 1 ช้อนชา", "ต้นหอมซอยและผักกาดหอม", "เครื่องปรุง (ซีอิ๊วขาว, พริกไทยป่น)", "น้ำมันหมู"],
+    instructions: ["ตั้งกระทะใส่น้ำมันหมู รวนเนื้อไก่และปลาหมึกกรอบจนสุก", "ใส่เส้นใหญ่และตั้งฉ่ายลงไปคั่วด้วยไฟแรง", "ปรุงรสด้วยซีอิ๊วขาว ตอกไข่ใส่ลงไป คั่วให้ไข่เคลือบเส้นและเกรียมหอมกระทะ", "โรยพริกไทยป่นเยอะๆ และต้นหอมซอย ผัดเร็วๆ", "รองจานด้วยผักกาดหอม ตักเส้นคั่วไก่วางทับ เสิร์ฟพร้อมซอสพริก"]
+  },
+  {
+    name: "สุกี้น้ำทะเล",
+    image: "",
+    calories: 290,
+    protein: "20g",
+    carbs: "35g",
+    fat: "8g",
+    ingredients: ["วุ้นเส้นแช่น้ำ 1/2 ถ้วย", "กุ้งสด ปลาหมึก และเนื้อปลา 100g", "ไข่ไก่ 1 ฟอง", "ผักกาดขาว ผักบุ้ง ขึ้นฉ่าย", "น้ำจิ้มสุกี้ 3 ช้อนโต๊ะ", "น้ำซุปใส"],
+    instructions: ["ต้มน้ำซุปให้เดือด ใส่ผักกาดขาวและผักบุ้งลงไปต้มให้นุ่ม", "ใส่อาหารทะเลลงไปรอก่อนจะสุก", "ตอกไข่ไก่ตีผสมกับน้ำจิ้มสุกี้เล็กน้อย เทลงไปในหม้อให้น้ำซุปเข้มข้น", "ใส่วุ้นเส้นและขึ้นฉ่าย ต้มต่อแป๊บเดียวจนเส้นใสนุ่ม", "ตักใส่ชาม เสิร์ฟพร้อมน้ำจิ้มสุกี้แยก"]
+  },
+  {
+    name: "สุกี้แห้งหมู",
+    image: "",
+    calories: 430,
+    protein: "22g",
+    carbs: "40g",
+    fat: "20g",
+    ingredients: ["วุ้นเส้นแช่น้ำ 1/2 ถ้วย", "หมูชิ้นหมักนุ่ม 100g", "ไข่ไก่ 1 ฟอง", "ผักกาดขาว ผักบุ้ง ขึ้นฉ่าย", "กระเทียมสับ", "น้ำจิ้มสุกี้เต้าหู้ยี้ 3-4 ช้อนโต๊ะ", "น้ำมันพืช"],
+    instructions: ["ตั้งกระทะเจียวกระเทียมให้หอม ใส่หมูหมักลงผัดจนสุก", "ตอกไข่ลงไป ยีให้แตก", "ใส่ผักกาดขาวและผักบุ้งลงผัดให้สลด เติมน้ำเปล่าเล็กน้อย", "ใส่วุ้นเส้นและน้ำจิ้มสุกี้ ผัดคลุกเคล้าให้เส้นดูดซอสและสุกนุ่ม", "โรยขึ้นฉ่าย ผัดเข้ากัน ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "มาม่าผัดขี้เมาหมู",
+    image: "",
+    calories: 515,
+    protein: "18g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["เส้นบะหมี่กึ่งสำเร็จรูปลวกพอคลายตัว 1-2 ห่อ", "เนื้อหมูหั่นชิ้น 100g", "พริกขี้หนูและกระเทียมโขลก 1.5 ช้อนโต๊ะ", "กระชายซอย พริกไทยอ่อน ใบกะเพรา", "ข้าวโพดอ่อนและถั่วฝักยาว", "เครื่องปรุงรส (ซอสหอยนางรม, ซีอิ๊วขาว, น้ำตาล)"],
+    instructions: ["ตั้งกระทะผัดพริกกระเทียมโขลกให้หอมฉุน", "ใส่เนื้อหมูลงผัดจนสุก ตามด้วยกระชาย พริกไทยอ่อน ข้าวโพดอ่อน", "ปรุงรสด้วยเครื่องปรุงทั้งหมดและน้ำเปล่าเล็กน้อย", "ใส่เส้นบะหมี่ที่ลวกไว้ลงไปผัดคลุกเคล้าให้ซอสเคลือบเส้น", "ใส่ใบกะเพรา เร่งไฟแรงผัดเร็วๆ ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "ขนมจีนน้ำยาปลา",
+    image: "",
+    calories: 465,
+    protein: "18g",
+    carbs: "58g",
+    fat: "18g",
+    ingredients: ["เส้นขนมจีน 1 จับใหญ่", "เนื้อปลาช่อนหรือปลานิลต้มสุกแกะเนื้อ 150g", "พริกแกงน้ำยา 3 ช้อนโต๊ะ", "กระชายโขลกละเอียด 2 ช้อนโต๊ะ", "กะทิ 2 ถ้วย", "น้ำปลาและเกลือ", "ผักเคียง (ถั่วฝักยาว, กะหล่ำปลี, ใบแมงลัก, ถั่วงอก)"],
+    instructions: ["โขลกเนื้อปลาต้มสุกรวมกับพริกแกงและกระชายให้เป็นเนื้อเดียวกัน", "ตั้งหม้อใส่กะทิ นำพริกแกงที่โขลกไว้ลงไปละลายและต้มให้เดือด", "ปรุงรสด้วยน้ำปลาและเกลือเล็กน้อย ชิมรสให้เค็มนำและหอมกะทิ", "เคี่ยวไฟอ่อนให้กะทิแตกมันสวยงามและเนื้อปลาฟู", "ตักน้ำยาราดบนเส้นขนมจีน ทานคู่กับผักสดและผักต้ม"]
+  },
+  {
+    name: "ขนมจีนแกงเขียวหวาน",
+    image: "",
+    calories: 580,
+    protein: "22g",
+    carbs: "60g",
+    fat: "28g",
+    ingredients: ["เส้นขนมจีน 1 จับใหญ่", "เนื้อไก่หรือหมู 150g", "พริกแกงเขียวหวาน 2 ช้อนโต๊ะ", "หัวกะทิและหางกะทิ", "มะเขือเปราะ มะเขือพวง ใบมะกรูด ใบโหระพา", "น้ำปลาและน้ำตาลปี๊บ"],
+    instructions: ["เคี่ยวหัวกะทิให้แตกมัน ผัดกับพริกแกงเขียวหวานจนหอม", "ใส่เนื้อไก่ลงไปผัดจนสุก เติมหางกะทิต้มให้เดือด", "ใส่มะเขือเปราะและมะเขือพวง ปรุงรสด้วยน้ำปลา น้ำตาลปี๊บ", "รอจนมะเขือสุกนุ่ม ใส่ใบมะกรูดและใบโหระพา ปิดไฟ", "ตักแกงเขียวหวานราดลงบนเส้นขนมจีน เสิร์ฟพร้อมไข่ต้ม"]
+  },
+  {
+    name: "ก๋วยจั๊บน้ำข้น",
+    image: "",
+    calories: 460,
+    protein: "20g",
+    carbs: "50g",
+    fat: "20g",
+    ingredients: ["เส้นก๋วยจั๊บต้มสุก 1 ถ้วย", "หมูกรอบ 50g", "เครื่องในหมู (ตับ, กระเพาะ, ปอด, ไส้) ต้มพะโล้", "ไข่ต้มพะโล้ 1 ฟอง", "เลือดหมู", "น้ำซุปพะโล้ก๋วยจั๊บ (หอมเครื่องเทศและพริกไทย)", "ต้นหอม ผักชี กระเทียมเจียว"],
+    instructions: ["ต้มเส้นก๋วยจั๊บกับแป้งมันเล็กน้อยให้น้ำมีความข้นหนืด ตักใส่ชาม", "หั่นหมูกรอบ เครื่องในพะโล้ เลือดหมู และไข่ต้ม วางเรียงบนเส้น", "ตักน้ำซุปพะโล้ที่เคี่ยวจนหอมและมีรสเผ็ดพริกไทยร้อนๆ ราดลงไป", "โรยหน้าด้วยกระเทียมเจียว ต้นหอม และผักชี", "เสิร์ฟคู่กับน้ำส้มพริกตำ"]
+  },
+  {
+    name: "ก๋วยจั๊บญวน",
+    image: "",
+    calories: 400,
+    protein: "18g",
+    carbs: "55g",
+    fat: "12g",
+    ingredients: ["เส้นก๋วยจั๊บญวน 1 ถ้วย", "หมูยอหั่นเส้น 50g", "ซี่โครงหมูตุ๋น 100g", "หมูสับรวน 2 ช้อนโต๊ะ", "น้ำซุปกระดูกหมูใส 2 ถ้วย", "หอมแดงเจียวและต้นหอมซอย"],
+    instructions: ["ต้มน้ำซุปกระดูกหมูให้เดือด ใส่ซี่โครงหมูตุ๋นลงไป", "ใส่เส้นก๋วยจั๊บญวน (ล้างแป้งออกเล็กน้อย) ลงไปต้มจนเส้นสุกใสและน้ำซุปข้นขึ้นเล็กน้อย", "ใส่หมูยอและหมูสับรวนลงไปต้มต่อให้เข้ากัน", "ตักใส่ชาม โรยด้วยหอมแดงเจียว ต้นหอมซอย และพริกไทยดำป่น", "เสิร์ฟร้อนๆ คู่กับพริกผัดน้ำมัน"]
+  },
+  {
+    name: "ผัดหมี่โคราช",
+    image: "",
+    calories: 545,
+    protein: "15g",
+    carbs: "65g",
+    fat: "25g",
+    ingredients: ["เส้นหมี่โคราช 1 ห่อ (พร้อมน้ำปรุงรส)", "เนื้อหมูสามชั้นหั่นชิ้น 80g", "ไข่ไก่ 1 ฟอง", "ถั่วงอก 1 ถ้วย", "ต้นหอมหั่นท่อน", "น้ำเปล่า 1 ถ้วย", "น้ำมันพืช"],
+    instructions: ["ตั้งกระทะรวนหมูสามชั้นจนสุกและคายน้ำมัน", "เทน้ำปรุงรสสำเร็จรูปและน้ำเปล่าลงไป ต้มให้เดือด", "ใส่เส้นหมี่โคราชลงไป (ไม่ต้องแช่น้ำก่อน) ผัดให้เส้นดูดน้ำซอสจนนุ่ม", "เขี่ยเส้นไว้ข้างกระทะ ตอกไข่ลงไปยีให้สุก แล้วนำเส้นมาคลุก", "ใส่ถั่วงอกและต้นหอม ผัดให้เข้ากัน ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "มักกะโรนีผัดซอสมะเขือเทศ",
+    image: "",
+    calories: 490,
+    protein: "22g",
+    carbs: "60g",
+    fat: "18g",
+    ingredients: ["เส้นมักกะโรนีต้มสุก 1.5 ถ้วย", "เนื้อหมูชิ้นหรือไก่ 100g", "ไข่ไก่ 1 ฟอง", "หอมใหญ่หั่นเต๋า มะเขือเทศ ต้นหอม", "ซอสมะเขือเทศ 3 ช้อนโต๊ะ", "เครื่องปรุง (ซอสปรุงรส, น้ำตาล, พริกไทย)", "เนยหรือน้ำมันพืช"],
+    instructions: ["ตั้งกระทะใส่เนย ผัดหอมใหญ่ให้ใสและมีกลิ่นหอม", "ใส่เนื้อสัตว์ลงผัดจนสุก ตอกไข่ลงไปยีให้เข้ากัน", "ใส่เส้นมักกะโรนีและมะเขือเทศลงไป", "ปรุงรสด้วยซอสมะเขือเทศ ซอสปรุงรส และน้ำตาล ผัดคลุกเคล้าให้ซอสเคลือบเส้นสีสวย", "โรยต้นหอม พริกไทยป่น ผัดให้เข้ากัน ตักเสิร์ฟ"]
+  },
+  {
+    name: "สปาเก็ตตี้คาโบนาร่า",
+    image: "",
+    calories: 615,
+    protein: "20g",
+    carbs: "55g",
+    fat: "35g",
+    ingredients: ["เส้นสปาเก็ตตี้ต้มสุก 1 ถ้วย", "เบคอนหั่นชิ้น 50g", "ไข่แดง 2 ฟอง", "พาร์เมซานชีสขูด 3 ช้อนโต๊ะ", "วิปปิ้งครีมหรือนมสด 1/4 ถ้วย", "พริกไทยดำป่น 1 ช้อนชา"],
+    instructions: ["ผสมไข่แดง พาร์เมซานชีส และพริกไทยดำในชาม พักไว้", "คั่วเบคอนในกระทะด้วยไฟอ่อนจนกรอบและคายน้ำมัน ตักเบคอนบางส่วนไว้โรยหน้า", "นำเส้นสปาเก็ตตี้ร้อนๆ ลงไปคลุกกับน้ำมันเบคอนในกระทะ ปิดไฟทันที (สำคัญมาก)", "เทส่วนผสมไข่และชีสลงไป คลุกเคล้าอย่างรวดเร็วให้ความร้อนจากเส้นทำให้ซอสข้นครีมมี่ (อย่าให้ไข่สุกเป็นก้อน)", "ตักใส่จาน โรยด้วยเบคอนกรอบ พริกไทยดำ และชีสเพิ่มเติม"]
+  },
+  {
+    name: "สปาเก็ตตี้ซอสเนื้อ",
+    image: "",
+    calories: 520,
+    protein: "25g",
+    carbs: "60g",
+    fat: "20g",
+    ingredients: ["เส้นสปาเก็ตตี้ต้มสุก 1 ถ้วย", "เนื้อวัวสับ 150g", "หอมใหญ่ แครอท เซเลอรี่ สับละเอียด (Mirepoix)", "ซอสมะเขือเทศเข้มข้น (Tomato Paste) 2 ช้อนโต๊ะ", "มะเขือเทศกระป๋องบด 1 ถ้วย", "ออริกาโน่ เกลือ พริกไทย", "น้ำมันมะกอก"],
+    instructions: ["ผัดหอมใหญ่ แครอท และเซเลอรี่กับน้ำมันมะกอกจนสุกนุ่ม", "ใส่เนื้อสับลงไปผัดจนเปลี่ยนสีและน้ำเนื้อระเหยออก", "ใส่ Tomato Paste ผัดให้หอม ตามด้วยมะเขือเทศบดและออริกาโน่", "ปรุงรสด้วยเกลือพริกไทย เคี่ยวไฟอ่อน 30-45 นาทีจนซอสข้นและรสชาติกลมกล่อม", "ตักซอสเนื้อราดบนเส้นสปาเก็ตตี้ โรยพาร์เมซานชีส"]
+  },
+  {
+    name: "สปาเก็ตตี้ผัดขี้เมาทะเล",
+    image: "",
+    calories: 470,
+    protein: "22g",
+    carbs: "55g",
+    fat: "18g",
+    ingredients: ["เส้นสปาเก็ตตี้ต้มสุก 1 ถ้วย", "กุ้ง ปลาหมึก หอยแมลงภู่ รวม 150g", "พริกและกระเทียมโขลก 2 ช้อนโต๊ะ", "กระชายซอย พริกไทยอ่อน ใบโหระพา", "เครื่องปรุง (น้ำปลา, ซอสหอยนางรม, น้ำตาลทราย)", "น้ำมันพืช"],
+    instructions: ["ผัดพริกกระเทียมให้หอมฉุนในกระทะ", "ใส่อาหารทะเลลงไปผัด ตามด้วยกระชายและพริกไทยอ่อน", "ปรุงรสด้วยน้ำปลา ซอสหอยนางรม และน้ำตาล", "ใส่เส้นสปาเก็ตตี้ลงไปคลุกเคล้าให้เข้ากับเครื่องผัดขี้เมา", "ใส่ใบโหระพา เร่งไฟแรงผัดเร็วๆ ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "สปาเก็ตตี้เบคอนพริกแห้ง",
+    image: "",
+    calories: 560,
+    protein: "18g",
+    carbs: "55g",
+    fat: "30g",
+    ingredients: ["เส้นสปาเก็ตตี้ต้มสุก 1 ถ้วย", "เบคอนหั่นชิ้น 80g", "กระเทียมฝานบาง 2 ช้อนโต๊ะ", "พริกแห้งหั่นท่อน 4-5 เม็ด", "เกลือและพริกไทยดำป่น", "น้ำมันมะกอก 1 ช้อนโต๊ะ", "พาร์สลีย์สับเล็กน้อย"],
+    instructions: ["ตั้งกระทะคั่วเบคอนด้วยไฟอ่อนจนกรอบ ตักพักไว้ครึ่งหนึ่ง", "ใส่น้ำมันมะกอก นำกระเทียมและพริกแห้งลงผัดกับน้ำมันเบคอนจนหอมระวังไหม้", "นำเส้นสปาเก็ตตี้ต้มสุกใส่ลงไป เติมน้ำต้มเส้นเล็กน้อย", "ผัดคลุกเคล้า ปรุงรสด้วยเกลือและพริกไทยดำ", "ใส่เบคอนกรอบกลับลงไป โรยพาร์สลีย์ ผัดให้เข้ากัน ตักเสิร์ฟ"]
+  },
+  {
+    name: "พาสต้าเพสโต้ไก่",
+    image: "",
+    calories: 590,
+    protein: "26g",
+    carbs: "50g",
+    fat: "32g",
+    ingredients: ["เส้นพาสต้า (เพนเน่หรือฟูซิลลี) ต้มสุก 1 ถ้วย", "อกไก่หั่นชิ้น 150g", "ซอสเพสโต้ (โหระพาอิตาเลียนปั่นกับน้ำมันมะกอก กระเทียม ชีส ถั่ว) 3 ช้อนโต๊ะ", "มะเขือเทศราชินีผ่าครึ่ง 5-6 ลูก", "เกลือและพริกไทยดำ", "น้ำมันมะกอก"],
+    instructions: ["หมักอกไก่ด้วยเกลือและพริกไทย นำไปย่างหรือจี่ในกระทะจนสุกเหลือง", "ในกระทะไฟอ่อน ใส่น้ำมันมะกอกและซอสเพสโต้ลงไปอุ่นเล็กน้อย", "นำเส้นพาสต้าลงคลุกเคล้ากับซอสเพสโต้ให้ทั่ว", "ใส่มะเขือเทศราชินีและเนื้อไก่ย่างลงไป คลุกเบาๆ", "ตักใส่จาน โรยพาร์เมซานชีสและถั่วสนคั่วด้านบน"]
+  },
+  {
+    name: "มักกะโรนีอบชีส (Mac and Cheese)",
+    image: "",
+    calories: 650,
+    protein: "22g",
+    carbs: "55g",
+    fat: "38g",
+    ingredients: ["เส้นมักกะโรนีต้มสุก 1 ถ้วย", "เชดดาร์ชีสขูด 1 ถ้วย", "มอสซาเรลล่าชีส 1/2 ถ้วย", "เนยจืด 2 ช้อนโต๊ะ", "แป้งอเนกประสงค์ 2 ช้อนโต๊ะ", "นมสด 1 ถ้วย", "เกลือ พริกไทย และพริกปาปริก้า"],
+    instructions: ["ทำซอสรูส์ (Roux) โดยละลายเนยในหม้อ เติมแป้งลงผัดให้สุกหอม (ไม่ให้เปลี่ยนสี)", "ค่อยๆ เติมนมสดลงไป คนด้วยตะกร้อมือตลอดเวลาจนซอสเนียนข้น", "หรี่ไฟอ่อน ใส่เชดดาร์ชีสลงไปคนให้ละลายเข้ากัน ปรุงรสด้วยเกลือ พริกไทย", "นำเส้นมักกะโรนีลงไปคลุกกับซอสชีสให้ชุ่มฉ่ำ", "เทใส่ชามอบ โรยหน้าด้วยมอสซาเรลล่าชีส นำไปอบอุณหภูมิ 200°C ประมาณ 10 นาทีจนชีสเกรียมสวย"]
+  },
+  {
+    name: "พิซซ่าฮาวายเอี้ยน",
+    image: "",
+    calories: 535,
+    protein: "24g",
+    carbs: "60g",
+    fat: "22g",
+    ingredients: ["แป้งพิซซ่าสำเร็จรูป 1 แผ่น (ขนาดเล็ก)", "ซอสพิซซ่า 3 ช้อนโต๊ะ", "มอสซาเรลล่าชีส 1 ถ้วย", "แฮมหั่นเต๋าหรือหั่นชิ้น 50g", "สับปะรดหั่นเต๋า 1/4 ถ้วย", "ออริกาโน่"],
+    instructions: ["ทาซอสพิซซ่าให้ทั่วแผ่นแป้ง เว้นขอบไว้เล็กน้อย", "โรยมอสซาเรลล่าชีสชั้นแรกบางๆ", "จัดเรียงแฮมและสับปะรดให้ทั่วแผ่นหน้าพิซซ่า", "โรยมอสซาเรลล่าชีสทับด้านบนอีกชั้น และโรยออริกาโน่เล็กน้อย", "นำเข้าเตาอบอุณหภูมิ 220°C ประมาณ 10-15 นาทีจนแป้งสุกกรอบและชีสละลายเยิ้ม"]
+  },
+  {
+    name: "พิซซ่าเปปเปอโรนี",
+    image: "",
+    calories: 590,
+    protein: "26g",
+    carbs: "58g",
+    fat: "28g",
+    ingredients: ["แป้งพิซซ่าสำเร็จรูป 1 แผ่น", "ซอสพิซซ่า 3 ช้อนโต๊ะ", "มอสซาเรลล่าชีส 1 ถ้วย", "เปปเปอโรนีสไลซ์ 10-15 ชิ้น", "น้ำมันมะกอกเล็กน้อย"],
+    instructions: ["ทาซอสพิซซ่าลงบนแผ่นแป้งให้ทั่วถึง", "โรยมอสซาเรลล่าชีสให้หนาปกคลุมซอสมะเขือเทศ", "วางเรียงเปปเปอโรนีสไลซ์ให้สวยงามทั่วแผ่นหน้า", "ทาน้ำมันมะกอกที่ขอบแป้งเล็กน้อยเพื่อให้ขอบกรอบและสีสวย", "นำเข้าเตาอบ 220°C จนชีสเดือดปุดๆ และขอบเปปเปอโรนีม้วนตัวกรอบ"]
+  },
+  {
+    name: "เบอร์เกอร์เนื้อ (Cheeseburger)",
+    image: "",
+    calories: 615,
+    protein: "30g",
+    carbs: "45g",
+    fat: "35g",
+    ingredients: ["ขนมปังเบอร์เกอร์ 1 คู่", "เนื้อวัวบดปั้นก้อน (Patty) 150g", "อเมริกันชีส 1 แผ่น", "ผักกาดแก้ว หอมใหญ่ มะเขือเทศ", "มายองเนสและซอสมะเขือเทศ", "เกลือและพริกไทยดำ", "เนยจืด"],
+    instructions: ["ผ่าครึ่งขนมปัง ทาเนยบางๆ นำไปนาบกระทะให้เกรียมหอม", "นำเนื้อเบอร์เกอร์ไปย่างบนกระทะแบน โรยเกลือและพริกไทยทั้งสองด้าน", "เมื่อกลับด้านเนื้อ ให้วางแผ่นอเมริกันชีสทับลงไป รอจนเนื้อสุกและชีสละลาย", "ทามายองเนสที่ขนมปัง วางผักกาดแก้ว มะเขือเทศ และหอมใหญ่", "วางชิ้นเนื้อท็อปชีสลงไป บีบซอสมะเขือเทศ ปิดฝาขนมปัง เสิร์ฟพร้อมเฟรนช์ฟรายส์"]
+  },
+  {
+    name: "เบอร์เกอร์ไก่ทอด",
+    image: "",
+    calories: 595,
+    protein: "22g",
+    carbs: "55g",
+    fat: "32g",
+    ingredients: ["ขนมปังเบอร์เกอร์ 1 คู่", "สะโพกไก่เลาะกระดูก 1 ชิ้น", "แป้งทอดกรอบและเกล็ดขนมปัง", "มายองเนสหรือซอสทาร์ทาร์", "ผักกาดแก้ว หรือ โคลสลอว์", "น้ำมันสำหรับทอดไก่"],
+    instructions: ["นำสะโพกไก่ชุบแป้งทอดกรอบผสมน้ำ ชุบแป้งแห้ง และทอดจนกรอบสีทอง", "นาบขนมปังเบอร์เกอร์ในกระทะให้ร้อน", "ทามายองเนสหรือซอสทาร์ทาร์ที่ฐานขนมปัง", "วางผักกาดแก้วหรือโคลสลอว์ ตามด้วยชิ้นไก่ทอดกรอบชิ้นใหญ่", "ปิดฝาขนมปัง จัดเสิร์ฟตอนไก่ยังร้อนและกรอบ"]
+  },
+  {
+    name: "เบอร์เกอร์หมู",
+    image: "",
+    calories: 550,
+    protein: "25g",
+    carbs: "45g",
+    fat: "30g",
+    ingredients: ["ขนมปังเบอร์เกอร์ 1 คู่", "หมูสับผสมเครื่องเทศปั้นก้อน 150g", "ซอสบาร์บีคิวหรือซอสเทอริยากิ 2 ช้อนโต๊ะ", "หอมใหญ่ผัด (Caramelized Onion)", "ผักกาดแก้วและมะเขือเทศ", "มายองเนส"],
+    instructions: ["นำก้อนหมูสับไปย่างบนกระทะให้สุกทั้งสองด้าน", "ทาซอสบาร์บีคิวลงบนชิ้นหมูขณะย่างให้ซอสเคลือบเงางาม", "เตรียมขนมปังเบอร์เกอร์ นาบกระทะให้ร้อนและทามายองเนส", "วางผักกาด มะเขือเทศ หอมใหญ่ผัด และชิ้นหมูย่างซอส", "ประกบขนมปัง เสิร์ฟทันที"]
+  },{
+    name: "แซนด์วิชแฮมชีส",
+    image: "",
+    calories: 390,
+    protein: "18g",
+    carbs: "35g",
+    fat: "20g",
+    ingredients: ["ขนมปังแผ่น 2 แผ่น", "แฮมหมูหรือไก่ 1-2 แผ่น", "ชีสแผ่น (เชดดาร์ชีส) 1 แผ่น", "เนยจืดสำหรับทาขนมปัง", "มายองเนส 1 ช้อนโต๊ะ", "ผักกาดหอมและมะเขือเทศสไลซ์"],
+    instructions: ["นำขนมปังมาทาเนยบางๆ ทั้งสองแผ่น แล้วนำไปจี่บนกระทะให้พอเหลืองกรอบ", "ทามายองเนสลงบนขนมปังด้านใน", "วางผักกาดหอม มะเขือเทศ ตามด้วยแฮมและแผ่นชีส", "ประกบขนมปังเข้าด้วยกัน หั่นครึ่งเป็นรูปสามเหลี่ยม", "จัดเสิร์ฟพร้อมทาน"]
+  },
+  {
+    name: "แซนด์วิชทูน่ามายอ",
+    image: "",
+    calories: 420,
+    protein: "20g",
+    carbs: "35g",
+    fat: "22g",
+    ingredients: ["ขนมปังแผ่น 2 แผ่น", "ทูน่ากระป๋อง (ในน้ำแร่หรือน้ำสลัด) 1/2 กระป๋อง", "มายองเนส 2 ช้อนโต๊ะ", "หอมใหญ่สับละเอียด 1 ช้อนโต๊ะ", "เกลือและพริกไทยดำป่นเล็กน้อย", "ผักกาดหอมสด"],
+    instructions: ["บีบน้ำออกจากทูน่าให้แห้ง นำมาผสมกับมายองเนส หอมใหญ่สับ เกลือ และพริกไทย", "คนส่วนผสมทูน่ามายองเนสให้เข้ากันเป็นเนื้อเดียว", "นำขนมปังแผ่นมาวาง รองด้วยผักกาดหอม", "ตักไส้ทูน่ามายองเนสเกลี่ยลงบนแผ่นขนมปังให้หนาพอดี", "ประกบขนมปัง หั่นครึ่งพร้อมเสิร์ฟ"]
+  },
+  {
+    name: "คลับแซนด์วิช",
+    image: "",
+    calories: 505,
+    protein: "25g",
+    carbs: "45g",
+    fat: "25g",
+    ingredients: ["ขนมปังปิ้ง 3 แผ่น", "แฮม 1 แผ่น", "เบคอนทอดกรอบ 2 ชิ้น", "ไข่ดาว 1 ฟอง", "ชีสแผ่น 1 แผ่น", "มายองเนส", "ผักกาดแก้วและมะเขือเทศฝาน"],
+    instructions: ["ปิ้งขนมปังทั้ง 3 แผ่นให้กรอบ ทามายองเนสบางๆ บนขนมปัง", "ชั้นที่ 1: วางผักกาดแก้ว มะเขือเทศ แฮม และชีสลงบนขนมปังแผ่นแรก", "นำขนมปังแผ่นที่สองมาประกบ ทามายองเนสเพิ่ม", "ชั้นที่ 2: วางไข่ดาวและเบคอนทอดกรอบ แล้วปิดด้วยขนมปังแผ่นที่สาม", "ใช้ไม้จิ้มฟันเสียบตรงกลาง 4 มุม แล้วหั่นเป็น 4 ชิ้น (รูปสามเหลี่ยม)"]
+  },
+  {
+    name: "ฮอทดอก (Hotdog)",
+    image: "",
+    calories: 330,
+    protein: "12g",
+    carbs: "30g",
+    fat: "18g",
+    ingredients: ["ขนมปังฮอทดอก 1 ชิ้น", "ไส้กรอกหมูหรือไก่ 1 ชิ้น", "เนยจืด", "หอมใหญ่สับผัดเนย", "แตงกวาดองสับ (Relish)", "ซอสมะเขือเทศและมัสตาร์ด"],
+    instructions: ["ผ่าตรงกลางขนมปังฮอทดอก ทาเนยด้านใน นำไปนาบกระทะให้ร้อนและหอม", "นำไส้กรอกไปย่าง ต้ม หรือทอดจนสุกตึง", "วางไส้กรอกลงในช่องขนมปัง", "โรยหน้าด้วยหอมใหญ่ผัดเนยและแตงกวาดองสับ", "บีบซอสมะเขือเทศและมัสตาร์ดซิกแซกด้านบน พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "ฟิชแอนด์ชิปส์",
+    image: "",
+    calories: 640,
+    protein: "22g",
+    carbs: "60g",
+    fat: "35g",
+    ingredients: ["เนื้อปลาดอรี่หรือปลาคอด 1 ชิ้นใหญ่", "มันฝรั่งหั่นแท่ง (เฟรนช์ฟรายส์) 1 ถ้วย", "แป้งชุบทอดอเนกประสงค์ 1/2 ถ้วย", "น้ำเย็นจัดหรือโซดา 1/2 ถ้วย", "เกลือและพริกไทย", "น้ำมันสำหรับทอด", "ซอสทาร์ทาร์และเลมอน"],
+    instructions: ["ทอดมันฝรั่งแท่งในน้ำมันร้อนจนกรอบสีทอง ตักขึ้นโรยเกลือพักไว้", "ซับเนื้อปลาให้แห้ง ปรุงรสด้วยเกลือและพริกไทย คลุกแป้งแห้งบางๆ", "ผสมแป้งทอดกรอบกับน้ำเย็นจัดให้เข้ากัน นำปลาลงชุบให้ทั่ว", "ทอดปลาในน้ำมันท่วมไฟกลางจนแป้งฟูกรอบและมีสีเหลืองทอง", "ตักขึ้นสะเด็ดน้ำมัน เสิร์ฟคู่กับเฟรนช์ฟรายส์ ซอสทาร์ทาร์ และเลมอนฝาน"]
+  },
+  {
+    name: "สเต็กหมูพริกไทยดำ",
+    image: "",
+    calories: 510,
+    protein: "35g",
+    carbs: "30g",
+    fat: "28g",
+    ingredients: ["เนื้อหมูสันคอหรือพอร์คชอป 200g", "พริกไทยดำป่นหยาบ 1 ช้อนโต๊ะ", "ซอสหอยนางรม 1 ช้อนโต๊ะ", "ซีอิ๊วขาว 1 ช้อนชา", "เนยจืด 1 ช้อนโต๊ะ", "ผักเคียง (แครอท, บรอกโคลีลวก)", "มันฝรั่งทอดหรือมันบด"],
+    instructions: ["ใช้ค้อนทุบเนื้อหมูเบาๆ ให้นุ่ม หมักด้วยซอสหอยนางรม ซีอิ๊วขาว และพริกไทยดำ ทิ้งไว้ 30 นาที", "ตั้งกระทะแบน ใช้ไฟกลางค่อนแรง ใส่เนยจืดลงไป", "นำสเต็กหมูลงไปดาดบนกระทะ จี่ให้เกรียมสวยทั้งสองด้าน และเนื้อข้างในสุก", "ตักสเต็กใส่จานพักไว้ประมาณ 3 นาทีก่อนหั่น เพื่อให้ฉ่ำน้ำ", "จัดเสิร์ฟคู่กับผักลวกและมันฝรั่งทอด ราดซอสพริกไทยดำเพิ่มตามชอบ"]
+  },
+  {
+    name: "สเต็กไก่สไปซี่",
+    image: "",
+    calories: 375,
+    protein: "40g",
+    carbs: "20g",
+    fat: "15g",
+    ingredients: ["อกไก่หรือสะโพกไก่เลาะกระดูก 200g", "ผงปาปริก้า 1 ช้อนชา", "พริกป่นละเอียด 1/2 ช้อนชา", "เกลือป่นและพริกไทยดำ", "ซอสพริก 1 ช้อนโต๊ะ", "น้ำมันมะกอก 1 ช้อนโต๊ะ", "สลัดผักสด"],
+    instructions: ["หมักไก่ด้วยผงปาปริก้า พริกป่น เลือ พริกไทย และซอสพริก คลุกเคล้าให้เข้าเนื้อ ทิ้งไว้ 20 นาที", "ตั้งกระทะแบนใส่น้ำมันมะกอกเล็กน้อย ใช้ไฟกลาง", "นำไก่ที่หมักไว้ลงไปย่าง (เอาด้านหนังลงก่อนถ้ามี) จนหนังเกรียมและเนื้อสุก", "ตักสเต็กไก่ขึ้นพักไว้สักครู่ หั่นเป็นชิ้นพอดีคำ", "เสิร์ฟคู่กับสลัดผักสดและน้ำสลัดตามชอบ"]
+  },
+  {
+    name: "สเต็กเนื้อริบอาย",
+    image: "",
+    calories: 555,
+    protein: "45g",
+    carbs: "15g",
+    fat: "35g",
+    ingredients: ["เนื้อริบอายคุณภาพดี (หนาประมาณ 1 นิ้ว) 250g", "เกลือทะเล (Sea Salt) 1 ช้อนชา", "พริกไทยดำบดหยาบ 1 ช้อนชา", "เนยจืด 2 ช้อนโต๊ะ", "กระเทียมบุบ 2 กลีบ", "โรสแมรี่สด 1 ก้าน", "น้ำมันมะกอก"],
+    instructions: ["ซับเนื้อวัวให้แห้งสนิท โรยเกลือและพริกไทยดำให้ทั่วทั้งสองด้านก่อนทอด 15 นาที", "ตั้งกระทะ (ควรใช้กระทะเหล็กหล่อ) ให้ร้อนจัด ใส่น้ำมันมะกอกเล็กน้อย", "วางเนื้อลงไปนาบกระทะ (Sear) ข้างละประมาณ 2-3 นาทีจนเกิดเปลือกสีน้ำตาลสวย (Crust)", "ลดไฟลง ใส่เนย กระเทียม และโรสแมรี่ ตักเนยที่ละลายราดบนชิ้นเนื้อ (Basting) จนได้ระดับความสุกที่ต้องการ", "นำเนื้อขึ้นมาพัก (Resting) 5-10 นาทีก่อนสไลซ์ เสิร์ฟพร้อมผักย่าง"]
+  },
+  {
+    name: "สเต็กปลาแซลมอน",
+    image: "",
+    calories: 425,
+    protein: "35g",
+    carbs: "15g",
+    fat: "25g",
+    ingredients: ["เนื้อปลาแซลมอนชิ้นฟิเลต์ 1 ชิ้น (200g)", "เกลือและพริกไทยดำป่น", "น้ำมันมะกอก 1 ช้อนโต๊ะ", "เลมอน 1 ซีก", "ผักเคียง (หน่อไม้ฝรั่งหรือบรอกโคลีย่าง)"],
+    instructions: ["ซับชิ้นปลาแซลมอนให้แห้งสนิท โรยเกลือและพริกไทยบางๆ ให้ทั่ว", "ตั้งกระทะแบนใส่น้ำมันมะกอก ใช้ไฟกลางค่อนแรง รอจนกระทะร้อน", "นำปลาแซลมอนลงจี่โดยเอาด้านหนังลงก่อน กดเบาๆ ให้หนังแนบกระทะ", "ทอดจนหนังกรอบ (ประมาณ 3-4 นาที) แล้วกลับด้าน ทอดต่ออีก 1-2 นาทีให้เนื้อปลาสุกพอดี", "ตักขึ้นเสิร์ฟพร้อมผักย่าง บีบเลมอนเพิ่มความสดชื่นก่อนทาน"]
+  },
+  {
+    name: "สลัดอกไก่ย่างน้ำใส",
+    image: "",
+    calories: 250,
+    protein: "30g",
+    carbs: "15g",
+    fat: "8g",
+    ingredients: ["อกไก่ลอกหนัง 150g", "ผักสลัดรวม (กรีนโอ๊ค, เรดโอ๊ค, ผักกาดแก้ว)", "มะเขือเทศราชินีและแตงกวาญี่ปุ่น", "เกลือและพริกไทยดำสำหรับหมักไก่", "น้ำสลัดน้ำใส (น้ำส้มสายชูแอปเปิลไซเดอร์, น้ำมันมะกอก, น้ำผึ้ง, เกลือ, พริกไทย)"],
+    instructions: ["หมักอกไก่ด้วยเกลือและพริกไทย นำไปย่างบนกระทะเทฟลอนไฟอ่อนจนสุก นำมาหั่นเป็นชิ้นพอดีคำ", "ผสมส่วนผสมน้ำสลัดน้ำใสให้เข้ากัน ชิมรสเปรี้ยวอมหวาน", "ล้างและจัดเตรียมผักสลัด มะเขือเทศ แตงกวา ใส่ชาม", "วางอกไก่ย่างลงบนผักสลัด", "ราดน้ำสลัดน้ำใสลงไป คลุกเคล้าให้เข้ากันก่อนรับประทาน"]
+  },
+  {
+    name: "สลัดทูน่า",
+    image: "",
+    calories: 255,
+    protein: "22g",
+    carbs: "15g",
+    fat: "12g",
+    ingredients: ["ทูน่ากระป๋องในน้ำแร่ 1/2 กระป๋อง", "ผักสลัดรวม (ผักกาดแก้ว, กรีนโอ๊ค, แครอทขูดฝอย)", "ข้าวโพดหวานต้ม 2 ช้อนโต๊ะ", "หอมใหญ่ซอยบาง 1 ช้อนโต๊ะ", "มะเขือเทศราชินี 4-5 ลูก", "น้ำสลัดงาข้นหรือน้ำสลัดครีมไขมันต่ำ 2 ช้อนโต๊ะ"],
+    instructions: ["นำทูน่ากระป๋องมาบีบน้ำแร่ออกให้แห้ง ยีเป็นชิ้นเล็กๆ", "จัดผักสลัดรวม ข้าวโพดหวาน หอมใหญ่ และมะเขือเทศลงในชามใหญ่", "โรยทูน่าลงบนหน้าสลัดให้สวยงาม", "ราดน้ำสลัดงาข้นหรือน้ำสลัดครีมไขมันต่ำลงไป", "คลุกเคล้าส่วนผสมทั้งหมดให้เข้ากัน พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "ซีซาร์สลัดไก่",
+    image: "",
+    calories: 410,
+    protein: "28g",
+    carbs: "18g",
+    fat: "25g",
+    ingredients: ["ผักกาดคอส (Cos Lettuce) หั่นท่อน 2 ถ้วย", "อกไก่ย่างหั่นชิ้น 100g", "เบคอนอบกรอบสับ 1 ช้อนโต๊ะ", "กรูตอง (ขนมปังกรอบ) 2 ช้อนโต๊ะ", "พาร์เมซานชีสขูดฝอย 2 ช้อนโต๊ะ", "น้ำสลัดซีซาร์ 2-3 ช้อนโต๊ะ"],
+    instructions: ["ฉีกหรือหั่นผักกาดคอสใส่ชามผสมขนาดใหญ่", "เทน้ำสลัดซีซาร์ลงไป คลุกเคล้าผักกับน้ำสลัดให้เข้ากันอย่างเบามือ", "ใส่กรูตอง พาร์เมซานชีสครึ่งหนึ่ง และเบคอนกรอบลงไปคลุกเบาๆ", "จัดสลัดที่คลุกแล้วลงจาน วางอกไก่ย่างด้านบน", "โรยหน้าด้วยพาร์เมซานชีสที่เหลือและเบคอนกรอบ พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "สเต็กปลาดอลลี่",
+    image: "",
+    calories: 315,
+    protein: "25g",
+    carbs: "20g",
+    fat: "15g",
+    ingredients: ["เนื้อปลาดอลลี่ (แพนกาเซียส) 1 ชิ้น", "เกลือป่น พริกไทย และพริกไทยดำป่น", "แป้งสาลีเอนกประสงค์ 1 ช้อนโต๊ะ", "เนยจืดหรือน้ำมันมะกอก 1 ช้อนโต๊ะ", "ผักสลัดและเฟรนช์ฟรายส์"],
+    instructions: ["ซับปลาดอลลี่ให้แห้ง โรยเกลือและพริกไทย นำไปคลุกแป้งสาลีบางๆ ให้ทั่ว (ช่วยไม่ให้ปลาเละตอนจี่)", "ตั้งกระทะไฟกลาง ใส่เนยหรือน้ำมันมะกอกลงไป", "นำปลาดอลลี่ลงจี่ในกระทะจนสุกเหลืองทั้งสองด้าน (ระวังอย่าพลิกบ่อย)", "ตักปลาใส่จาน เสิร์ฟพร้อมผักสลัดและเฟรนช์ฟรายส์", "ทานคู่กับซอสพริก ซอสมะเขือเทศ หรือซอสทาร์ทาร์ตามชอบ"]
+  },
+  {
+    name: "มันฝรั่งอบชีสเบคอน",
+    image: "",
+    calories: 485,
+    protein: "15g",
+    carbs: "50g",
+    fat: "25g",
+    ingredients: ["มันฝรั่งหัวใหญ่ 1 หัว", "เบคอนคั่วกรอบ 2 ช้อนโต๊ะ", "เชดดาร์ชีสและมอสซาเรลล่าชีสขูดรวมกัน 1/2 ถ้วย", "เนยจืด 1 ช้อนโต๊ะ", "วิปปิ้งครีมหรือนมสด 2 ช้อนโต๊ะ", "เกลือ พริกไทย และพาร์สลีย์สับ"],
+    instructions: ["นำมันฝรั่งไปล้างให้สะอาด จิ้มด้วยส้อมให้ทั่ว นำไปอบหรือเข้าไมโครเวฟจนมันฝรั่งสุกนุ่ม", "ผ่าครึ่งมันฝรั่ง คว้านเนื้อส่วนกลางออกมาระวังอย่าให้เปลือกขาด", "นำเนื้อมันฝรั่งมาบดผสมกับเนย วิปปิ้งครีม เกลือ พริกไทย และเบคอนกรอบ", "ตักมันบดกลับเข้าไปในเปลือกมันฝรั่งให้พูน", "โรยชีสให้ทั่วด้านบน นำไปอบที่ 200°C ประมาณ 10 นาทีจนชีสละลายเกรียม โรยพาร์สลีย์พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "พอร์คชอป (Pork Chop)",
+    image: "",
+    calories: 520,
+    protein: "38g",
+    carbs: "25g",
+    fat: "30g",
+    ingredients: ["เนื้อหมูพอร์คชอป (ติดกระดูก) 1 ชิ้นหนา (250g)", "เกลือและพริกไทยดำป่น 1 ช้อนชา", "กระเทียมบุบ 2 กลีบ", "โรสแมรี่ 1 ก้าน", "เนยจืด 1 ช้อนโต๊ะ", "น้ำมันพืช"],
+    instructions: ["บั้งบริเวณขอบพอร์คชอปตรงที่เป็นมัน เพื่อป้องกันไม่ให้ชิ้นหมูโค้งงอเวลาทอด หมักด้วยเกลือและพริกไทย 15 นาที", "ตั้งกระทะให้ร้อน ใส่น้ำมัน นำพอร์คชอปลงจี่ให้เกรียมสวยด้านละ 3-4 นาที", "ใส่เนย กระเทียม และโรสแมรี่ลงในกระทะ ตักเนยที่ละลายราดบนชิ้นหมู (Basting)", "หากชิ้นหนามาก ให้นำเข้าเตาอบต่อที่ 180°C ประมาณ 5-8 นาทีจนสุกถึงข้างใน", "นำพอร์คชอปมาพัก 5 นาทีก่อนเสิร์ฟ คู่กับมันบดและผักย่าง"]
+  },
+  {
+    name: "ข้าวหน้าเนื้อ (Gyudon)",
+    image: "",
+    calories: 560,
+    protein: "25g",
+    carbs: "70g",
+    fat: "20g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 ถ้วย", "เนื้อวัวสไลซ์บาง (เนื้อติดมันเล็กน้อย) 120g", "หอมใหญ่สไลซ์บาง 1/2 หัว", "น้ำซุปดาชิ 1/2 ถ้วย", "โชยุ 2 ช้อนโต๊ะ", "มิริน 2 ช้อนโต๊ะ", "สาเก 1 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนชา", "ไข่ออนเซ็น 1 ฟอง"],
+    instructions: ["ตั้งกระทะหรือหม้อใบเล็ก ใส่น้ำซุปดาชิ โชยุ มิริน สาเก และน้ำตาลทราย ต้มให้เดือด", "ใส่หอมใหญ่สไลซ์ลงไปต้มจนหอมใหญ่เริ่มสุกใสและมีสีน้ำตาลอ่อน", "ใส่เนื้อวัวสไลซ์ลงไปต้ม คอยช้อนฟองออกเพื่อให้ซุปใส ต้มจนเนื้อสุกนุ่มและน้ำซุปงวดลงเล็กน้อย", "ตักข้าวญี่ปุ่นใส่ชาม ราดเนื้อต้มซีอิ๊วพร้อมน้ำซุปชุ่มๆ ลงบนข้าว", "ตอกไข่ออนเซ็นวางตรงกลาง โรยต้นหอมซอยและขิงดองแดง"]
+  },
+  {
+    name: "ข้าวหน้าหมูทอด (Katsudon)",
+    image: "",
+    calories: 680,
+    protein: "28g",
+    carbs: "75g",
+    fat: "30g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 ถ้วย", "ทงคัตสึ (หมูสันนอกชุบเกล็ดขนมปังทอด) หั่นชิ้น 1 ชิ้น", "ไข่ไก่ 2 ฟอง", "หอมใหญ่สไลซ์บาง 1/4 หัว", "น้ำซุปดาชิ 1/3 ถ้วย", "โชยุ 1.5 ช้อนโต๊ะ", "มิริน 1.5 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนชา"],
+    instructions: ["ผสมน้ำซุปดาชิ โชยุ มิริน และน้ำตาลลงในกระทะแบน ตั้งไฟให้เดือด", "ใส่หอมใหญ่ลงไปต้มจนสุกใส นำหมูทอดทงคัตสึวางลงไปตรงกลาง", "ตีไข่ไก่พอแตก (ไม่ต้องให้เนียนมาก) เทไข่ราดวนๆ รอบชิ้นหมูและบนชิ้นหมู", "ปิดฝากระทะประมาณ 30 วินาทีถึง 1 นาที ให้ไข่สุกระดับกึ่งสุกกึ่งดิบตามชอบ", "ค่อยๆ เทส่วนผสมทั้งหมดลงบนชามข้าวญี่ปุ่นร้อนๆ โรยต้นหอมซอย"]
+  },
+  {
+    name: "ข้าวหน้าไก่และไข่ (Oyakodon)",
+    image: "",
+    calories: 540,
+    protein: "30g",
+    carbs: "65g",
+    fat: "18g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 ถ้วย", "เนื้อสะโพกไก่หั่นชิ้นพอดีคำ 120g", "ไข่ไก่ 2 ฟอง", "หอมใหญ่สไลซ์บาง 1/4 หัว", "น้ำซุปดาชิ 1/3 ถ้วย", "โชยุ 1.5 ช้อนโต๊ะ", "มิริน 1.5 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนชา"],
+    instructions: ["ต้มน้ำซุปดาชิ โชยุ มิริน และน้ำตาลในกระทะแบนจนเดือด", "ใส่หอมใหญ่และเนื้อไก่ลงไปต้ม ปิดฝากระทะเล็กน้อยเพื่อให้ไก่สุกถึงเนื้อใน", "เมื่อเนื้อไก่สุก ตีไข่ไก่พอแตกแล้วเทราดลงไปให้ทั่วกระทะ", "ปิดฝาอบประมาณ 30 วินาทีให้ไข่เซ็ตตัวเป็นลักษณะไข่ข้นเยิ้มๆ ปิดไฟ", "สไลด์ส่วนผสมทั้งหมดลงบนข้าวญี่ปุ่นร้อนๆ อย่างระมัดระวัง เสิร์ฟทันที"]
+  },
+  {
+    name: "ข้าวแกงกะหรี่หมูทอด",
+    image: "",
+    calories: 760,
+    protein: "26g",
+    carbs: "85g",
+    fat: "35g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 จาน", "ก้อนแกงกะหรี่ญี่ปุ่นสำเร็จรูป 2 ก้อน", "เนื้อหมูสไลซ์ แครอท มันฝรั่ง หอมใหญ่ (สำหรับทำน้ำแกง)", "น้ำเปล่า 2 ถ้วย", "หมูชุบเกล็ดขนมปังทอด (ทงคัตสึ) 1 ชิ้น"],
+    instructions: ["ตั้งหม้อผัดหอมใหญ่ แครอท มันฝรั่ง และเนื้อหมูสไลซ์ให้พอสุก เติมน้ำเปล่าและต้มจนผักสุกนุ่ม (ประมาณ 20 นาที)", "ปิดไฟ ใส่ก้อนแกงกะหรี่ลงไปคนให้ละลายจนหมด แล้วเปิดไฟอ่อนเคี่ยวต่อจนแกงข้น", "ตักข้าวญี่ปุ่นใส่จาน นำหมูทอดทงคัตสึที่หั่นเป็นชิ้นวางลงไป", "ตักแกงกะหรี่ร้อนๆ ราดลงบนข้าวและชิ้นหมูทอดครึ่งหนึ่ง", "เสิร์ฟพร้อมผักดองฟุกุจินซึเกะ (Fukujinzuke) เพื่อตัดเลี่ยน"]
+  },
+  {
+    name: "ข้าวหน้าปลาไหล (Unagi Don)",
+    image: "",
+    calories: 530,
+    protein: "22g",
+    carbs: "70g",
+    fat: "18g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 ถ้วย", "ปลาไหลย่างซีอิ๊วสำเร็จรูป 1 ซีก", "ซอสเทอริยากิหรือซอสปลาไหล (คาบายากิ) 2 ช้อนโต๊ะ", "งาขาวคั่ว", "สาหร่ายเส้น (โนริ)", "พริกไทยซันโช (ผงพริกไทยญี่ปุ่น - ถ้ามี)"],
+    instructions: ["นำปลาไหลย่างสำเร็จรูปไปอุ่นในไมโครเวฟ หรืออบในเตาอบให้ร้อนและหนังมีความตึงเล็กน้อย", "หั่นปลาไหลเป็นชิ้นพอดีคำหรือชิ้นใหญ่ตามต้องการ", "ตักข้าวญี่ปุ่นร้อนๆ ใส่ชาม ราดซอสปลาไหลลงบนข้าวเล็กน้อย", "วางปลาไหลย่างลงบนข้าว ราดซอสปลาไหลทับอีกครั้งให้เงางาม", "โรยงาขาวคั่ว สาหร่ายเส้น และพริกไทยซันโชเล็กน้อย พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวหน้าแซลมอนเทอริยากิ",
+    image: "",
+    calories: 560,
+    protein: "30g",
+    carbs: "65g",
+    fat: "20g",
+    ingredients: ["ข้าวญี่ปุ่นหุงสุก 1 ถ้วย", "ปลาแซลมอนฟิเลต์ 1 ชิ้น (150g)", "ซอสเทอริยากิ 3 ช้อนโต๊ะ", "เกลือเล็กน้อย", "น้ำมันพืช 1 ช้อนโต๊ะ", "ต้นหอมซอยและงาขาวคั่ว"],
+    instructions: ["ซับปลาแซลมอนให้แห้ง โรยเกลือบางๆ นำไปดาดในกระทะน้ำมันเล็กน้อยจนสุกเหลืองทั้งสองด้าน", "เทน้ำมันส่วนเกินในกระทะออก เติมซอสเทอริยากิลงไป", "เคี่ยวซอสให้งวดและเคลือบชิ้นปลาแซลมอนจนเงางาม ปิดไฟ", "ตักปลาแซลมอนวางลงบนชามข้าวญี่ปุ่นร้อนๆ", "ราดน้ำซอสเทอริยากิที่เหลือในกระทะลงไป โรยหน้าด้วยงาขาวและต้นหอมซอย"]
+  },
+  {
+    name: "ซูชิเซ็ตรวม (10 คำ)",
+    image: "",
+    calories: 490,
+    protein: "25g",
+    carbs: "75g",
+    fat: "10g",
+    ingredients: ["ข้าวซูชิ (ข้าวญี่ปุ่นปรุงรสน้ำส้มสายชู) ปั้นก้อน 10 คำ", "ปลาดิบรวม (แซลมอน ทูน่า ฮามาจิ ซาบะ) หั่นชิ้นสำหรับซูชิ", "กุ้งต้ม กุ้งหวาน", "ไข่หวานญี่ปุ่นหั่นชิ้น", "วาซาบิ 1 ช้อนชา", "โชยุ และขิงดอง"],
+    instructions: ["เตรียมข้าวซูชิโดยผสมข้าวญี่ปุ่นหุงสุกร้อนๆ กับน้ำส้มสายชูปรุงรส พัดให้ข้าวเย็นลงและมีความเงางาม", "ปั้นข้าวซูชิเป็นก้อนพอดีคำสไตล์นิกิริ (Nigiri)", "ป้ายวาซาบิเล็กน้อยใต้ชิ้นปลาดิบหรือหน้าท็อปปิ้งต่างๆ", "วางชิ้นปลาดิบ กุ้ง หรือไข่หวานลงบนข้าวที่ปั้นไว้ กดเบาๆ ให้หน้าติดกับข้าว", "จัดเรียงใส่จานให้สวยงาม เสิร์ฟคู่กับโชยุ วาซาบิ และขิงดอง"]
+  },
+  {
+    name: "ทงคตสึราเมน",
+    image: "",
+    calories: 685,
+    protein: "28g",
+    carbs: "65g",
+    fat: "35g",
+    ingredients: ["เส้นราเมนสด 1 ก้อน", "น้ำซุปกระดูกหมูทงคตสึ (เคี่ยวจนเป็นสีขาวขุ่น) 2 ถ้วย", "หมูชาชู 2-3 แผ่น", "ไข่ต้มยางมะตูม (อาจิทามะ) 1/2 ฟอง", "เห็ดหูหนูซอย สาหร่ายแผ่น ต้นหอมซอย", "น้ำมันกระเทียมเจียว (มายุ)"],
+    instructions: ["ต้มน้ำซุปทงคตสึให้ร้อนจัด ปรุงรสด้วยเกลือหรือทาเระ (Tare) ตามสูตร", "ลวกเส้นราเมนในน้ำเดือดจัดประมาณ 1-2 นาที สะเด็ดน้ำให้แห้งสนิท นำใส่ชาม", "เทน้ำซุปทงคตสึร้อนๆ ลงในชาม คลี่เส้นให้กระจายตัวในซุป", "จัดวางหมูชาชู ไข่ต้ม เห็ดหูหนู สาหร่าย และต้นหอมซอยลงไป", "หยดน้ำมันกระเทียมเจียวเพื่อเพิ่มความหอม พร้อมเสิร์ฟทันที"]
+  },
+  {
+    name: "โชยุราเมน",
+    image: "",
+    calories: 515,
+    protein: "25g",
+    carbs: "70g",
+    fat: "15g",
+    ingredients: ["เส้นราเมนสด 1 ก้อน", "น้ำซุปไก่หรือซุปปลาแห้ง (ซุปใส) 2 ถ้วย", "โชยุ ทาเระ (Shoyu Tare) 2 ช้อนโต๊ะ", "หมูชาชู 2 แผ่น", "ไข่ต้มต้มโชยุ 1/2 ฟอง", "หน่อไม้ดอง (เมนมะ) สาหร่ายแผ่น ลูกชิ้นนารุโตะ ต้นหอมซอย"],
+    instructions: ["ใส่น้ำซอสโชยุ (Tare) ลงในชามราเมนเปล่า", "ต้มน้ำซุปใสให้ร้อนจัดแล้วเทลงในชาม คนให้เข้ากับโชยุ", "ลวกเส้นราเมนจนสุกพอดี สะเด็ดน้ำใส่ลงในชามซุป", "จัดเรียงหน้าด้วยหมูชาชู หน่อไม้ดอง ลูกชิ้นนารุโตะ ไข่ต้ม และสาหร่าย", "โรยต้นหอมซอย เสิร์ฟขณะกำลังร้อน"]
+  },
+  {
+    name: "มิโซะราเมน",
+    image: "",
+    calories: 545,
+    protein: "26g",
+    carbs: "70g",
+    fat: "18g",
+    ingredients: ["เส้นราเมน (เส้นหยักหนา) 1 ก้อน", "น้ำซุปกระดูกหมูหรือไก่ 2 ถ้วย", "มิโซะ (เต้าเจี้ยวญี่ปุ่น) ปรุงรส 2 ช้อนโต๊ะ", "หมูสับรวน 2 ช้อนโต๊ะ", "ข้าวโพดหวาน ถั่วงอก กะหล่ำปลี", "หมูชาชูและเนย 1 ก้อนเล็ก"],
+    instructions: ["ตั้งกระทะผัดหมูสับ ถั่วงอก และกะหล่ำปลีให้สลัด", "เติมน้ำซุปลงไปต้มให้เดือด ละลายมิโซะลงในกระทะ (ระวังอย่าให้มิโซะเดือดนานจนเสียรสชาติ)", "ลวกเส้นราเมนใส่ชาม", "เทน้ำซุปมิโซะและผักที่ผัดไว้ลงในชาม", "ท็อปด้วยข้าวโพดหวาน หมูชาชู และวางเนยก้อนเล็กๆ ด้านบนสุดเพื่อความหอมมัน"]
+  },
+  {
+    name: "ยากิโซบะหมู",
+    image: "",
+    calories: 555,
+    protein: "22g",
+    carbs: "60g",
+    fat: "25g",
+    ingredients: ["เส้นยากิโซบะสด 1 ห่อ", "เนื้อหมูสไลซ์หรือหมูสามชั้น 100g", "กะหล่ำปลี แคร์รอต หอมใหญ่ หั่นชิ้น 1 ถ้วย", "ซอสยากิโซบะ 3-4 ช้อนโต๊ะ", "สาหร่ายผง (อาโอโนริ) และ ขิงดองแดง (เบนิโชกะ)", "น้ำมันพืช"],
+    instructions: ["ตั้งกระทะใส่น้ำมัน ผัดหมูสามชั้นจนสุกและคายน้ำมัน", "ใส่ผักทั้งหมดลงไปผัดจนสลด", "ใส่เส้นยากิโซบะลงไป (อาจเติมน้ำเปล่าเล็กน้อยเพื่อให้เส้นคลายตัว) คลุกเคล้าให้เข้ากัน", "ราดซอสยากิโซบะลงไป เร่งไฟแรง ผัดให้ซอสเคลือบเส้นและผักอย่างทั่วถึงจนมีกลิ่นหอมกระทะ", "ตักใส่จาน โรยด้วยสาหร่ายผงและเคียงด้วยขิงดองแดง"]
+  },
+  {
+    name: "อุดงน้ำซุปกุ้งเทมปุระ",
+    image: "",
+    calories: 505,
+    protein: "18g",
+    carbs: "75g",
+    fat: "15g",
+    ingredients: ["เส้นอุดงสด 1 ห่อ", "กุ้งเทมปุระทอดกรอบ 2 ตัว", "น้ำซุปอุด้ง (ทำจากดาชิ โชยุ มิริน) 2 ถ้วย", "ลูกชิ้นปลาญี่ปุ่น (คามาโบโกะ) 2-3 แผ่น", "ต้นหอมญี่ปุ่นซอยและแป้งเทมปุระทอดกรอบ (เทนคาสึ)"],
+    instructions: ["ต้มน้ำซุปอุด้งให้เดือดและมีกลิ่นหอมของปลาโอแห้ง", "นำเส้นอุดงสดไปลวกในน้ำร้อนให้คลายตัวและนุ่ม ตักสะเด็ดน้ำใส่ชาม", "เทน้ำซุปร้อนๆ ลงในชามเส้น", "วางกุ้งเทมปุระลงไป (แนะนำให้วางพาดขอบชามเพื่อไม่ให้แป้งแฉะน้ำซุปจนหมด)", "ตกแต่งด้วยลูกชิ้นปลา โรยต้นหอมซอยและเศษแป้งเทมปุระ"]
+  },
+  {
+    name: "ซารุโซบะ (หมี่เย็น)",
+    image: "",
+    calories: 345,
+    protein: "15g",
+    carbs: "60g",
+    fat: "5g",
+    ingredients: ["เส้นโซบะแห้ง (เส้นบัควีท) 1 กำ", "ทสึยุ (ซอสสำหรับจิ้มโซบะ) 1/2 ถ้วย", "น้ำเย็นจัดผสมน้ำแข็ง", "ต้นหอมซอย วาซาบิ ขิงฝอย และหัวไชเท้าขูด", "สาหร่ายโนริหั่นเส้น"],
+    instructions: ["ต้มเส้นโซบะในน้ำเดือดตามเวลาที่ระบุข้างซอง (ประมาณ 4-5 นาที)", "ตักเส้นขึ้นน็อกในน้ำเย็นจัด ถูเส้นเบาๆ เพื่อล้างเมือกแป้งออกให้หมด เส้นจะเหนียวนุ่ม", "สะเด็ดน้ำให้แห้ง จัดวางเส้นลงบนถาดซารุ (ถาดไม้ไผ่) โรยสาหร่ายเส้นด้านบน", "เตรียมถ้วยน้ำจิ้ม ใส่ทสึยุลงไป เสิร์ฟคู่กับเครื่องเคียง (วาซาบิ ต้นหอม หัวไชเท้าขูด)", "วิธีทาน: คีบเส้นโซบะจุ่มลงในน้ำจิ้มที่ผสมเครื่องเคียงแล้วซู้ดเข้าปาก"]
+  },
+  {
+    name: "ทาโกะยากิ (6 ลูก)",
+    image: "",
+    calories: 345,
+    protein: "12g",
+    carbs: "40g",
+    fat: "15g",
+    ingredients: ["แป้งทาโกะยากิผสมน้ำและไข่ 1 ถ้วย", "หนวดปลาหมึกยักษ์ (ทาโกะ) หั่นเต๋า 6 ชิ้น", "ต้นหอมซอย ขิงดองสับ และเศษแป้งเทมปุระ", "ซอสทาโกะยากิ 2 ช้อนโต๊ะ", "มายองเนสญี่ปุ่น", "สาหร่ายผง (อาโอโนริ) และ ปลาโอแห้งขูดเส้น (คัตสึโอะบุชิ)"],
+    instructions: ["ตั้งเตาทาโกะยากิให้ร้อน ทาน้ำมันให้ทั่วหลุม", "หยอดแป้งลงไปประมาณครึ่งหลุม ใส่ชิ้นปลาหมึก ต้นหอม ขิงดอง และเศษแป้งเทมปุระลงไปในแต่ละหลุม", "หยอดแป้งเพิ่มจนล้นหลุมเล็กน้อย รอจนขอบแป้งเริ่มสุก", "ใช้ไม้จิ้มพลิกแป้งกลับด้านตะแคง 90 องศา ค่อยๆ เก็บขอบแป้งลงหลุม พลิกจนกลายเป็นทรงกลม ทอดจนกลิ้งได้และสีเหลืองกรอบ", "ตักใส่จาน ราดซอสทาโกะยากิและมายองเนส โรยสาหร่ายและปลาโอแห้ง"]
+  },
+  {
+    name: "โอโคโนมิยากิ (พิซซ่าญี่ปุ่น)",
+    image: "",
+    calories: 505,
+    protein: "20g",
+    carbs: "50g",
+    fat: "25g",
+    ingredients: ["กะหล่ำปลีซอยละเอียด 1.5 ถ้วย", "แป้งโอโคโนมิยากิผสมน้ำและไข่ไก่ 1/2 ถ้วย", "หมูสามชั้นสไลซ์บาง 3-4 แผ่น", "ต้นหอมซอยและขิงดองสับ", "ซอสโอโคโนมิยากิ และ มายองเนส", "สาหร่ายผง และ ปลาโอแห้งขูดเส้น"],
+    instructions: ["ผสมกะหล่ำปลี ต้นหอม ขิงดอง กับแป้งที่ผสมไว้ให้เข้ากัน (คนให้มีอากาศเข้าจะทำให้ฟู)", "ตั้งกระทะแบนทาน้ำมันให้ร้อน เทส่วนผสมลงไป เกลี่ยให้เป็นรูปวงกลมหนาประมาณ 2 ซม.", "วางหมูสามชั้นสไลซ์ลงบนด้านบนของแป้ง", "ทอดไฟกลางประมาณ 3-5 นาทีจนด้านล่างเหลืองกรอบ พลิกกลับด้าน (ให้ด้านหมูลง) ปิดฝาอบต่ออีก 5 นาทีจนหมูเกรียมและกะหล่ำปลีสุก", "ตักใส่จาน ราดซอสโอโคโนมิยากิ มายองเนส โรยสาหร่ายและปลาโอแห้ง ตัดเป็นชิ้นเสิร์ฟ"]
+  },
+   {
+    name: "ข้าวยำเกาหลี (Bibimbap)",
+    image: "",
+    calories: 505,
+    protein: "22g",
+    carbs: "70g",
+    fat: "15g",
+    ingredients: ["ข้าวสวยเกาหลี 1 ถ้วย", "เนื้อหมูหรือเนื้อวัวสไลซ์ 50g", "ไข่ไก่ 1 ฟอง", "ผักโขม แครอท ถั่วงอก เห็ดหอม (ลวกและปรุงรสด้วยน้ำมันงา)", "ซอสโคชูจัง 2 ช้อนโต๊ะ", "น้ำมันงาและงาขาวคั่ว"],
+    instructions: ["ผัดเนื้อสัตว์ให้สุกด้วยซีอิ๊วและน้ำมันงา", "ลวกผักแต่ละชนิดแยกกัน แล้วคลุกเคล้าด้วยน้ำมันงา เกลือ และงาขาวเล็กน้อย", "ตักข้าวสวยใส่ชาม (หรือหม้อหินร้อน) จัดเรียงผักและเนื้อสัตว์ไว้ด้านบนให้สวยงาม", "ทอดไข่ดาวแบบไม่สุกมาก วางตรงกลาง", "ราดด้วยซอสโคชูจัง คลุกเคล้าส่วนผสมทั้งหมดให้เข้ากันก่อนรับประทาน"]
+  },
+  {
+    name: "จาจังมยอน (บะหมี่ดำ)",
+    image: "",
+    calories: 600,
+    protein: "20g",
+    carbs: "85g",
+    fat: "20g",
+    ingredients: ["เส้นจาจังมยอนหรือเส้นอุด้ง 1 ถ้วย", "ซอสชุนจัง (เต้าเจี้ยวถั่วดำเกาหลี) 3 ช้อนโต๊ะ", "หมูสามชั้นหั่นเต๋า 100g", "หอมใหญ่ กะหล่ำปลี มันฝรั่ง หั่นเต๋า", "น้ำตาลทราย 1 ช้อนโต๊ะ", "แป้งมันละลายน้ำ 2 ช้อนโต๊ะ", "แตงกวาซอยสำหรับโรยหน้า"],
+    instructions: ["ผัดซอสชุนจังกับน้ำมันให้หอมและลดความขม ตักซอสพักไว้", "ใช้กระทะเดิมผัดหมูสามชั้นจนสุกและคายน้ำมัน ใส่ผักทั้งหมดลงไปผัดจนสุกนุ่ม", "ใส่ซอสชุนจังที่ผัดไว้กลับลงไป เติมน้ำเปล่าเล็กน้อย ต้มให้เดือด", "เติมน้ำตาลทรายและแป้งมันละลายน้ำ คนให้ซอสเหนียวข้น", "ต้มเส้นให้สุก ตักใส่ชาม ราดซอสจาจังลงไป โรยด้วยแตงกวาซอย"]
+  },
+  {
+    name: "ซุปกิมจิเต้าหู้อ่อน",
+    image: "",
+    calories: 480,
+    protein: "24g",
+    carbs: "55g",
+    fat: "18g",
+    ingredients: ["กิมจิเปรี้ยว 1 ถ้วย", "หมูสามชั้นสไลซ์ 100g", "เต้าหู้อ่อน 1 หลอด", "โคชูจัง 1 ช้อนโต๊ะ", "พริกป่นเกาหลี (โคชูการู) 1 ช้อนโต๊ะ", "น้ำซุปหรือน้ำเปล่า 2 ถ้วย", "ต้นหอมเกาหลีซอย"],
+    instructions: ["ตั้งหม้อผัดหมูสามชั้นกับกิมจิให้หอม", "ใส่โคชูจังและพริกป่นเกาหลีลงไปผัดให้เข้ากัน", "เติมน้ำซุป ต้มจนเดือดและกิมจิเริ่มเปื่อย", "ใส่เต้าหู้อ่อนลงไป ปรุงรสเพิ่มเติมด้วยโชยุเล็กน้อยหากกิมจิไม่เค็ม", "โรยต้นหอมเกาหลี ต้มต่อ 1-2 นาที เสิร์ฟร้อนๆ คู่กับข้าวสวย"]
+  },
+  {
+    name: "หมูผัดโคชูจัง (พร้อมข้าว)",
+    image: "",
+    calories: 570,
+    protein: "28g",
+    carbs: "65g",
+    fat: "22g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูสามชั้นสไลซ์หรือหมูสันคอ 150g", "หอมใหญ่ แครอท ต้นหอมเกาหลี หั่นท่อน", "ซอสโคชูจัง 2 ช้อนโต๊ะ", "โชยุ 1 ช้อนโต๊ะ", "น้ำมันงา 1 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนชา และกระเทียมสับ"],
+    instructions: ["ผสมโคชูจัง โชยุ น้ำตาลทราย กระเทียมสับ และน้ำมันงา เข้าด้วยกันเป็นซอส", "หมักเนื้อหมูกับซอสทิ้งไว้ 15 นาที", "ตั้งกระทะให้ร้อน นำหมูที่หมักไว้ลงไปผัดจนเริ่มสุก", "ใส่หอมใหญ่และแครอท ผัดคลุกเคล้าจนผักนุ่มและหมูสุกดี", "ใส่ต้นหอมเกาหลี ผัดให้เข้ากัน ปิดไฟ ตักเสิร์ฟพร้อมข้าวสวย"]
+  },
+  {
+    name: "ต๊อกบกกี",
+    image: "",
+    calories: 440,
+    protein: "12g",
+    carbs: "75g",
+    fat: "10g",
+    ingredients: ["แป้งต๊อกบกกี 1 ถ้วย", "ออมุก (ปลาแผ่นเกาหลี) หั่นชิ้น 1 แผ่น", "โคชูจัง 2 ช้อนโต๊ะ", "พริกป่นเกาหลี 1 ช้อนโต๊ะ", "น้ำตาลทรายหรือคอร์นไซรัป 2 ช้อนโต๊ะ", "น้ำซุปดาชิหรือน้ำเปล่า 2 ถ้วย", "ต้นหอมเกาหลีซอยและไข่ต้ม"],
+    instructions: ["ต้มน้ำซุปให้เดือด ใส่โคชูจัง พริกป่นเกาหลี และน้ำตาล คนให้ละลาย", "ใส่แป้งต๊อกและออมุกลงไปต้มด้วยไฟกลาง", "หมั่นคนเรื่อยๆ เพื่อไม่ให้แป้งต๊อกติดก้นหม้อ", "ต้มจนน้ำซอสเริ่มงวดข้นและแป้งนุ่มหนึบ", "ใส่ต้นหอมซอยและไข่ต้ม ปิดไฟ พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "ไก่ทอดเกาหลีซอสเผ็ด",
+    image: "",
+    calories: 625,
+    protein: "30g",
+    carbs: "70g",
+    fat: "25g",
+    ingredients: ["ปีกไก่หรือสะโพกไก่เลาะกระดูก 200g", "แป้งทอดกรอบ", "โคชูจัง 2 ช้อนโต๊ะ", "ซอสมะเขือเทศ 2 ช้อนโต๊ะ", "น้ำผึ้งหรือคอร์นไซรัป 2 ช้อนโต๊ะ", "กระเทียมสับ 1 ช้อนโต๊ะ", "งาขาวคั่ว", "น้ำมันสำหรับทอด"],
+    instructions: ["คลุกไก่กับแป้งทอดกรอบ นำไปทอดในน้ำมันร้อนไฟกลางจนเหลืองกรอบ ตักขึ้นพัก (ทอดรอบสองจะยิ่งกรอบ)", "ตั้งกระทะใหม่ ใส่กระเทียมสับ โคชูจัง ซอสมะเขือเทศ และน้ำผึ้ง เคี่ยวจนซอสข้นเหนียว", "นำไก่ทอดที่พักไว้ลงไปคลุกกับซอสในกระทะอย่างรวดเร็วให้ซอสเคลือบชิ้นไก่", "ตักใส่จาน โรยด้วยงาขาวคั่ว เสิร์ฟพร้อมหัวไชเท้าดอง"]
+  },
+  {
+    name: "คิมบับ (1 โรล)",
+    image: "",
+    calories: 390,
+    protein: "15g",
+    carbs: "55g",
+    fat: "12g",
+    ingredients: ["ข้าวสวยเกาหลีคลุกน้ำมันงาและเกลือ 1 ถ้วย", "สาหร่ายแผ่นใหญ่ (สำหรับห่อ)", "ไข่เจียวหั่นเส้นยาว", "แครอทผัดน้ำมันงา ผักโขมลวก", "หัวไชเท้าดองสีเหลือง (ทันมูจิ)", "แฮมหรือปูอัดหั่นยาว"],
+    instructions: ["วางแผ่นสาหร่ายบนเสื่อห่อซูชิ เกลี่ยข้าวเกาหลีให้ทั่วแผ่น (เว้นขอบด้านบนไว้เล็กน้อย)", "จัดเรียงเครื่องเคียง (ไข่ แครอท ผักโขม หัวไชเท้าดอง แฮม) ไว้ตรงกลางข้าวตามแนวยาว", "ม้วนเสื่อให้แน่นเป็นโรลยาว ใช้น้ำแตะขอบสาหร่ายเล็กน้อยให้ปิดสนิท", "ทาน้ำมันงาบางๆ บนม้วนสาหร่าย", "ใช้มีดคมๆ หั่นเป็นชิ้นพอดีคำ จัดเสิร์ฟ"]
+  },
+  {
+    name: "แนงมยอน (บะหมี่เย็น)",
+    image: "",
+    calories: 425,
+    protein: "18g",
+    carbs: "70g",
+    fat: "8g",
+    ingredients: ["เส้นแนงมยอน (เส้นบัควีทเกาหลี) 1 ก้อน", "น้ำซุปเนื้อสไตล์เกาหลี แช่เย็นจัดจนเป็นเกล็ดน้ำแข็ง 2 ถ้วย", "เนื้อวัวต้มสไลซ์บาง 2 แผ่น", "ไข่ต้ม 1/2 ฟอง", "แตงกวาและสาลี่หั่นเส้น", "น้ำส้มสายชูและมัสตาร์ดเกาหลีสำหรับปรุง"],
+    instructions: ["ต้มเส้นแนงมยอนในน้ำเดือด (เส้นจะสุกไวมาก ประมาณ 2-3 นาที) รีบนำไปล้างและขยำในน้ำเย็นจัดจนหายลื่น", "สะเด็ดน้ำเส้น ม้วนเป็นก้อนกลมใส่ชาม", "จัดวางเนื้อสไลซ์ ไข่ต้ม แตงกวา และสาลี่ไว้บนเส้น", "เทน้ำซุปเกล็ดน้ำแข็งลงไป", "เสิร์ฟพร้อมกรรไกร (สำหรับตัดเส้นที่เหนียว) ปรุงรสเพิ่มด้วยน้ำส้มสายชูและมัสตาร์ด"]
+  },
+  {
+    name: "ซุปไก่ตุ๋นโสม",
+    image: "",
+    calories: 480,
+    protein: "55g",
+    carbs: "25g",
+    fat: "18g",
+    ingredients: ["ไก่กระทงตัวเล็ก 1 ตัว", "ข้าวเหนียวแช่น้ำ 1/2 ถ้วย", "โสมเกาหลี 1 ราก", "พุทราจีน 3-4 เม็ด", "เกาลัดปอกเปลือก 2 เม็ด", "กระเทียม 4-5 กลีบ", "เกลือและพริกไทยสำหรับปรุงรส", "น้ำเปล่า"],
+    instructions: ["ล้างทำความสะอาดไก่ ควักเครื่องในออกให้หมด", "ยัดข้าวเหนียว โสม พุทราจีน เกาลัด และกระเทียม เข้าไปในช่องท้องของไก่", "มัดขาไก่ไขว้กันเพื่อไม่ให้ข้าวเหนียวทะลักออกมา", "ใส่ไก่ลงในหม้อ เติมน้ำเปล่าให้ท่วม ต้มไฟแรงจนเดือด ช้อนฟองออก", "ลดไฟอ่อน ตุ๋นต่อประมาณ 1-1.5 ชั่วโมงจนเนื้อไก่เปื่อยและข้าวเหนียวสุกนุ่ม ปรุงรสด้วยเกลือพริกไทยก่อนทาน"]
+  },
+  {
+    name: "บุลโกกิเนื้อ (พร้อมข้าว)",
+    image: "",
+    calories: 530,
+    protein: "32g",
+    carbs: "60g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อวัวสไลซ์บาง 150g", "หอมใหญ่ แครอท ต้นหอม หั่นสไลซ์", "โชยุ 2 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนโต๊ะ", "น้ำมันงา 1 ช้อนโต๊ะ", "กระเทียมสับและสาลี่ขูด (ช่วยให้เนื้อนุ่ม)"],
+    instructions: ["ผสมโชยุ น้ำตาลทราย น้ำมันงา กระเทียมสับ และสาลี่ขูดเข้าด้วยกัน", "นำเนื้อวัวสไลซ์ลงไปหมักในซอส ทิ้งไว้ 30 นาที", "ตั้งกระทะไฟกลาง นำเนื้อวัวหมักลงไปผัด", "ใส่หอมใหญ่ แครอท ต้นหอม ลงไปผัดรวมกันจนผักนุ่มและเนื้อสุก", "ตักราดบนข้าวสวยร้อนๆ โรยงาขาวคั่ว"]
+  },
+  {
+    name: "ข้าวผัดหยางโจว",
+    image: "",
+    calories: 530,
+    protein: "22g",
+    carbs: "65g",
+    fat: "20g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "กุ้งสดหั่นเต๋า 50g", "หมูแดงหั่นเต๋า 50g", "ไข่ไก่ 2 ฟอง", "แครอทหั่นเต๋า ถั่วลันเตา ต้นหอมซอย", "โชยุ 1 ช้อนโต๊ะ", "เกลือและพริกไทยขาวป่น"],
+    instructions: ["ตั้งกระทะใส่น้ำมัน ผัดกุ้งและหมูแดงให้สุก ตักขึ้นพักไว้", "ตอกไข่ลงกระทะ ยีให้แตกและสุกเป็นลิ่ม", "ใส่ข้าวสวย แครอท ถั่วลันเตา ลงไปผัดคลุกเคล้ากับไข่ด้วยไฟแรงให้ข้าวร่วน", "นำกุ้งและหมูแดงกลับลงไป ปรุงรสด้วยโชยุ เกลือ พริกไทย", "ผัดเร็วๆ ให้เข้ากัน โรยต้นหอม ปิดไฟตักเสิร์ฟ"]
+  },
+  {
+    name: "ข้าวหมูแดงฮ่องกง",
+    image: "",
+    calories: 540,
+    protein: "26g",
+    carbs: "68g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "หมูแดงสไตล์ฮ่องกง (หอมกลิ่นเครื่องเทศและเกรียมน้ำผึ้ง) 100g", "ผักกวางตุ้งฮ่องเต้ลวก 1-2 ต้น", "น้ำราดซีอิ๊ว (โชยุผสมน้ำตาลและน้ำมันงาเล็กน้อย)", "พริกชี้ฟ้าซอยดองซีอิ๊ว"],
+    instructions: ["หั่นหมูแดงฮ่องกงเป็นชิ้นหนาพอดีคำเพื่อให้ได้เท็กซ์เจอร์เนื้อนุ่มฉ่ำ", "ตักข้าวสวยใส่จาน จัดผักกวางตุ้งฮ่องเต้ลวกเคียงไว้ด้านข้าง", "เรียงชิ้นหมูแดงลงบนข้าวสวย", "ราดด้วยน้ำซีอิ๊วปรุงรสบางๆ (สไตล์ฮ่องกงจะไม่ใช้น้ำราดเหนียวข้นแบบไทย)", "เสิร์ฟคู่กับพริกชี้ฟ้าดองซีอิ๊วเพื่อตัดเลี่ยน"]
+  },
+  {
+    name: "ข้าวหน้าเป็ดย่างฮ่องกง",
+    image: "",
+    calories: 595,
+    protein: "28g",
+    carbs: "65g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "เป็ดย่างฮ่องกง (หนังกรอบบาง) หั่นชิ้น 120g", "ผักกวางตุ้งฮ่องเต้ลวก 1-2 ต้น", "น้ำราดเป็ดสไตล์ฮ่องกง (น้ำซุปเป็ดผสมซีอิ๊ว)", "พริกชี้ฟ้าซอยดองซีอิ๊วหรือซอสบ๊วยเจี่ย"],
+    instructions: ["สับเป็ดย่างฮ่องกงเป็นชิ้นยาวพอดีคำ", "ตักข้าวสวยร้อนๆ ใส่จาน วางผักกวางตุ้งลวก", "จัดเรียงชิ้นเป็ดย่างลงบนข้าว", "ราดน้ำซอสเป็ดใสๆ ที่เคี่ยวจากน้ำซุปและซีอิ๊วให้หนังเป็ดยังคงความตึงและข้าวมีรสชาติ", "เสิร์ฟพร้อมซอสบ๊วยเจี่ยหรือพริกซีอิ๊ว"]
+  },
+  {
+    name: "บะหมี่ผัดสไตล์จีน",
+    image: "",
+    calories: 530,
+    protein: "18g",
+    carbs: "65g",
+    fat: "22g",
+    ingredients: ["เส้นบะหมี่ไข่เส้นแบน 1-2 ก้อน", "เนื้อหมูเส้น 50g", "กุยช่ายขาว ถั่วงอก แครอทซอย", "โชยุ 1 ช้อนโต๊ะ", "ซอสหอยนางรม 1 ช้อนโต๊ะ", "น้ำมันงา 1 ช้อนชา", "กระเทียมสับ"],
+    instructions: ["ลวกเส้นบะหมี่ให้สุก ล้างน้ำเย็นเพื่อหยุดความสุก คลุกน้ำมันเล็กน้อย", "ตั้งกระทะเจียวกระเทียม ผัดหมูเส้นจนสุก", "ใส่แครอท ถั่วงอก และเส้นบะหมี่ลงไปผัด", "ปรุงรสด้วยโชยุ ซอสหอยนางรม ผัดคลุกเคล้าด้วยไฟแรง", "ใส่กุยช่ายขาว หยดน้ำมันงา ผัดเร็วๆ ให้เข้ากันและเส้นมีกลิ่นคั่วกระทะ ปิดไฟ"]
+  },
+  {
+    name: "ติ่มซำเซ็ตรวม",
+    image: "",
+    calories: 380,
+    protein: "20g",
+    carbs: "35g",
+    fat: "18g",
+    ingredients: ["ขนมจีบกุ้ง/หมู 2 ลูก", "ฮะเก๋ากุ้ง 2 ลูก", "ซาลาเปาไส้หมูแดง 1 ลูก", "จิ๊กโฉ่ว (ซอสเปรี้ยวสไตล์จีน)", "พริกน้ำส้มและกระเทียมเจียว"],
+    instructions: ["เรียงขนมจีบ ฮะเก๋า และซาลาเปาลงในเข่งหรือซึ้งนึ่งที่รองด้วยใบตองหรือกระดาษรองนึ่ง", "นำไปนึ่งในน้ำเดือดจัด ประมาณ 8-10 นาที จนแป้งฮะเก๋าใสและติ่มซำสุกร้อน", "โรยกระเทียมเจียวบนขนมจีบเล็กน้อย", "เสิร์ฟร้อนๆ ในเข่ง คู่กับจิ๊กโฉ่วและพริกน้ำส้ม"]
+  },
+  {
+    name: "กระเพาะปลาน้ำแดง",
+    image: "",
+    calories: 230,
+    protein: "15g",
+    carbs: "25g",
+    fat: "8g",
+    ingredients: ["กระเพาะปลาแห้ง (ต้มไล่น้ำมันแล้ว) หั่นชิ้น 1 ถ้วย", "เนื้อไก่ฉีกและไข่นกกระทาต้ม", "เห็ดหอมสไลซ์ 3-4 ดอก", "หน่อไม้เส้น 2 ช้อนโต๊ะ", "น้ำซุปไก่ 2 ถ้วย", "ซีอิ๊วดำ ซอสหอยนางรม โชยุ", "แป้งมันหรือแป้งท้าวผสมน้ำ และ จิ๊กโฉ่ว"],
+    instructions: ["ตั้งน้ำซุปไก่ให้เดือด ใส่เห็ดหอม หน่อไม้ และกระเพาะปลาลงไปต้มให้นุ่ม", "ปรุงรสด้วยซีอิ๊วดำ ซอสหอยนางรม โชยุ ให้ได้รสกลมกล่อมและสีน้ำตาลสวย", "ใส่เนื้อไก่ฉีกและไข่นกกระทา", "ค่อยๆ เทแป้งละลายน้ำลงไป คนตลอดเวลาจนซุปเหนียวข้น", "ตักใส่ชาม โรยพริกไทย ผักชี เสิร์ฟคู่กับจิ๊กโฉ่ว"]
+  },
+  {
+    name: "โจ๊กหมูใส่ไข่",
+    image: "",
+    calories: 360,
+    protein: "18g",
+    carbs: "45g",
+    fat: "12g",
+    ingredients: ["ปลายข้าวหอมมะลิต้มเปื่อย 1 ถ้วยใหญ่", "หมูสับปั้นก้อนปรุงรส 50g", "ตับหมูต้มหั่นชิ้นบาง", "ไข่ไก่ลวก 1 ฟอง", "ซีอิ๊วขาวและพริกไทยป่น", "ขิงซอยและต้นหอมผักชี"],
+    instructions: ["นำปลายข้าวที่ต้มจนเปื่อยมาเคี่ยวกับน้ำซุปกระดูกหมูให้เนื้อเนียนละเอียด", "ใส่หมูสับปั้นก้อนลงไปต้มในโจ๊กจนสุก", "ตักโจ๊กร้อนๆ ใส่ชาม ตอกไข่ลวกและตับหมูวางลงไป", "เหยาะซีอิ๊วขาวและพริกไทยป่นตามชอบ", "โรยหน้าด้วยขิงซอย ต้นหอม ผักชี และปาท่องโก๋กรอบ"]
+  },
+  {
+    name: "ข้าวต้มปลา",
+    image: "",
+    calories: 320,
+    protein: "22g",
+    carbs: "40g",
+    fat: "8g",
+    ingredients: ["ข้าวสวยหรือข้าวต้ม 1 ถ้วย", "เนื้อปลากะพงหั่นชิ้น 100g", "น้ำซุปกระดูกปลาและกระดูกหมู (ใสและหอม)", "ข่าป่น 1/2 ช้อนชา (ดับคาว)", "ซีอิ๊วขาว เกลือ", "ตั้งฉ่าย กระเทียมเจียว ขึ้นฉ่าย", "เต้าเจี้ยวปรุงรส (น้ำจิ้ม)"],
+    instructions: ["ต้มน้ำซุปให้เดือดจัด ลวกเนื้อปลาพอสุกตึง ตักขึ้นพักไว้เพื่อไม่ให้เนื้อเละ", "นำข้าวสวยลงไปต้มในน้ำซุปพอให้เมล็ดข้าวบานเล็กน้อย ปรุงรสด้วยซีอิ๊วขาวและเกลือ", "ตักข้าวต้มใส่ชาม วางเนื้อปลาลวกด้านบน", "โรยตั้งฉ่าย ข่าป่น กระเทียมเจียว และขึ้นฉ่าย", "เสิร์ฟร้อนๆ คู่กับน้ำจิ้มเต้าเจี้ยว"]
+  },
+  {
+    name: "ข้าวต้มหมูสับ",
+    image: "",
+    calories: 360,
+    protein: "18g",
+    carbs: "45g",
+    fat: "12g",
+    ingredients: ["ข้าวสวย 1 ถ้วย", "หมูสับปรุงรส (ซีอิ๊ว พริกไทย รากผักชี) 80g", "น้ำซุปกระดูกหมู 1.5 ถ้วย", "ซีอิ๊วขาวและเกลือ", "กระเทียมเจียว ต้นหอม ผักชี ตั้งฉ่าย"],
+    instructions: ["ตั้งน้ำซุปให้เดือด ปั้นหมูสับเป็นก้อนๆ ใส่ลงไปต้มจนสุกลอยขึ้นมา ช้อนฟองทิ้ง", "ปรุงรสน้ำซุปด้วยซีอิ๊วขาวและเกลือ", "ใส่ข้าวสวยลงไปต้มต่อสักพักให้ข้าวดูกลืนกับน้ำซุป ปิดไฟ", "ตักใส่ชาม โรยด้วยตั้งฉ่าย กระเทียมเจียว ต้นหอม และผักชี", "โรยพริกไทยป่น เสิร์ฟร้อนๆ"]
+  },
+  {
+    name: "มาโปโทฟู (พร้อมข้าว)",
+    image: "",
+    calories: 560,
+    protein: "24g",
+    carbs: "60g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "เต้าหู้อ่อนหั่นเต๋า 1 หลอด", "หมูสับหรือเนื้อสับ 80g", "ซอสโต้วป้านเจี้ยง (ซอสเต้าเจี้ยวพริกเสฉวน) 2 ช้อนโต๊ะ", "พริกเสฉวน (ฮวาเจียว) ป่น 1 ช้อนชา", "โชยุ น้ำมันงา แป้งมันละลายน้ำ", "กระเทียมสับ ต้นหอมซอย"],
+    instructions: ["ลวกเต้าหู้ในน้ำเกลือเดือด 1 นาทีแล้วตักขึ้น (ช่วยให้เต้าหู้ไม่เละง่าย)", "ตั้งกระทะผัดกระเทียมและเนื้อสับจนสุก ใส่ซอสโต้วป้านเจี้ยงลงผัดให้หอมแตกมัน", "เติมน้ำเปล่าหรือน้ำซุปเล็กน้อย ต้มให้เดือด ปรุงรสด้วยโชยุ", "ใส่เต้าหู้ลงไป ค่อยๆ คนอย่างเบามือเพื่อไม่ให้เต้าหู้เละ", "ใส่แป้งละลายน้ำให้ซอสข้น หยดน้ำมันงา โรยพริกเสฉวนป่นและต้นหอม ตักราดข้าวสวย"]
+  },
+  {
+    name: "ข้าวกะเพราเนื้อสับ",
+    image: "",
+    calories: 610,
+    protein: "30g",
+    carbs: "55g",
+    fat: "30g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อวัวสับ 150g", "ใบกะเพรา 1 ถ้วย", "พริกขี้หนูและกระเทียมโขลกหยาบ 1.5 ช้อนโต๊ะ", "ซอสหอยนางรม น้ำปลา ซีอิ๊วดำเล็กน้อย", "น้ำตาลทราย 1/2 ช้อนชา", "ไข่เป็ดดาว 1 ฟอง"],
+    instructions: ["ตั้งกระทะใส่น้ำมัน ใช้ไฟกลาง ทอดไข่เป็ดดาวให้กรอบนอกเยิ้มใน ตักพักไว้", "ใช้กระทะเดิม ผัดพริกกระเทียมให้หอมและฉุน", "ใส่เนื้อสับลงไปผัดยีให้แตกและรวนจนเนื้อเริ่มเปลี่ยนสีและส่งกลิ่นหอมเนื้อ", "ปรุงรสด้วยซอสหอยนางรม น้ำปลา ซีอิ๊วดำ (แต่งสี) และน้ำตาล", "เร่งไฟแรง ใส่ใบกะเพรา ผัดเร็วๆ ให้สลด ปิดไฟ ตักราดข้าวพร้อมไข่ดาว"]
+  },
+  {
+    name: "ข้าวหมูกระเทียมพริกไทย",
+    image: "",
+    calories: 520,
+    protein: "26g",
+    carbs: "55g",
+    fat: "22g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อหมูหั่นชิ้น (สันคอหรือสะโพก) 150g", "กระเทียมไทยสับละเอียด 3 ช้อนโต๊ะ", "พริกไทยป่น 1 ช้อนชา", "รากผักชีโขลก 1 ราก", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย", "แตงกวา และซอสพริก"],
+    instructions: ["หมักหมูกับรากผักชี ซอสหอยนางรม ซีอิ๊วขาว น้ำตาล และพริกไทย ทิ้งไว้ 15 นาที", "ตั้งกระทะเจียวกระเทียมสับในน้ำมันจนเหลืองกรอบ ตักกระเทียมเจียวพักไว้", "ใช้กระทะเดิมน้ำมันเจียวกระเทียม นำหมูหมักลงไปผัดด้วยไฟกลาง", "ผัดจนหมูสุกและน้ำซอสเริ่มแห้งงวดเคลือบชิ้นหมู", "ตักราดข้าวสวย โรยด้วยกระเทียมเจียวที่พักไว้ ทานคู่กับแตงกวา"]
+  },
+  {
+    name: "ข้าวไก่ผัดเม็ดมะม่วงหิมพานต์",
+    image: "",
+    calories: 605,
+    protein: "28g",
+    carbs: "60g",
+    fat: "28g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่หั่นชิ้น 120g (คลุกแป้งทอดกรอบ)", "เม็ดมะม่วงหิมพานต์ทอด 3 ช้อนโต๊ะ", "พริกแห้งทอด หอมใหญ่ พริกหวาน ต้นหอม", "น้ำพริกเผา 1 ช้อนโต๊ะ", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย", "กระเทียมสับ"],
+    instructions: ["นำไก่ชุบแป้งบางๆ ไปทอดจนเหลืองกรอบ ตักขึ้นพักไว้", "ตั้งกระทะผัดกระเทียมให้หอม ใส่น้ำพริกเผาลงผัดให้กระจายตัว", "ใส่หอมใหญ่และพริกหวานลงไปผัด ปรุงรสด้วยซอสหอยนางรม ซีอิ๊วขาว น้ำตาล", "นำไก่ทอด เม็ดมะม่วงหิมพานต์ และพริกแห้งทอดลงไปคลุกเคล้ากับซอส", "โรยต้นหอม ผัดให้เข้ากัน ปิดไฟ ตักราดข้าวสวย"]
+  },
+  {
+    name: "ข้าวปลาหมึกผัดไข่เค็ม",
+    image: "",
+    calories: 555,
+    protein: "25g",
+    carbs: "55g",
+    fat: "26g",
+    ingredients: ["ข้าวสวย 1 จาน", "ปลาหมึกกล้วยหั่นแว่น 150g", "ไข่แดงเค็มนึ่งสุก 2 ฟอง", "หอมใหญ่ พริกชี้ฟ้า ต้นหอม ขึ้นฉ่าย", "กระเทียมสับ", "น้ำพริกเผา 1/2 ช้อนโต๊ะ", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย"],
+    instructions: ["บี้ไข่แดงเค็มให้ละเอียด ผสมกับน้ำพริกเผา น้ำเปล่าเล็กน้อย และเครื่องปรุงรส คนให้เป็นเนื้อซอสไข่เค็ม", "ตั้งกระทะน้ำมัน ผัดกระเทียมและหอมใหญ่ให้หอม", "ใส่ปลาหมึกลงไปผัดพอสะดุ้งไฟ (อย่าผัดนานปลาหมึกจะเหนียว)", "เทซอสไข่เค็มที่ผสมไว้ลงไป ผัดให้ไข่เค็มเคลือบชิ้นปลาหมึกจนเกิดฟองปุดๆ", "ใส่ต้นหอม ขึ้นฉ่าย พริกชี้ฟ้า ผัด 2-3 ที ปิดไฟตักราดข้าว"]
+  },
+  {
+    name: "ข้าวผัดน้ำพริกลงเรือ",
+    image: "",
+    calories: 520,
+    protein: "20g",
+    carbs: "65g",
+    fat: "20g",
+    ingredients: ["ข้าวสวย 1 จาน", "น้ำพริกลงเรือ 2 ช้อนโต๊ะ", "หมูหวาน 3 ช้อนโต๊ะ", "ไข่เค็ม 1/2 ฟอง", "ปลาดุกฟูหรือกระเทียมดอง (เครื่องเคียง)", "น้ำมันพืชเล็กน้อย", "ผักสดเคียง (แตงกวา, ถั่วฝักยาว, ขมิ้นขาว)"],
+    instructions: ["ตั้งกระทะใส่น้ำมันเล็กน้อย นำน้ำพริกลงเรือลงไปผัดให้หอม", "นำข้าวสวยลงไปผัดคลุกเคล้าให้เข้ากับน้ำพริกจนสีข้าวสม่ำเสมอ", "ตักข้าวผัดใส่จาน จัดทรงให้สวยงาม", "วางไข่เค็ม หมูหวาน และปลาดุกฟู ไว้ด้านข้างข้าวหรือโรยหน้า", "เสิร์ฟพร้อมผักสดตามชอบ"]
+  },
+  {
+    name: "ข้าวผัดปลาสลิด",
+    image: "",
+    calories: 525,
+    protein: "22g",
+    carbs: "60g",
+    fat: "22g",
+    ingredients: ["ข้าวสวยแช่เย็น 1 จาน", "ปลาสลิดทอดกรอบแกะเนื้อ 50g", "ไข่ไก่ 1 ฟอง", "กระเทียมสับ 1 ช้อนโต๊ะ", "พริกขี้หนูซอยและต้นหอมซอย", "ซีอิ๊วขาวและน้ำตาลทราย", "มะนาวฝานและแตงกวา"],
+    instructions: ["นำเนื้อปลาสลิดที่ทอดแล้วมาฉีกเป็นชิ้นเล็กๆ", "ตั้งกระทะเจียวกระเทียมให้หอม ตอกไข่ลงไปยีให้สุก", "ใส่ข้าวสวยลงไปผัด ปรุงรสด้วยซีอิ๊วขาวและน้ำตาล (ระวังเค็มเพราะปลาสลิดเค็มอยู่แล้ว)", "ใส่เนื้อปลาสลิดทอด (แบ่งไว้โรยหน้าเล็กน้อย) และพริกขี้หนูซอยลงไปผัดด้วยไฟแรง", "โรยต้นหอม ผัดให้เข้ากัน ตักใส่จาน โรยปลาสลิดกรอบด้านบน เสิร์ฟพร้อมมะนาว"]
+  },
+  {
+    name: "ข้าวเนื้อทอดกระเทียม",
+    image: "",
+    calories: 575,
+    protein: "32g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อวัวสันในหรือเนื้อหนอกหั่นชิ้น 150g", "กระเทียมไทยสับหยาบ 3 ช้อนโต๊ะ", "พริกไทยดำป่น 1 ช้อนชา", "ซอสหอยนางรม ซีอิ๊วขาว ซอสปรุงรส", "น้ำมันพืช 2 ช้อนโต๊ะ"],
+    instructions: ["หมักเนื้อวัวกับซอสหอยนางรม ซีอิ๊วขาว ซอสปรุงรส และพริกไทยดำ ทิ้งไว้ 15 นาที", "เจียวกระเทียมในน้ำมันจนเหลืองกรอบ ตักขึ้นพักไว้ให้สะเด็ดน้ำมัน", "นำเนื้อที่หมักไว้ลงไปผัดในกระทะที่มีน้ำมันกระเทียมเจียว ใช้ไฟแรง", "ผัดเร็วๆ ให้เนื้อสุกตามระดับที่ชอบ (ไม่ควรผัดนานเกินไปเนื้อจะเหนียว)", "ตักราดข้าวสวยร้อนๆ โรยด้วยกระเทียมเจียวกรอบๆ ด้านบน"]
+  },
+  {
+    name: "ข้าวหน้าเนื้อตุ๋น",
+    image: "",
+    calories: 560,
+    protein: "30g",
+    carbs: "60g",
+    fat: "22g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อน่องลายหรือเอ็นเนื้อตุ๋น 150g", "น้ำซุปเนื้อตุ๋น (หอมเครื่องยาจีนและซีอิ๊ว) 1/2 ถ้วย", "คะน้าหรือผักกาดหอมลวก", "กระเทียมเจียว ผักชี", "พริกน้ำส้มสำหรับทานคู่"],
+    instructions: ["อุ่นเนื้อตุ๋นและน้ำซุปที่เคี่ยวจนเปื่อยและรสชาติเข้มข้นให้ร้อน", "ตักข้าวสวยร้อนๆ ใส่จาน วางคะน้าหรือผักกาดหอมลวกไว้ด้านข้าง", "ตักชิ้นเนื้อตุ๋นและเอ็นตุ๋นวางเรียงบนข้าวสวย", "ราดน้ำซุปเนื้อตุ๋นลงไปให้ชุ่มข้าวเล็กน้อย", "โรยหน้าด้วยกระเทียมเจียว ผักชี เสิร์ฟพร้อมพริกน้ำส้ม"]
+  },
+  {
+    name: "ข้าวตับผัดกระเทียม",
+    image: "",
+    calories: 495,
+    protein: "28g",
+    carbs: "55g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "ตับหมูหั่นชิ้นบาง 120g (ล้างเลือดออกให้สะอาด)", "กระเทียมไทยสับ 2 ช้อนโต๊ะ", "พริกไทยป่น", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย", "น้ำมันพืช 1.5 ช้อนโต๊ะ"],
+    instructions: ["นำตับหมูไปคลุกกับนมสดเล็กน้อยเพื่อลดกลิ่นคาวและทำให้นุ่ม ล้างออกแล้วซับให้แห้ง", "ตั้งกระทะเจียวกระเทียมให้พอเหลืองหอม", "ใส่ตับหมูลงไปผัด ปรุงรสด้วยซอสหอยนางรม ซีอิ๊วขาว และน้ำตาลอย่างรวดเร็ว", "เร่งไฟแรง ผัดเร็วๆ พอให้ตับสุกเด้ง (หากผัดนานตับจะแข็งและกระด้าง)", "ปิดไฟ ตักราดบนข้าวสวย โรยพริกไทยป่น"]
+  },
+  {
+    name: "ข้าวไข่เจียวกุ้งสับ",
+    image: "",
+    calories: 575,
+    protein: "22g",
+    carbs: "50g",
+    fat: "32g",
+    ingredients: ["ข้าวสวย 1 จาน", "ไข่ไก่ 2 ฟอง", "กุ้งสดแกะเปลือกสับหยาบ 80g", "น้ำปลา 1 ช้อนชา", "พริกไทยป่นเล็กน้อย", "ต้นหอมซอย (ถ้าชอบ)", "น้ำมันพืชสำหรับทอดไข่ (ใช้น้ำมันเยอะเพื่อให้ไข่ฟู)"],
+    instructions: ["ตอกไข่ใส่ชาม ตีให้เข้ากันจนเกิดฟอง", "ใส่กุ้งสับ น้ำปลา พริกไทยป่น และต้นหอมซอย ตีส่วนผสมให้เข้ากัน", "ตั้งกระทะใส่น้ำมัน รอจนน้ำมันร้อนจัด (มีควันบางๆ)", "เทไข่เจียวลงไปตรงกลางกระทะ ทอดจนด้านล่างเหลืองกรอบและฟูขึ้น", "กลับด้านไข่เจียว ทอดจนกุ้งสุกและเหลืองกรอบทั้งสองด้าน ตักสะเด็ดน้ำมันโปะข้าวสวย"]
+  },
+  {
+    name: "ยำวุ้นเส้นทะเล",
+    image: "",
+    calories: 305,
+    protein: "20g",
+    carbs: "45g",
+    fat: "5g",
+    ingredients: ["วุ้นเส้นแช่น้ำให้นิ่ม 1 ถ้วย", "กุ้งสดและปลาหมึกหั่นชิ้น 100g", "หมูสับรวนสุก 2 ช้อนโต๊ะ", "หอมใหญ่ซอย มะเขือเทศ ขึ้นฉ่าย", "พริกขี้หนูสับ 1 ช้อนโต๊ะ", "น้ำปลา 2 ช้อนโต๊ะ", "น้ำมะนาว 2.5 ช้อนโต๊ะ", "น้ำตาลทราย 1 ช้อนโต๊ะ"],
+    instructions: ["ลวกวุ้นเส้น กุ้ง และปลาหมึกในน้ำเดือดจนสุก ตักขึ้นสะเด็ดน้ำพักไว้", "ผสมน้ำยำโดยใส่พริกขี้หนู น้ำปลา น้ำมะนาว และน้ำตาล คนให้น้ำตาลละลาย", "ใส่หมูสับรวนและน้ำรวนหมูเล็กน้อยลงในน้ำยำ", "นำวุ้นเส้น กุ้ง ปลาหมึก หอมใหญ่ และมะเขือเทศลงไปคลุกเคล้ากับน้ำยำ", "โรยขึ้นฉ่าย คลุกเบาๆ อีกครั้ง ตักใส่จานเสิร์ฟ"]
+  },
+  {
+    name: "ยำมาม่าหมูสับ",
+    image: "",
+    calories: 425,
+    protein: "18g",
+    carbs: "55g",
+    fat: "15g",
+    ingredients: ["เส้นบะหมี่กึ่งสำเร็จรูป 1 ห่อ", "หมูสับรวนสุก 50g", "หมูยอหั่นชิ้น 50g", "กะหล่ำปลีซอยและแครอทขูดฝอย", "หอมใหญ่ซอย มะเขือเทศ ขึ้นฉ่าย", "น้ำยำ (พริกสับ, น้ำปลา, น้ำมะนาว, น้ำตาล)", "เครื่องปรุงบะหมี่กึ่งสำเร็จรูป (ถ้าชอบ)"],
+    instructions: ["ลวกเส้นบะหมี่กึ่งสำเร็จรูป หมูยอ และกะหล่ำปลีให้สุก สะเด็ดน้ำ", "ปรุงน้ำยำด้วยพริก น้ำมะนาว น้ำปลา น้ำตาล และผงปรุงรสบะหมี่เล็กน้อย", "ใส่หมูสับรวนลงในชามผสมน้ำยำ", "ใส่เส้นบะหมี่ หมูยอ และผักที่เหลือทั้งหมดลงไป", "คลุกเคล้าให้เครื่องยำเข้ากันดี ตักใส่จานพร้อมทาน"]
+  },
+  {
+    name: "ส้มตำไทยไข่เค็ม",
+    image: "",
+    calories: 430,
+    protein: "15g",
+    carbs: "65g",
+    fat: "12g",
+    ingredients: ["มะละกอสับหรือขูดเส้น 1 ถ้วย", "แครอทขูดเส้นเล็กน้อย", "พริกขี้หนู 3-5 เม็ด และกระเทียม 3 กลีบ", "ถั่วฝักยาวหั่นท่อน และ มะเขือเทศสีดา", "กุ้งแห้ง 1 ช้อนโต๊ะ และ ถั่วลิสงคั่ว 1 ช้อนโต๊ะ", "น้ำตาลปี๊บ 1 ช้อนโต๊ะ", "น้ำปลา 1 ช้อนโต๊ะ", "น้ำมะนาว 1.5 ช้อนโต๊ะ", "ไข่เค็มต้มสุก 1 ฟอง ผ่าซีก"],
+    instructions: ["โขลกพริกกับกระเทียมพอหยาบ ใส่ถั่วฝักยาวลงไปตำเบาๆ ให้พอแตก", "ใส่น้ำตาลปี๊บ น้ำปลา และน้ำมะนาว ใช้สากคนให้น้ำตาลละลาย", "ใส่มะเขือเทศสีดา กุ้งแห้ง และถั่วลิสงคั่ว ตำคลุกเคล้าเบาๆ", "เส้นมะละกอและแครอทลงไป คลุกเคล้าให้เข้ากับน้ำส้มตำ", "ตักใส่จาน วางไข่เค็มผ่าซีกไว้ด้านข้าง เสิร์ฟพร้อมผักเคียง"]
+  },
+  {
+    name: "น้ำตกหมู (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 490,
+    protein: "28g",
+    carbs: "50g",
+    fat: "20g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "หมูย่าง (สันคอ) หั่นชิ้น 100g", "พริกป่น 1 ช้อนโต๊ะ", "ข้าวคั่ว 1 ช้อนโต๊ะ", "น้ำปลา 1 ช้อนโต๊ะ", "น้ำมะนาว 1.5 ช้อนโต๊ะ", "หอมแดงซอย ต้นหอม ผักชีฝรั่ง และใบสะระแหน่"],
+    instructions: ["นำหมูย่างที่หั่นไว้ใส่ในหม้อหรือชามผสม เติมน้ำซุปเล็กน้อยตั้งไฟรวนพออุ่น", "ปรุงรสด้วยพริกป่น น้ำปลา และน้ำมะนาว คนให้เข้ากัน ชิมรสตามชอบ", "ใส่ข้าวคั่ว หอมแดงซอย ต้นหอม และผักชีฝรั่ง", "คลุกเคล้าส่วนผสมทั้งหมดให้เข้ากัน", "ตักใส่จาน โรยหน้าด้วยใบสะระแหน่ เสิร์ฟพร้อมข้าวเหนียวร้อนๆ"]
+  },
+  {
+    name: "ลาบหมู (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 465,
+    protein: "26g",
+    carbs: "50g",
+    fat: "18g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "หมูสับ 100g", "หนังหมูและตับหมูต้มสุกหั่นชิ้นเล็ก 50g", "พริกป่น 1 ช้อนโต๊ะ", "ข้าวคั่ว 1.5 ช้อนโต๊ะ", "น้ำปลา 1 ช้อนโต๊ะ", "น้ำมะนาว 1.5 ช้อนโต๊ะ", "หอมแดงซอย ต้นหอม ผักชีฝรั่ง ผักชี และใบสะระแหน่"],
+    instructions: ["รวนหมูสับในหม้อด้วยน้ำเปล่าเล็กน้อยจนหมูสุก (ระวังอย่าให้แห้งเกินไป)", "ใส่หนังหมูและตับต้มสุกลงไปผสม ปิดไฟ", "ปรุงรสด้วยพริกป่น น้ำปลา และน้ำมะนาว คลุกเคล้าให้เข้ากัน", "ใส่ข้าวคั่ว หอมแดง และผักซอยทั้งหมดลงไป", "คลุกเบาๆ ให้เข้ากัน ตักใส่จาน ตกแต่งด้วยใบสะระแหน่ ทานคู่กับข้าวเหนียว"]
+  },
+  {
+    name: "ไก่ย่างครึ่งตัว (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 585,
+    protein: "45g",
+    carbs: "45g",
+    fat: "25g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "ไก่ครึ่งตัว (ประมาณ 300g-400g)", "รากผักชี กระเทียม พริกไทย โขลกรวมกัน 2 ช้อนโต๊ะ", "ซอสหอยนางรม ซีอิ๊วขาว น้ำปลา น้ำตาลปี๊บ", "ผงขมิ้น 1 ช้อนชา", "นมสดหรือกะทิ (เพิ่มความนุ่ม) 2 ช้อนโต๊ะ"],
+    instructions: ["หมักไก่ด้วยเครื่องที่โขลกไว้ เครื่องปรุงรส ผงขมิ้น และนมสด นวดให้ซึมเข้าเนื้อ ทิ้งไว้ 2-3 ชม.", "นำไก่ไปย่างบนเตาถ่านด้วยไฟอ่อนถึงกลาง หมั่นกลับด้านและพรมน้ำหมักที่เหลือ", "ย่างจนหนังไก่เหลืองกรอบและเนื้อข้างในสุกทั่ว", "สับไก่เป็นชิ้นใส่จาน", "เสิร์ฟคู่กับข้าวเหนียวร้อนๆ และน้ำจิ้มแจ่ว"]
+  },
+  {
+    name: "คอหมูย่าง (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 595,
+    protein: "25g",
+    carbs: "45g",
+    fat: "35g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "เนื้อคอหมู (มีมันแทรก) 200g", "ซอสหอยนางรม 1 ช้อนโต๊ะ", "ซีอิ๊วขาว 1 ช้อนโต๊ะ", "น้ำตาลปี๊บ 1 ช้อนชา", "พริกไทยป่น 1 ช้อนชา", "รากผักชีสับละเอียด 1 ช้อนโต๊ะ"],
+    instructions: ["หมักเนื้อคอหมูกับรากผักชี ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลปี๊บ และพริกไทย", "นวดให้เครื่องปรุงซึมเข้าเนื้อ หมักทิ้งไว้ในตู้เย็นอย่างน้อย 1 ชั่วโมง", "นำคอหมูไปย่างไฟกลางค่อนอ่อนให้มันหยดและเกรียมสุก", "เมื่อสุกดีแล้ว นำมาหั่นแฉลบเป็นชิ้นพอดีคำ", "จัดใส่จาน เสิร์ฟพร้อมข้าวเหนียวและน้ำจิ้มแจ่วรสเด็ด"]
+  },
+  {
+    name: "ซุปหน่อไม้ (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 295,
+    protein: "8g",
+    carbs: "55g",
+    fat: "5g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "หน่อไม้รวกขูดเส้นต้มสุก 1 ถ้วย", "น้ำใบย่านางข้นๆ 1/2 ถ้วย", "น้ำปลาร้าต้มสุก 2 ช้อนโต๊ะ", "พริกป่น ข้าวคั่ว น้ำปลา น้ำมะนาว", "หอมแดงซอย ต้นหอม ผักชีฝรั่ง และใบสะระแหน่"],
+    instructions: ["นำหน่อไม้ต้มจืดแล้วมาต้มกับน้ำใบย่านางและน้ำปลาร้าจนเดือดและน้ำงวดลงเล็กน้อย", "ยกลงจากเตา ปรุงรสด้วยพริกป่น น้ำมะนาว และน้ำปลาเพิ่มเติมตามชอบ", "ใส่ข้าวคั่ว หอมแดงซอย ต้นหอม และผักชีฝรั่ง", "คลุกเคล้าส่วนผสมทั้งหมดให้เข้ากันชิมรสให้กลมกล่อม", "ตักใส่จาน โรยหน้าด้วยใบสะระแหน่ ทานกับข้าวเหนียว"]
+  },
+  {
+    name: "ต้มแซ่บกระดูกอ่อน",
+    image: "",
+    calories: 480,
+    protein: "25g",
+    carbs: "50g",
+    fat: "20g",
+    ingredients: ["ซี่โครงหมูกระดูกอ่อน 200g", "ข่าหั่นแว่น ตะไคร้ทุบ ใบมะกรูดฉีก", "หอมแดงทุบ 3-4 หัว", "พริกขี้หนูแห้งคั่วทุบ 5-6 เม็ด", "พริกป่น 1 ช้อนโต๊ะ", "น้ำปลา น้ำมะนาว น้ำมะขามเปียก", "ข้าวคั่วและผักชีฝรั่งซอย"],
+    instructions: ["ตั้งน้ำให้เดือด ใส่ข่า ตะไคร้ ใบมะกรูด และหอมแดงลงไปต้มให้หอม", "ใส่กระดูกอ่อนหมูลงไป ตุ๋นไฟอ่อนประมาณ 40-60 นาทีจนกระดูกเปื่อย", "ปรุงรสน้ำซุปด้วยน้ำมะขามเปียกและน้ำปลา", "ปิดไฟ เติมพริกแห้งคั่ว พริกป่น และบีบน้ำมะนาว", "โรยข้าวคั่วและผักชีฝรั่งซอย ตักเสิร์ฟร้อนๆ"]
+  },
+  {
+    name: "แกงอ่อมหมู (พร้อมข้าวเหนียว)",
+    image: "",
+    calories: 440,
+    protein: "24g",
+    carbs: "45g",
+    fat: "18g",
+    ingredients: ["ข้าวเหนียวนึ่ง 1 ปั้น", "เนื้อหมูหั่นชิ้น 100g", "ผักชีลาว กะหล่ำปลี ถั่วฝักยาว มะเขือเปราะ ต้นหอม", "เครื่องแกงอ่อม (พริกแห้ง หอมแดง ตะไคร้ ข้าวเบือ โขลกรวมกัน)", "น้ำปลาร้าต้มสุก 2 ช้อนโต๊ะ", "น้ำปลา 1 ช้อนโต๊ะ"],
+    instructions: ["ตั้งหม้อใส่น้ำเล็กน้อย นำเครื่องแกงอ่อมและเนื้อหมูลงไปรวนจนหมูเริ่มสุก", "เติมน้ำเปล่าหรือน้ำซุปลงไปพอท่วมเนื้อหมู ปรุงรสด้วยน้ำปลาร้าและน้ำปลา", "เมื่อน้ำเดือด ใส่มะเขือเปราะ ถั่วฝักยาว และกะหล่ำปลีลงไปต้มให้นุ่ม", "ใส่ข้าวเบือ (ข้าวเหนียวแช่น้ำโขลก) เพื่อให้น้ำแกงข้นขึ้น", "เมื่อผักสุกดี ใส่ผักชีลาวและต้นหอม ปิดไฟทันที ตักเสิร์ฟคู่ข้าวเหนียว"]
+  },
+  {
+    name: "ข้าวราดผัดมะเขือยาวหมูสับ",
+    image: "",
+    calories: 490,
+    protein: "18g",
+    carbs: "55g",
+    fat: "22g",
+    ingredients: ["ข้าวสวย 1 จาน", "มะเขือยาวหั่นท่อน (แช่น้ำเกลือไม่ให้ดำ) 1 ลูก", "หมูสับ 80g", "ใบโหระพา 1/2 ถ้วย", "พริกขี้หนูและกระเทียมสับ 1 ช้อนโต๊ะ", "เต้าเจี้ยว 1 ช้อนโต๊ะ", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย", "น้ำมันพืช"],
+    instructions: ["นำมะเขือยาวไปทอดในน้ำมันร้อนจัดให้ผิวนอกสุกสีสวย ตักขึ้นสะเด็ดน้ำมัน (หรือลวกน้ำร้อนจัดถ้าไม่อยากทอด)", "ตั้งกระทะผัดพริกและกระเทียมให้หอม ใส่หมูสับลงผัดจนสุก", "ปรุงรสด้วยเต้าเจี้ยว ซอสหอยนางรม ซีอิ๊วขาว และน้ำตาลทราย", "ใส่มะเขือยาวที่เตรียมไว้ลงไปผัดคลุกเคล้าให้เข้ากับน้ำซอส", "ใส่ใบโหระพา ผัดเร็วๆ ปิดไฟ ตักราดบนข้าวสวย"]
+  },
+  {
+    name: "ข้าวราดผัดดอกกุยช่ายหมูกรอบ",
+    image: "",
+    calories: 440,
+    protein: "26g",
+    carbs: "50g",
+    fat: "15g",
+    ingredients: ["ข้าวสวย 1 จาน", "ดอกกุยช่ายหั่นท่อน 1.5 ถ้วย", "หมูกรอบหั่นชิ้น 80g", "กระเทียมสับ 1 ช้อนโต๊ะ", "พริกขี้หนูบุบ 3-4 เม็ด", "ซอสหอยนางรม ซีอิ๊วขาว น้ำตาลทราย", "น้ำมันพืชเล็กน้อย"],
+    instructions: ["เตรียมดอกกุยช่าย พริก กระเทียม และเครื่องปรุงทั้งหมดใส่จานไว้", "ตั้งกระทะใส่น้ำมันใช้ไฟแรงจัด รอจนกระทะร้อนมีควันอ่อนๆ", "เทดอกกุยช่ายและเครื่องปรุงลงไปผัดอย่างรวดเร็ว (ผัดไฟแดง) เติมน้ำเปล่าเล็กน้อย", "เมื่อดอกกุยช่ายเริ่มสลด ใส่หมูกรอบลงไปคลุกเคล้า 1-2 ครั้ง", "ปิดไฟทันทีเพื่อรักษาความกรอบของหมูกรอบ ตักราดข้าวสวย"]
+  },
+  {
+    name: "ข้าวราดผัดวุ้นเส้นใส่ไข่",
+    image: "",
+    calories: 480,
+    protein: "15g",
+    carbs: "65g",
+    fat: "18g",
+    ingredients: ["ข้าวสวย 1 จาน", "วุ้นเส้นแช่น้ำตัดสั้น 1 ถ้วย", "ไข่ไก่ 2 ฟอง", "กะหล่ำปลีซอย แครอทซอย หอมใหญ่ มะเขือเทศ", "หมูชิ้น 50g", "กระเทียมสับ", "ซอสหอยนางรม ซีอิ๊วขาว ซอสปรุงรส น้ำตาล พริกไทย"],
+    instructions: ["เจียวกระเทียมให้หอม ใส่หมูชิ้นลงผัดจนสุก", "ใส่กะหล่ำปลี แครอท หอมใหญ่ ลงผัดให้ผักเริ่มนุ่ม", "เขี่ยผักไว้ข้างกระทะ ตอกไข่ลงไปยีให้สุกเป็นลิ่ม", "ใส่วุ้นเส้นลงไป ปรุงรสด้วยซอสทั้งหมด เติมน้ำเล็กน้อยให้วุ้นเส้นสุกนุ่ม", "ใส่มะเขือเทศ ต้นหอม ผัดให้เข้ากันจนน้ำแห้ง ตักราดข้าวสวย"]
+  },
+  {
+    name: "ข้าวราดไก่ผัดขิง",
+    image: "",
+    calories: 435,
+    protein: "25g",
+    carbs: "50g",
+    fat: "15g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่หั่นชิ้น 100g", "ขิงซอยเป็นเส้น 1/2 ถ้วย", "เห็ดหูหนูหั่นชิ้น หอมใหญ่ ต้นหอม", "กระเทียมสับ", "ซอสหอยนางรม ซีอิ๊วขาว เต้าเจี้ยว (เล็กน้อย) น้ำตาลทราย", "น้ำมันพืช"],
+    instructions: ["ตั้งกระทะผัดกระเทียมและขิงซอยบางส่วนให้หอม", "ใส่เนื้อไก่ลงผัดจนสุกตึง", "ใส่ขิงซอยที่เหลือ หอมใหญ่ และเห็ดหูหนูลงไปผัด", "ปรุงรสด้วยซอสหอยนางรม ซีอิ๊วขาว เต้าเจี้ยว และน้ำตาลทราย", "ผัดให้เข้ากัน ใส่ต้นหอมหั่นท่อน ปิดไฟ ตักราดบนข้าวสวย"]
+  },
+  {
+    name: "ข้าวราดปลาดุกผัดเผ็ด",
+    image: "",
+    calories: 535,
+    protein: "22g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["ข้าวสวย 1 จาน", "ปลาดุกทอดกรอบหั่นชิ้น 100g", "พริกแกงเผ็ด 1.5 ช้อนโต๊ะ", "กระชายซอย พริกไทยอ่อน ใบมะกรูดฉีก พริกชี้ฟ้าแดง", "ใบกะเพรา", "ซอสหอยนางรม น้ำปลา น้ำตาลปี๊บ", "น้ำมันพืช"],
+    instructions: ["ผัดพริกแกงเผ็ดกับน้ำมันด้วยไฟกลางจนหอมฉุน", "ปรุงรสด้วยน้ำปลา น้ำตาลปี๊บ และซอสหอยนางรม เติมน้ำเปล่าเล็กน้อยให้เป็นซอสขลุกขลิก", "ใส่กระชาย พริกไทยอ่อน และใบมะกรูดลงผัดให้หอม", "นำปลาดุกทอดกรอบลงไปคลุกเคล้ากับซอสอย่างเบามือและรวดเร็ว", "ใส่พริกชี้ฟ้าและใบกะเพรา ผัดให้เข้ากัน ปิดไฟตักราดข้าว"]
+  },
+  {
+    name: "ข้าวราดแกงส้มชะอมกุ้ง",
+    image: "",
+    calories: 495,
+    protein: "24g",
+    carbs: "55g",
+    fat: "20g",
+    ingredients: ["ข้าวสวย 1 จาน", "ไข่เจียวชะอมหั่นชิ้น 1 ถ้วย", "กุ้งสด 3-4 ตัว", "พริกแกงส้ม 2 ช้อนโต๊ะ", "เนื้อปลาต้มสุกโขลกผสมพริกแกง 2 ช้อนโต๊ะ", "น้ำมะขามเปียก 3 ช้อนโต๊ะ", "น้ำปลา น้ำตาลปี๊บ"],
+    instructions: ["ต้มน้ำเปล่าหรือน้ำซุปให้เดือด ละลายพริกแกงส้มที่โขลกกับเนื้อปลาลงไป", "ปรุงรสด้วยน้ำมะขามเปียก น้ำปลา และน้ำตาลปี๊บ ชิมรสให้เปรี้ยว หวาน เค็มกลมกล่อม", "เมื่อน้ำแกงเดือดจัด ใส่กุ้งสดลงไปต้มพอสุก", "นำไข่เจียวชะอมใส่ชาม หรือใส่ลงหม้อแล้วปิดไฟทันทีเพื่อไม่ให้ไข่เละ", "ตักแกงส้มชะอมกุ้งราดลงบนข้าวสวยร้อนๆ"]
+  },
+  {
+    name: "ข้าวราดต้มข่าไก่",
+    image: "",
+    calories: 540,
+    protein: "22g",
+    carbs: "50g",
+    fat: "28g",
+    ingredients: ["ข้าวสวย 1 จาน", "เนื้อไก่หรือสะโพกไก่หั่นชิ้น 100g", "หัวกะทิและหางกะทิ รวม 1.5 ถ้วย", "ข่าอ่อนหั่นแว่น ตะไคร้ทุบ ใบมะกรูดฉีก", "เห็ดนางฟ้าหรือเห็ดฟาง", "พริกขี้หนูบุบ น้ำปลา น้ำมะนาว", "ผักชีสำหรับโรยหน้า"],
+    instructions: ["ต้มหางกะทิกับข่า ตะไคร้ ให้เดือดและหอมสมุนไพร", "ใส่เนื้อไก่ลงไปต้มจนสุก ตามด้วยเห็ดนางฟ้า", "ใส่หัวกะทิลงไป คนให้เข้ากัน (อย่าปล่อยให้เดือดพล่านกะทิจะแตกมัน)", "ปรุงรสด้วยน้ำปลา ปิดไฟ แล้วจึงบีบน้ำมะนาวและใส่พริกขี้หนูบุบ ชิมให้ได้รสเปรี้ยวเค็มมัน", "ตักต้มข่าราดข้าวสวย โรยหน้าด้วยผักชี"]
+  },
+  {
+    name: "ข้าวราดมัสมั่นไก่",
+    image: "",
+    calories: 610,
+    protein: "25g",
+    carbs: "60g",
+    fat: "30g",
+    ingredients: ["ข้าวสวย 1 จาน", "สะโพกไก่หรือน่องไก่ 1 ชิ้น", "มันฝรั่งหั่นชิ้นใหญ่ หอมใหญ่ ถั่วลิสงคั่ว", "พริกแกงมัสมั่น 2 ช้อนโต๊ะ", "หัวกะทิและหางกะทิ", "น้ำมะขามเปียก น้ำตาลปี๊บ น้ำปลา"],
+    instructions: ["เคี่ยวหัวกะทิให้แตกมัน ใส่พริกแกงมัสมั่นลงผัดให้หอม", "ใส่เนื้อไก่ลงไปผัดให้เข้ากับเครื่องแกง เติมหางกะทิลงไปต้ม", "ใส่มันฝรั่ง หอมใหญ่ และถั่วลิสงคั่ว ตุ๋นด้วยไฟอ่อน", "ปรุงรสด้วยน้ำมะขามเปียก น้ำตาลปี๊บ และน้ำปลา ให้ได้รสหวานนำ เปรี้ยว เค็มตาม", "เคี่ยวจนไก่และมันฝรั่งเปื่อยนุ่ม น้ำแกงข้น ตักราดบนข้าวสวย"]
+  },
+  {
+    name: "พายเนื้อ (Meat Pie)",
+    image: "",
+    calories: 540,
+    protein: "22g",
+    carbs: "45g",
+    fat: "30g",
+    ingredients: ["แป้งพายสำเร็จรูป (Puff Pastry) 1 แผ่น", "เนื้อวัวบด 150g", "หอมใหญ่สับ แครอทเต๋าเล็ก", "ซอสมะเขือเทศ 2 ช้อนโต๊ะ", "น้ำซุปเนื้อ เกลือ พริกไทย ออริกาโน่", "ไข่ไก่ตีสำหรับทาหน้าขนม 1 ฟอง", "น้ำมันหรือเนย"],
+    instructions: ["ผัดหอมใหญ่ แครอท และเนื้อบดในกระทะจนสุก", "เติมซอสมะเขือเทศ น้ำซุป และเครื่องปรุงรส เคี่ยวจนน้ำงวดข้นเป็นไส้เนื้อ พักให้เย็น", "กรุแป้งพายลงในพิมพ์พาย ตักไส้เนื้อใส่ลงไป", "ปิดทับด้วยแป้งพายอีกแผ่น จีบขอบให้สนิท เจาะรูระบายอากาศด้านบน ทาด้วยไข่ไก่บางๆ", "นำเข้าเตาอบ 200°C ประมาณ 20-25 นาทีจนแป้งพายพองฟูและสีเหลืองทอง"]
+  },
+  {
+    name: "คีชโลแรน (Quiche Lorraine)",
+    image: "",
+    calories: 505,
+    protein: "18g",
+    carbs: "30g",
+    fat: "35g",
+    ingredients: ["แป้งทาร์ตหรือแป้งพายร่วน (Shortcrust) กรุลงพิมพ์อบสุก 1 ชิ้น", "เบคอนหั่นชิ้นคั่วกรอบ 50g", "ไข่ไก่ 2 ฟอง", "วิปปิ้งครีม (Heavy Cream) 1/2 ถ้วย", "นมสด 1/4 ถ้วย", "กรูแยร์ชีส (Gruyere) ขูด 1/2 ถ้วย", "ลูกจันทน์เทศป่น (Nutmeg) เกลือ พริกไทย"],
+    instructions: ["ตีไข่ไก่ วิปปิ้งครีม นมสด เกลือ พริกไทย และลูกจันทน์เทศเข้าด้วยกัน (ส่วนผสมคัสตาร์ด)", "โรยเบคอนกรอบและชีสขูดลงในฐานแป้งทาร์ตที่อบเตรียมไว้", "เทส่วนผสมคัสตาร์ดลงไปให้ท่วมเบคอนและชีส", "นำเข้าเตาอบอุณหภูมิ 180°C ประมาณ 25-30 นาที จนหน้าคีชเซ็ตตัวและสีเหลืองสวย", "นำออกมาพักให้อุ่นก่อนตัดเสิร์ฟ"]
+  },
+  {
+    name: "เครปคาว (แฮมชีส)",
+    image: "",
+    calories: 445,
+    protein: "22g",
+    carbs: "40g",
+    fat: "22g",
+    ingredients: ["แป้งเครป (แป้งสาลี นม ไข่ เนยละลาย) 1 แผ่นใหญ่", "แฮมสไลซ์ 2 แผ่น", "ชีสขูด (มอสซาเรลล่า หรือ เชดดาร์) 1/2 ถ้วย", "เนยจืดเล็กน้อยสำหรับทากระทะ", "ไข่ไก่ 1 ฟอง (ถ้าชอบเครปไข่)", "มายองเนส หรือ ซอสมะเขือเทศ (ตามชอบ)"],
+    instructions: ["ตั้งกระทะแบนหรือเตาเครปไฟอ่อน ทาเนยบางๆ เทแป้งเครปลงไปเกลี่ยให้เป็นแผ่นกลมบาง", "เมื่อแป้งเริ่มสุก ตอกไข่ลงไปตรงกลาง เกลี่ยไข่ให้ทั่ว", "วางแฮมและโรยชีสลงไปตรงกลางแผ่นเครป", "พับขอบเครปทั้ง 4 ด้านเข้ามาหากันให้เป็นรูปสี่เหลี่ยม หรือพับครึ่งเป็นสามเหลี่ยม", "รอจนชีสละลายเยิ้ม ตักขึ้นเสิร์ฟร้อนๆ"]
+  },
+  {
+    name: "แพนเค้กไข่ดาวเบคอน",
+    image: "",
+    calories: 515,
+    protein: "18g",
+    carbs: "55g",
+    fat: "25g",
+    ingredients: ["แป้งแพนเค้กสำเร็จรูปผสมนมและไข่ ทอดเป็นแผ่นกลม 2 แผ่น", "เบคอนเส้นทอดกรอบ 2-3 เส้น", "ไข่ไก่ 1 ฟอง (ทอดเป็นไข่ดาว)", "เนยจืด 1 ก้อนเล็ก", "เมเปิลไซรัป (Maple Syrup)"],
+    instructions: ["ผสมแป้งแพนเค้กตามสูตร หยอดลงกระทะแบนทอดให้สุกทั้งสองด้าน จัดใส่จาน", "ทอดเบคอนในกระทะให้กรอบ ตักพักไว้", "ทอดไข่ดาวให้ไข่ขาวสุกกรอบและไข่แดงเยิ้ม", "วางเบคอนและไข่ดาวลงบนแผ่นแพนเค้ก โปะเนยจืดด้านบน", "ราดด้วยเมเปิลไซรัป เสิร์ฟเป็นอาหารเช้าสไตล์อเมริกัน"]
+  },
+  {
+    name: "ข้าวโอ๊ตต้มหมูสับ",
+    image: "",
+    calories: 360,
+    protein: "18g",
+    carbs: "45g",
+    fat: "12g",
+    ingredients: ["ข้าวโอ๊ตชนิดเกล็ดหยาบ (Rolled Oats) 1/2 ถ้วย", "น้ำซุปกระดูกหมู 1.5 ถ้วย", "หมูสับปรุงรสปั้นก้อน 50g", "ซีอิ๊วขาว เกลือ พริกไทยป่น", "ต้นหอม ผักชี ขิงซอย กระเทียมเจียว"],
+    instructions: ["ตั้งน้ำซุปกระดูกหมูให้เดือด ใส่หมูสับปั้นก้อนลงไปต้มจนสุก", "ใส่ข้าวโอ๊ตลงไปต้ม คนเรื่อยๆ เพื่อไม่ให้ติดก้นหม้อ ต้มจนข้าวโอ๊ตนุ่มบานและน้ำข้นขึ้น (ประมาณ 5 นาที)", "ปรุงรสด้วยซีอิ๊วขาวและเกลือ", "ตักใส่ชาม โรยด้วยต้นหอม ผักชี ขิงซอย และกระเทียมเจียว", "โรยพริกไทยป่นพร้อมเสิร์ฟ เป็นเมนูอาหารเช้าที่ดีต่อสุขภาพ"]
+  },
+  {
+    name: "โจ๊กข้าวโอ๊ตไก่ฉีก",
+    image: "",
+    calories: 320,
+    protein: "22g",
+    carbs: "40g",
+    fat: "8g",
+    ingredients: ["ข้าวโอ๊ตป่นละเอียด (Quick Oats) 1/2 ถ้วย", "น้ำซุปไก่ 1.5 ถ้วย", "อกไก่ต้มฉีกเป็นเส้น 50g", "ซีอิ๊วขาว พริกไทยป่น", "ไข่ลวก 1 ฟอง", "ต้นหอม ผักชี ขิงซอย"],
+    instructions: ["ต้มน้ำซุปไก่ให้เดือด ใส่ข้าวโอ๊ตป่นลงไปคนให้เข้ากัน", "ต้มไฟอ่อนๆ หมั่นคนจนข้าวโอ๊ตข้นเนียนเหมือนเนื้อโจ๊ก (ใช้เวลาเพียง 2-3 นาที)", "ปรุงรสด้วยซีอิ๊วขาว ปิดไฟ ตักใส่ชาม", "วางเนื้อไก่ฉีกและไข่ลวกลงบนโจ๊กข้าวโอ๊ต", "โรยต้นหอม ผักชี ขิงซอย และพริกไทยก่อนทาน"]
+  },
+  {
+    name: "อะโวคาโดโทสต์พร้อมไข่",
+    image: "",
+    calories: 400,
+    protein: "15g",
+    carbs: "35g",
+    fat: "22g",
+    ingredients: ["ขนมปังโฮลวีตหรือซาวร์โดว์ (Sourdough) แผ่นหนา 1 แผ่น", "อะโวคาโดสุก 1/2 ลูก", "ไข่ไก่ 1 ฟอง (ลวกเป็น Poached Egg หรือไข่ดาว)", "น้ำมะนาว 1 ช้อนชา", "เกลือทะเล พริกไทยดำป่น และพริกป่นปาปริก้า", "น้ำมันมะกอกเล็กน้อย"],
+    instructions: ["ปิ้งขนมปังให้กรอบ", "บดอะโวคาโดในชาม บีบน้ำมะนาว เติมเกลือและพริกไทย คลุกให้เข้ากัน", "ทาอะโวคาโดบดลงบนขนมปังปิ้งให้ทั่วหนาๆ", "วางไข่ลวกหรือไข่ดาวไว้ด้านบน", "เหยาะน้ำมันมะกอกเล็กน้อย โรยเกลือ พริกไทยดำ และพริกปาปริก้า พร้อมเสิร์ฟ"]
+  },
+  {
+    name: "สมูทตี้โบลว์ (Acai Bowl)",
+    image: "",
+    calories: 475,
+    protein: "20g",
+    carbs: "65g",
+    fat: "15g",
+    ingredients: ["ผงอาซาอิ (Acai) 1 ช้อนโต๊ะ หรือ อาซาอิแช่แข็ง 1 ซอง", "กล้วยหอมแช่แข็ง 1 ลูก", "มิกซ์เบอร์รี่แช่แข็ง 1/2 ถ้วย", "นมอัลมอนด์หรือน้ำมะพร้าว 1/4 ถ้วย", "ท็อปปิ้ง: กราโนล่า, สตรอว์เบอร์รีสดสไลซ์, กล้วยหอม, เมล็ดเจีย, มะพร้าวอบแห้ง"],
+    instructions: ["นำกล้วยแช่แข็ง มิกซ์เบอร์รี่ ผงอาซาอิ และนมอัลมอนด์ ใส่ลงในเครื่องปั่น", "ปั่นจนเนื้อเนียนละเอียดและข้นเหมือนไอศกรีม (หากข้นไปค่อยๆ เติมนมทีละนิด)", "ตักสมูทตี้ใส่ชามให้เกลี่ยเรียบ", "จัดเรียงท็อปปิ้ง ได้แก่ กราโนล่า ผลไม้สด เมล็ดเจีย และมะพร้าวอบแห้ง ไว้บนหน้าให้สวยงาม", "ทานทันทีขณะกำลังเย็นจัด"]
+  },
+  {
+    name: "กราโนล่าโยเกิร์ตผลไม้",
+    image: "",
+    calories: 390,
+    protein: "15g",
+    carbs: "55g",
+    fat: "12g",
+    ingredients: ["กรีกโยเกิร์ต (Greek Yogurt) รสธรรมชาติ 1 ถ้วย", "กราโนล่ารสที่ชอบ 1/2 ถ้วย", "ผลไม้สดตามฤดูกาล (เช่น กล้วย กีวี บลูเบอร์รี่)", "น้ำผึ้ง 1 ช้อนโต๊ะ", "ถั่วหรือธัญพืชเสริม (อัลมอนด์, เมล็ดฟักทอง)"],
+    instructions: ["ตักกรีกโยเกิร์ตใส่ชามหรือแก้วทรงสวยงาม", "หั่นผลไม้สดเป็นชิ้นสวยงามพอดีคำ", "โรยเนื้อกราโนล่าให้ทั่วด้านบนโยเกิร์ต ตามด้วยผลไม้สดและธัญพืช", "ราดน้ำผึ้งเป็นเส้นด้านบนสุดเพิ่มความหอมหวาน", "เสิร์ฟเป็นอาหารเช้าหรือของว่างที่มีประโยชน์"]
+  },
+  {
+    name: "สลัดเต้าหู้เย็นญี่ปุ่น",
+    image: "",
+    calories: 240,
+    protein: "18g",
+    carbs: "20g",
+    fat: "10g",
+    ingredients: ["เต้าหู้อ่อน (คินุ) แช่เย็นจัด 1 ก้อนเล็ก", "ผักสลัดรวม (กรีนโอ๊ค มะเขือเทศราชินี)", "ปลาโอแห้งขูดเส้น (คัตสึโอะบุชิ) 1 ช้อนโต๊ะ", "สาหร่ายวากาเมะแช่น้ำให้นุ่ม 2 ช้อนโต๊ะ", "น้ำสลัดงาโชยุสไตล์ญี่ปุ่น", "งาขาวคั่ว ต้นหอมซอย ขิงขูดฝอย"],
+    instructions: ["นำเต้าหู้อ่อนออกจากแพ็ก ซับน้ำให้แห้ง หั่นเป็นชิ้นเต๋าใหญ่จัดใส่ชาม หรือวางไว้ตรงกลางสลัด", "จัดผักสลัดรวมและสาหร่ายวากาเมะไว้รอบๆ เต้าหู้", "ราดน้ำสลัดงาโชยุลงบนเต้าหู้และผักสลัด", "โปะขิงขูดฝอยเล็กน้อยบนเต้าหู้", "โรยปลาโอแห้ง งาขาว และต้นหอมซอย พร้อมเสิร์ฟสดชื่น"]
+  },
+  {
+    name: "ปอเปี๊ยะสด",
+    image: "",
+    calories: 275,
+    protein: "12g",
+    carbs: "45g",
+    fat: "5g",
+    ingredients: ["แผ่นแป้งปอเปี๊ยะสด 2-3 แผ่น", "กุนเชียงต้มหั่นยาว หมูตั้ง และไข่เจียวหั่นเส้น", "เต้าหู้เหลืองต้มพะโล้หั่นยาว", "ถั่วงอกลวก แตงกวา และต้นหอม", "น้ำจิ้มราดปอเปี๊ยะสด (รสหวานอมเปรี้ยวเค็ม) และมัสตาร์ด", "พริกชี้ฟ้าเขียวแดง และเนื้อปูแกะโรยหน้า"],
+    instructions: ["แผ่แผ่นแป้งปอเปี๊ยะ วางผักกาดหอม ถั่วงอกลวก แตงกวา ลงไป", "วางกุนเชียง หมูตั้ง ไข่เจียวฝอย และเต้าหู้พะโล้ทับลงไปตามแนวยาว", "ม้วนแผ่นแป้งให้แน่น พับหัวท้ายให้สวยงาม หั่นเป็นชิ้นพอดีคำจัดลงจาน", "ราดน้ำจิ้มปอเปี๊ยะให้ชุ่มฉ่ำ โรยหน้าด้วยเนื้อปูและไข่ฝอย", "เสิร์ฟคู่กับพริกชี้ฟ้า ต้นหอมสด และแตง้มมัสตาร์ดเล็กน้อยเพื่อตัดเลี่ยน"]
+  },
+  {
+    name: "ก๋วยเตี๋ยวลุยสวน",
+    image: "",
+    calories: 330,
+    protein: "15g",
+    carbs: "50g",
+    fat: "8g",
+    ingredients: ["แผ่นก๋วยเตี๋ยวเส้นใหญ่ (แบบไม่ตัด) แผ่นสี่เหลี่ยม", "หมูสับรวนปรุงรสด้วยซีอิ๊วและพริกไทย 100g", "แครอทขูดเส้น เห็ดหูหนูสับ ผัดรวมกับหมูสับ", "ผักกาดหอม โหระพา สะระแหน่ ผักชีฝรั่ง", "น้ำจิ้มซีฟู้ดรสจัดจ้าน (พริกขี้หนูเขียว กระเทียม มะนาว น้ำปลา น้ำตาลปี๊บ)"],
+    instructions: ["นำแผ่นก๋วยเตี๋ยวไปนึ่งให้สุกนุ่ม ทิ้งไว้ให้อุ่นพอจับได้", "แผ่แผ่นก๋วยเตี๋ยว วางผักกาดหอม ใบโหระพา สะระแหน่ และผักชีฝรั่งเรียงกัน", "ตักไส้หมูสับรวนเห็ดหูหนูวางทับลงบนผัก", "ม้วนแผ่นก๋วยเตี๋ยวให้แน่นเป็นแท่งกลมยาวยาว", "หั่นเป็นชิ้นพอดีคำ จัดใส่จาน เสิร์ฟพร้อมน้ำจิ้มซีฟู้ดรสเด็ดแซ่บๆ"]
+  }
 ];
+
+foodMenu.forEach((food, index) => {
+  const order = index + 1; // ให้เริ่มนับลำดับที่ 1 ถึง 150
+  
+  if (order <= 100) {
+    // ลำดับที่ 1-100 ให้ใช้รูปจากโฟลเดอร์ images1
+    food.image = `images1/menu-${order}.jpg`;
+  } else {
+    // ลำดับที่ 101-150 ให้ใช้รูปจากโฟลเดอร์ images2
+    food.image = `images2/menu-${order}.jpg`;
+  }
+});
+
+// ลอง log ดูผลลัพธ์ว่ารูปเข้าครบทุกเมนูหรือไม่
+console.log(foodMenu);
+
+//Food Database Above Here
+
+
+
+
+
+
 
 function startRandomize() {
     const btn = document.getElementById('randomBtn');
@@ -211,9 +1580,9 @@ function showFinalResult() {
 
     if (allergiesFound) {
         warningEl.innerHTML = `⚠️ <b>ระวัง!</b> เมนูนี้มีส่วนผสมของ: <u>${allergiesFound.join(', ')}</u> ที่คุณแพ้`;
-        warningEl.classList.remove('hidden');
+        warningEl.style.display = 'block';
     } else {
-        warningEl.classList.add('hidden');
+        warningEl.style.display = 'none';
     }
     // ===================================
 
@@ -343,47 +1712,65 @@ function renderMenuGrid(menuArray) {
     });
 }
 
-// 5. ฟังก์ชันเปิดหน้าต่างวิธีทำ (Modal)
+let currentOpenFood = null; // ตัวแปรจำว่ากำลังเปิดเมนูไหนอยู่
+
+// 5. ฟังก์ชันเปิดหน้าต่างวิธีทำ (Modal) - รวมทุกระบบสมบูรณ์แล้ว
 function openRecipe(foodName) {
-    // ค้นหาข้อมูลอาหารจากชื่อ
     const food = foodMenu.find(f => f.name === foodName);
     if (!food) return;
+
+    currentOpenFood = food.name; // บันทึกชื่อเมนูที่เปิด
 
     // ใส่ข้อมูลพื้นฐาน
     document.getElementById('modalFoodName').innerText = food.name;
     document.getElementById('modalFoodImage').src = food.image;
-    
-    // === เพิ่มการตรวจจับอาการแพ้ ในหน้าวิธีทำ ===
+
+    // === ระบบที่ 1: ตรวจจับอาการแพ้อาหาร ===
     const modalWarningEl = document.getElementById('modalAllergyWarning');
     const modalAllergiesFound = checkAllergies(food.name, food.ingredients);
 
-    if (modalAllergiesFound) {
+    if (modalAllergiesFound && modalAllergiesFound.length > 0) {
         modalWarningEl.innerHTML = `⚠️ <b>ระวัง!</b> เมนูนี้มีส่วนผสมของ: <u>${modalAllergiesFound.join(', ')}</u> ที่คุณแพ้`;
-        modalWarningEl.classList.remove('hidden');
+        modalWarningEl.style.cssText = "display: flex !important; padding: 10px; border: 2px solid #ff4d4d; border-radius: 10px; background-color: #fff0f0; color: #d93025; margin-bottom: 15px; text-align: center;";
     } else {
-        modalWarningEl.classList.add('hidden');
+        modalWarningEl.innerHTML = '';
+        modalWarningEl.style.cssText = "display: none !important;"; 
     }
-    // ===================================
 
-    // อ้างอิงพื้นที่แสดงผล
+    // === ระบบที่ 2: อัปเดตวัตถุดิบและวิธีทำ ===
     const ingList = document.getElementById('modalIngredients');
     const instList = document.getElementById('modalInstructions');
     
-    // ตรวจสอบว่ามีข้อมูลวัตถุดิบไหม (ถ้าไม่มีให้แสดงข้อความสำรอง)
     if (food.ingredients && food.ingredients.length > 0) {
         ingList.innerHTML = food.ingredients.map(item => `<li>${item}</li>`).join('');
     } else {
         ingList.innerHTML = '<li>กำลังรออัปเดตข้อมูลวัตถุดิบ 🥺</li>';
     }
 
-    // ตรวจสอบว่ามีข้อมูลวิธีทำไหม
     if (food.instructions && food.instructions.length > 0) {
         instList.innerHTML = food.instructions.map(step => `<li>${step}</li>`).join('');
     } else {
         instList.innerHTML = '<li>กำลังรออัปเดตขั้นตอนวิธีทำ 🥺</li>';
     }
 
-    // แสดง Modal
+    // === ระบบที่ 3: โหลดข้อมูล "ถูกใจ" และ "คอมเมนต์" ===
+    const currentUser = localStorage.getItem('currentUser') || 'guest';
+    const storageKey = `likedFoods_${currentUser}`;
+    let likedFoods = JSON.parse(localStorage.getItem(storageKey)) || [];
+    
+    const likeBtn = document.getElementById('likeBtn');
+    const likeIcon = document.getElementById('likeIcon');
+    if (likedFoods.includes(food.name)) {
+        likeBtn.classList.add('liked');
+        likeIcon.innerText = '❤️';
+    } else {
+        likeBtn.classList.remove('liked');
+        likeIcon.innerText = '🤍';
+    }
+
+    loadComments();
+
+    // เปิดหน้าต่าง
     document.getElementById('recipeModal').style.display = 'flex';
 }
 
@@ -397,72 +1784,6 @@ window.onclick = function(event) {
     const modal = document.getElementById('recipeModal');
     if (event.target === modal) {
         modal.style.display = "none";
-    }
-}
-
-let currentOpenFood = null; // ตัวแปรจำว่ากำลังเปิดเมนูไหนอยู่
-
-// อัปเดตฟังก์ชันเปิดหน้าต่างวิธีทำ
-function openRecipe(foodName) {
-    const food = foodMenu.find(f => f.name === foodName);
-    if (!food) return;
-
-    currentOpenFood = food.name; // บันทึกชื่อเมนูที่เปิด
-
-    document.getElementById('modalFoodName').innerText = food.name;
-    document.getElementById('modalFoodImage').src = food.image;
-
-    const ingList = document.getElementById('modalIngredients');
-    const instList = document.getElementById('modalInstructions');
-    
-    if (food.ingredients && food.ingredients.length > 0) {
-        ingList.innerHTML = food.ingredients.map(item => `<li>${item}</li>`).join('');
-    } else {
-        ingList.innerHTML = '<li>กำลังรออัปเดตข้อมูลวัตถุดิบ 🥺</li>';
-    }
-
-    if (food.instructions && food.instructions.length > 0) {
-        instList.innerHTML = food.instructions.map(step => `<li>${step}</li>`).join('');
-    } else {
-        instList.innerHTML = '<li>กำลังรออัปเดตขั้นตอนวิธีทำ 🥺</li>';
-    }
-
-    // โหลดข้อมูล "ถูกใจ" จาก LocalStorage
-    const isLiked = localStorage.getItem('like_' + currentOpenFood);
-    const likeBtn = document.getElementById('likeBtn');
-    const likeIcon = document.getElementById('likeIcon');
-    if (isLiked === 'true') {
-        likeBtn.classList.add('liked');
-        likeIcon.innerText = '💛';
-    } else {
-        likeBtn.classList.remove('liked');
-        likeIcon.innerText = '🤍';
-    }
-
-    // โหลดคอมเมนต์จาก LocalStorage
-    loadComments();
-
-    document.getElementById('recipeModal').style.display = 'flex';
-}
-
-// 8. ฟังก์ชันกดถูกใจ
-function toggleLike() {
-    if (!currentOpenFood) return;
-    
-    const likeBtn = document.getElementById('likeBtn');
-    const likeIcon = document.getElementById('likeIcon');
-    const currentState = localStorage.getItem('like_' + currentOpenFood);
-
-    if (currentState === 'true') {
-        // ยกเลิกถูกใจ
-        localStorage.removeItem('like_' + currentOpenFood);
-        likeBtn.classList.remove('liked');
-        likeIcon.innerText = '🤍';
-    } else {
-        // กดถูกใจ
-        localStorage.setItem('like_' + currentOpenFood, 'true');
-        likeBtn.classList.add('liked');
-        likeIcon.innerText = '💛';
     }
 }
 
@@ -734,6 +2055,7 @@ function previewImage(event) {
 }
 
 // ฟังก์ชันกดปุ่มบันทึก
+// ฟังก์ชันกดปุ่มบันทึกโปรไฟล์ (อัปเกรดกันบั๊กรูปภาพใหญ่)
 function saveProfile() {
     const username = document.getElementById('profileUsername').value;
     const newDisplayName = document.getElementById('profileDisplayName').value;
@@ -747,8 +2069,15 @@ function saveProfile() {
     
     // ถ้ามีการอัปโหลดรูปใหม่ ให้บันทึกรูปด้วย
     if (tempProfilePicBase64 !== "") {
-        localStorage.setItem('profilePic_' + username, tempProfilePicBase64);
-        tempProfilePicBase64 = ""; 
+        try {
+            // ลองบันทึกรูปภาพ
+            localStorage.setItem('profilePic_' + username, tempProfilePicBase64);
+            tempProfilePicBase64 = ""; 
+        } catch (error) {
+            // 🚨 ถ้าไฟล์รูปใหญ่กว่า 5MB จะเด้งเข้าบล็อกนี้แทนการทำให้เว็บพัง
+            alert('⚠️ รูปภาพมีขนาดใหญ่เกินไปครับ (เกิน 5MB) ระบบไม่สามารถบันทึกได้ รบกวนเลือกรูปที่ขนาดเล็กลง หรือแคปหน้าจอรูปนั้นแล้วอัปโหลดใหม่นะครับ');
+            return; // หยุดการทำงาน ไม่ปิดหน้าต่าง
+        }
     }
 
     updateProfileUI(); 
@@ -762,7 +2091,9 @@ function saveProfile() {
 function checkAllergies(foodName, ingredients) {
     const userAllergies = localStorage.getItem('userAllergies');
     // ถ้าผู้ใช้ไม่ได้ระบุว่าแพ้อะไร ให้ข้ามไป
-    if (!userAllergies) return false; 
+    if (!userAllergies || userAllergies === "undefined" || userAllergies === "null" || userAllergies.trim() === "") {
+        return false; 
+    }
 
     // แยกคำที่ผู้ใช้แพ้ออกมา
     const allergyWords = userAllergies.split(/[\s,]+/).filter(w => w.trim() !== '');
@@ -788,3 +2119,45 @@ function checkAllergies(foodName, ingredients) {
 
     return foundAllergies.length > 0 ? foundAllergies : false;
 }
+
+// ==========================================
+// 2. ฟังก์ชันเปิด/ปิด หน้าต่างคลังเมนูโปรด
+// ==========================================
+function openLikedFoods() {
+    const currentUser = localStorage.getItem('currentUser') || 'guest';
+    const storageKey = `likedFoods_${currentUser}`;
+    let likedFoods = JSON.parse(localStorage.getItem(storageKey)) || [];
+    
+    const container = document.getElementById('likedFoodsContainer');
+    container.innerHTML = ''; // ล้างข้อมูลเก่าก่อน
+    
+    if (likedFoods.length === 0) {
+        container.innerHTML = '<p style="text-align: center; width: 100%; color: #888;">ยังไม่มีเมนูที่ถูกใจเลย ลองไปสุ่มหาเมนูอร่อยๆ ดูก่อนนะ! 🥺</p>';
+    } else {
+        // วนลูปหาข้อมูลอาหารจาก foodMenu แล้วสร้างการ์ดโชว์
+        likedFoods.forEach(name => {
+            const food = foodMenu.find(f => f.name === name);
+            if (food) {
+                const card = document.createElement('div');
+                card.style.border = '1px solid #eee';
+                card.style.borderRadius = '15px';
+                card.style.padding = '10px';
+                card.style.textAlign = 'center';
+                card.style.boxShadow = '0 4px 8px rgba(0,0,0,0.05)';
+                
+                card.innerHTML = `
+                    <img src="${food.image}" alt="${food.name}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 10px;">
+                    <h4 style="margin: 10px 0 5px 0;">${food.name}</h4>
+                    <button onclick="openRecipe('${food.name}')" style="background-color: #FFF44F; border: none; border-radius: 8px; padding: 8px 15px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 5px;">📖 ดูวิธีทำ</button>
+                `;
+                container.appendChild(card);
+            }
+        });
+    }
+    
+    document.getElementById('likedFoodsModal').style.display = 'flex';
+}
+
+function closeLikedFoods() {
+    document.getElementById('likedFoodsModal').style.display = 'none';
+}   
