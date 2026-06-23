@@ -1506,10 +1506,10 @@ foodMenu.forEach((food, index) => {
   
   if (order <= 100) {
     // ลำดับที่ 1-100 ให้ใช้รูปจากโฟลเดอร์ images1
-    food.image = `images1/menu-${order}.jpg`;
+    food.image = `./images1/menu-${order}.jpg`;
   } else {
     // ลำดับที่ 101-150 ให้ใช้รูปจากโฟลเดอร์ images2
-    food.image = `images2/menu-${order}.jpg`;
+    food.image = `./images2/menu-${order}.jpg`;
   }
 });
 
